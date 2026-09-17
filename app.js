@@ -1,3 +1,4 @@
+```javascript
 // ========================================
 // SUPABASE
 // ========================================
@@ -24,14 +25,24 @@ const supabaseClient =
 
 
 // ========================================
+// VAPID PUBLIC KEY
+// ========================================
+
+const VAPID_PUBLIC_KEY =
+  "BPhQnLNpn525kJsVWEiwbyQGnX5G7wmIBQRUnO4yFoJjaumolPGW37VNVRzlJmFMDdr4rO6_P6ht4MEsBVS6oA4";
+
+
+// ========================================
 // REDIRECT URL
 // ========================================
 
 function getRedirectUrl() {
+
   return new URL(
     "login.html",
     window.location.href
   ).href;
+
 }
 
 
@@ -39,27 +50,45 @@ function getRedirectUrl() {
 // QR CODE USER
 // ========================================
 
-function generateUserQR(userId, elementId) {
+function generateUserQR(
+  userId,
+  elementId
+) {
 
   const element =
-    document.getElementById(elementId);
+    document.getElementById(
+      elementId
+    );
 
-  if (!element || !userId) return;
+  if (
+    !element ||
+    !userId
+  ) {
+    return;
+  }
 
   const profileUrl =
     new URL(
-      "profile.html?id=" + encodeURIComponent(userId),
+      "profile.html?id=" +
+      encodeURIComponent(userId),
       window.location.href
     ).href;
 
   element.innerHTML = "";
 
   new QRCode(element, {
+
     text: profileUrl,
+
     width: 180,
+
     height: 180,
-    correctLevel: QRCode.CorrectLevel.H
+
+    correctLevel:
+      QRCode.CorrectLevel.H
+
   });
+
 }
 
 
@@ -74,7 +103,8 @@ async function getProfile() {
       user
     }
   } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient.auth
+      .getUser();
 
   if (!user) {
     return null;
@@ -92,17 +122,29 @@ async function getProfile() {
   if (profile) {
 
     return {
+
       ...profile,
-      email: user.email
+
+      email:
+        user.email
+
     };
 
   }
 
   return {
-    id: user.id,
-    email: user.email,
-    role: "volunteer"
+
+    id:
+      user.id,
+
+    email:
+      user.email,
+
+    role:
+      "volunteer"
+
   };
+
 }
 
 
@@ -119,7 +161,8 @@ async function requireAuth(
       user
     }
   } =
-    await supabaseClient.auth.getUser();
+    await supabaseClient.auth
+      .getUser();
 
   if (!user) {
 
@@ -127,9 +170,11 @@ async function requireAuth(
       target;
 
     return null;
+
   }
 
   return user;
+
 }
 
 
@@ -151,9 +196,11 @@ async function requireAdmin() {
       "dashboard.html";
 
     return null;
+
   }
 
   return profile;
+
 }
 
 
@@ -162,7 +209,9 @@ async function requireAdmin() {
 // ========================================
 
 const registerForm =
-  document.getElementById("register");
+  document.getElementById(
+    "register"
+  );
 
 if (registerForm) {
 
@@ -173,7 +222,9 @@ if (registerForm) {
       e.preventDefault();
 
       const msg =
-        document.getElementById("msg");
+        document.getElementById(
+          "msg"
+        );
 
       const name =
         document
@@ -193,54 +244,76 @@ if (registerForm) {
           .getElementById("password")
           .value;
 
+
       if (!name) {
+
         msg.textContent =
           "❌ Entrez votre nom.";
+
         return;
+
       }
+
 
       if (!email) {
+
         msg.textContent =
           "❌ Entrez votre email.";
+
         return;
+
       }
 
+
       if (password.length < 6) {
+
         msg.textContent =
           "❌ Minimum 6 caractères.";
+
         return;
+
       }
+
 
       msg.innerHTML =
         "⏳ Création du compte...";
+
 
       try {
 
         const redirectUrl =
           getRedirectUrl();
 
+
         const {
           data,
           error
         } =
-          await supabaseClient.auth.signUp({
+          await supabaseClient.auth
+            .signUp({
 
-            email: email,
+              email:
+                email,
 
-            password: password,
+              password:
+                password,
 
-            options: {
+              options: {
 
-              data: {
-                full_name: name
-              },
+                data: {
 
-              emailRedirectTo:
-                redirectUrl
+                  full_name:
+                    name
 
-            }
+                },
 
-          });
+                emailRedirectTo:
+                  redirectUrl
+
+              }
+
+            });
+
 
         if (error) {
 
@@ -250,10 +323,13 @@ if (registerForm) {
           );
 
           msg.innerHTML =
-            "❌ " + error.message;
+            "❌ " +
+            error.message;
 
           return;
+
         }
+
 
         if (data.user) {
 
@@ -268,20 +344,25 @@ if (registerForm) {
               "Cliquez sur le lien de confirmation.<br><br>" +
               "📁 Vérifiez aussi Spam.";
 
+
             const resend =
               document.getElementById(
                 "resendEmail"
               );
 
+
             if (resend) {
+
               resend.style.display =
                 "block";
+
             }
 
           } else {
 
             msg.innerHTML =
               "✅ Compte créé !";
+
 
             setTimeout(() => {
 
@@ -291,7 +372,9 @@ if (registerForm) {
             }, 1000);
 
           }
+
         }
+
 
       } catch (error) {
 
@@ -300,10 +383,12 @@ if (registerForm) {
         msg.innerHTML =
           "❌ Erreur : " +
           error.message;
+
       }
 
     }
   );
+
 }
 
 
@@ -316,6 +401,7 @@ const resendEmail =
     "resendEmail"
   );
 
+
 if (resendEmail) {
 
   resendEmail.addEventListener(
@@ -323,7 +409,10 @@ if (resendEmail) {
     async function () {
 
       const msg =
-        document.getElementById("msg");
+        document.getElementById(
+          "msg"
+        );
+
 
       const email =
         document
@@ -332,63 +421,80 @@ if (resendEmail) {
           .trim()
           .toLowerCase();
 
+
       if (!email) {
 
         msg.innerHTML =
           "❌ Entrez votre email.";
 
         return;
+
       }
+
 
       resendEmail.disabled =
         true;
 
+
       resendEmail.textContent =
         "⏳ Envoi...";
+
 
       try {
 
         const redirectUrl =
           getRedirectUrl();
 
+
         const {
           error
         } =
-          await supabaseClient.auth.resend({
+          await supabaseClient.auth
+            .resend({
 
-            type: "signup",
+              type:
+                "signup",
 
-            email: email,
+              email:
+                email,
 
-            options: {
+              options: {
 
-              emailRedirectTo:
-                redirectUrl
+                emailRedirectTo:
+                  redirectUrl
 
-            }
+              }
 
-          });
+            });
+
 
         if (error) {
 
           msg.innerHTML =
-            "❌ " + error.message;
+            "❌ " +
+            error.message;
+
 
           resendEmail.disabled =
             false;
+
 
           resendEmail.textContent =
             "إعادة إرسال رابط التأكيد";
 
           return;
+
         }
+
 
         msg.innerHTML =
           "✅ رابط تأكيد جديد تم إرساله.<br>" +
           "تفقد Email و Spam.";
 
+
         resendEmail.textContent =
           "تم الإرسال ✓";
+
 
         setTimeout(() => {
 
@@ -400,20 +506,26 @@ if (resendEmail) {
 
         }, 60000);
 
+
       } catch (error) {
 
         msg.innerHTML =
-          "❌ " + error.message;
+          "❌ " +
+          error.message;
+
 
         resendEmail.disabled =
           false;
 
+
         resendEmail.textContent =
           "إعادة إرسال رابط التأكيد";
+
       }
 
     }
   );
+
 }
 
 
@@ -422,7 +534,10 @@ if (resendEmail) {
 // ========================================
 
 const loginForm =
-  document.getElementById("login");
+  document.getElementById(
+    "login"
+  );
+
 
 if (loginForm) {
 
@@ -432,8 +547,12 @@ if (loginForm) {
 
       e.preventDefault();
 
+
       const msg =
-        document.getElementById("msg");
+        document.getElementById(
+          "msg"
+        );
+
 
       const email =
         document
@@ -442,276 +561,63 @@ if (loginForm) {
           .trim()
           .toLowerCase();
 
+
       const password =
         document
           .getElementById("password")
           .value;
 
+
       msg.innerHTML =
         "⏳ Connexion...";
 
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth
-          .signInWithPassword({
-
-            email: email,
-
-            password: password
-
-          });
-
-      if (error) {
-
-        if (
-          error.message
-            .toLowerCase()
-            .includes(
-              "email not confirmed"
-            )
-        ) {
-
-          msg.innerHTML =
-            "⚠️ Confirmez votre email avant de vous connecter.";
-
-        } else {
-
-          msg.innerHTML =
-            "❌ " +
-            error.message;
-        }
-
-        return;
-      }
-
-      if (data.user) {
-
-        const profile =
-          await getProfile();
-
-        if (
-          profile &&
-          profile.role === "admin"
-        ) {
-
-          window.location.href =
-            "admin.html";
-
-        } else {
-
-          window.location.href =
-            "dashboard.html";
-        }
-      }
-
-    }
-  );
-}
-
-
-// ========================================
-// LOGOUT
-// ========================================
-
-const logout =
-  document.getElementById(
-    "logout"
-  );
-
-if (logout) {
-
-  logout.addEventListener(
-    "click",
-    async function () {
-
-      await supabaseClient.auth
-        .signOut();
-
-      window.location.href =
-        "index.html";
-
-    }
-  );
-}
-
-
-// ========================================
-// AUTH EVENTS
-// ========================================
-
-supabaseClient.auth
-  .onAuthStateChange(
-    (event, session) => {
-
-      console.log(
-        "AUTH EVENT:",
-        event
-      );
-
-      /* =========================
-   PUSH NOTIFICATIONS
-========================= */
-
-if ("serviceWorker" in navigator) {
-
-  window.addEventListener(
-    "load",
-    async () => {
 
       try {
 
-        const registration =
-          await navigator.serviceWorker.register(
-            "sw.js",
-            {
-              scope: "./"
-            }
-          );
-
-        console.log(
-          "✅ Service Worker actif:",
-          registration.scope
-        );
-
-      } catch (error) {
-
-        console.error(
-          "❌ Service Worker error:",
+        const {
+          data,
           error
-        );
+        } =
+          await supabaseClient.auth
+            .signInWithPassword({
 
-      }
+              email:
+                email,
 
-    }
-  );
+              password:
+                password
 
-}
-    }
-  );
-
-/* =========================
-   PUSH NOTIFICATIONS
-========================= */
-
-if ("serviceWorker" in navigator) {
-
-  window.addEventListener(
-    "load",
-    async () => {
-
-      try {
-
-        const registration =
-          await navigator.serviceWorker.register(
-            "sw.js",
-            {
-              scope: "./"
-            }
-          );
-
-        console.log(
-          "✅ Service Worker actif:",
-          registration.scope
-        );
-
-      } catch (error) {
-
-        console.error(
-          "❌ Service Worker error:",
-          error
-        );
-
-      }
-
-    }
-  );
-
-}
-
-/* =========================
-   PUSH NOTIFICATIONS
-========================= */
-
-async function enablePushNotifications() {
-
-  const button =
-    document.getElementById("enablePush");
-
-  const status =
-    document.getElementById("pushStatus");
-
-  if (!button || !status) return;
-
-  if (!("Notification" in window)) {
-
-    status.textContent =
-      "❌ Votre navigateur ne supporte pas les notifications.";
-
-    return;
-  }
-
-  if (!("serviceWorker" in navigator)) {
-
-    status.textContent =
-      "❌ Les notifications ne sont pas supportées.";
-
-    return;
-  }
-
-  try {
-
-    const permission =
-      await Notification.requestPermission();
-
-    if (permission !== "granted") {
-
-      status.textContent =
-        "⚠️ Autorisez les notifications dans votre navigateur.";
-
-      return;
-    }
-
-    const registration =
-      await navigator.serviceWorker.ready;
-
-    console.log(
-      "✅ Service Worker prêt",
-      registration
-    );
-
-    status.textContent =
-      "✅ Notifications activées sur cet appareil.";
-
-    button.textContent =
-      "🔔 Notifications activées";
-
-    button.disabled = true;
-
-  } catch (error) {
-
-    console.error(error);
-
-    status.textContent =
-      "❌ Erreur : " +
-      error.message;
-
-  }
-
-}
+            });
 
 
-const enablePush =
-  document.getElementById(
-    "enablePush"
-  );
+        if (error) {
 
-if (enablePush) {
+          if (
+            error.message
+              .toLowerCase()
+              .includes(
+                "email not confirmed"
+              )
+          ) {
 
-  enablePush.addEventListener(
-    "click",
-    enablePushNotifications
-  );
+            msg.innerHTML =
+              "⚠️ Confirmez votre email avant de vous connecter.";
 
-}
+          } else {
+
+            msg.innerHTML =
+              "❌ " +
+              error.message;
+
+          }
+
+          return;
+
+        }
+
+
+        if (data.user) {
+
+          const profile =
+            await get
+```
