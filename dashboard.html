@@ -5,24 +5,166 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Dashboard bénévole — Roued Al Khair</title>
+  <title>Espace bénévole — Roued Al Khair</title>
 
   <link rel="stylesheet" href="style.css">
 
   <!-- QR CODE -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+
+    .welcome-card {
+      padding: 28px;
+      margin-bottom: 25px;
+    }
+
+    .welcome-card h1 {
+      margin: 5px 0;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .category-card {
+      text-decoration: none;
+      color: inherit;
+      padding: 25px 20px;
+      border-radius: 20px;
+      transition: .2s;
+      display: block;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .category-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .category-card h3 {
+      margin: 0 0 7px;
+    }
+
+    .category-card p {
+      margin: 0;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .qr-section {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .qr-panel {
+      padding: 25px;
+      text-align: center;
+    }
+
+    #userQR {
+      width: 200px;
+      height: 200px;
+      background: white;
+      padding: 10px;
+      border-radius: 15px;
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #userQR img,
+    #userQR canvas {
+      max-width: 180px;
+      max-height: 180px;
+    }
+
+    .profile-mini {
+      padding: 25px;
+    }
+
+    .mini-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .mini-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+      background: #e2e8f0;
+    }
+
+    .announcement-box {
+      margin-top: 20px;
+      padding: 25px;
+    }
+
+    @media (max-width: 900px) {
+
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .qr-section {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+  </style>
+
 </head>
 
+
 <body>
+
+
+<!-- ========================================= -->
+<!-- NAVBAR -->
+<!-- ========================================= -->
 
 <header class="nav-wrap">
 
   <nav class="nav glass">
 
     <a class="brand" href="index.html">
-      <span class="logo" id="navLogo">RK</span>
-      <span>Roued <b>Al Khair</b></span>
+
+      <span class="logo">
+        RK
+      </span>
+
+      <span>
+        Roued <b>Al Khair</b>
+      </span>
+
     </a>
+
 
     <div style="margin-left:auto;display:flex;gap:8px">
 
@@ -47,48 +189,289 @@
 </header>
 
 
+
+<!-- ========================================= -->
+<!-- MAIN -->
+<!-- ========================================= -->
+
 <main class="dashboard">
 
-  <!-- HEADER -->
 
-  <div class="dash-head">
+  <!-- ======================================= -->
+  <!-- WELCOME -->
+  <!-- ======================================= -->
 
-    <div>
+  <section class="glass welcome-card">
 
-      <span class="eyebrow">
-        Espace bénévole
-      </span>
+    <span class="eyebrow">
+      ESPACE BÉNÉVOLE
+    </span>
 
-      <h1>
-        Bonjour,
-        <span id="name">...</span>
-        👋
-      </h1>
+    <h1>
+      Bonjour,
+      <span id="name">...</span>
+      👋
+    </h1>
 
-      <p>
-        Voici votre activité et vos prochaines missions.
-      </p>
+    <p>
+      Bienvenue dans votre espace personnel
+      Roued Al Khair.
+    </p>
+
+  </section>
+
+
+
+  <!-- ======================================= -->
+  <!-- CATEGORIES -->
+  <!-- ======================================= -->
+
+  <section>
+
+    <div class="panel-title">
+
+      <h2>
+        Mon espace
+      </h2>
 
     </div>
 
 
-    <div
-      class="avatar"
-      id="avatar"
-    >
-      RK
+    <div class="category-grid">
+
+
+      <!-- PROFILE -->
+
+      <a
+        href="#"
+        id="profileLink"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          👤
+        </div>
+
+        <h3>
+          Mon profil
+        </h3>
+
+        <p>
+          Consultez votre profil bénévole
+          et vos informations.
+        </p>
+
+      </a>
+
+
+
+      <!-- FORM -->
+
+      <a
+        href="volunteer-form.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          📝
+        </div>
+
+        <h3>
+          Mon formulaire
+        </h3>
+
+        <p>
+          Complétez vos informations
+          personnelles et bénévoles.
+        </p>
+
+      </a>
+
+
+
+      <!-- CV -->
+
+      <a
+        href="cv.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          📄
+        </div>
+
+        <h3>
+          Mon CV
+        </h3>
+
+        <p>
+          Ajoutez ou consultez votre
+          CV professionnel.
+        </p>
+
+      </a>
+
+
+
+      <!-- CHAT -->
+
+      <a
+        href="chat.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          💬
+        </div>
+
+        <h3>
+          Chat
+        </h3>
+
+        <p>
+          Discutez directement avec
+          l'administration.
+        </p>
+
+      </a>
+
+
+
+      <!-- ANNOUNCEMENTS -->
+
+      <a
+        href="annonces.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          📢
+        </div>
+
+        <h3>
+          Annonces
+        </h3>
+
+        <p>
+          Découvrez les nouvelles
+          annonces de l'association.
+        </p>
+
+      </a>
+
+
+
+      <!-- EVENTS -->
+
+      <a
+        href="#eventsSection"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          📅
+        </div>
+
+        <h3>
+          Événements
+        </h3>
+
+        <p>
+          Consultez les prochaines
+          activités et missions.
+        </p>
+
+      </a>
+
+
+
+      <!-- HOURS -->
+
+      <a
+        href="hours.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          ⏱️
+        </div>
+
+        <h3>
+          Mes heures
+        </h3>
+
+        <p>
+          Suivez vos heures de
+          bénévolat.
+        </p>
+
+      </a>
+
+
+
+      <!-- CERTIFICATES -->
+
+      <a
+        href="certificats.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          🏆
+        </div>
+
+        <h3>
+          Mes certificats
+        </h3>
+
+        <p>
+          Retrouvez vos certificats
+          de participation.
+        </p>
+
+      </a>
+
+
+
+      <!-- NOTIFICATIONS -->
+
+      <a
+        href="notifications.html"
+        class="category-card glass"
+      >
+
+        <div class="category-icon">
+          🔔
+        </div>
+
+        <h3>
+          Notifications
+        </h3>
+
+        <p>
+          Consultez vos notifications
+          et informations importantes.
+        </p>
+
+      </a>
+
     </div>
 
-  </div>
+  </section>
 
 
-  <!-- STATISTICS -->
+
+  <!-- ======================================= -->
+  <!-- STATS -->
+  <!-- ======================================= -->
 
   <div class="dash-grid">
 
     <div class="metric glass">
 
-      <small>Points</small>
+      <small>
+        Points
+      </small>
 
       <strong>
         240
@@ -103,10 +486,12 @@
 
     <div class="metric glass">
 
-      <small>Heures</small>
+      <small>
+        Heures
+      </small>
 
-      <strong>
-        48h
+      <strong id="hours">
+        0h
       </strong>
 
       <span>
@@ -118,7 +503,9 @@
 
     <div class="metric glass">
 
-      <small>Événements</small>
+      <small>
+        Événements
+      </small>
 
       <strong id="eventCount">
         0
@@ -133,10 +520,12 @@
 
     <div class="metric glass">
 
-      <small>Certificats</small>
+      <small>
+        Certificats
+      </small>
 
-      <strong>
-        4
+      <strong id="certificateCount">
+        0
       </strong>
 
       <span>
@@ -148,9 +537,15 @@
   </div>
 
 
-  <!-- MAIN -->
 
-  <div class="dash-main">
+  <!-- ======================================= -->
+  <!-- EVENTS + PROFILE -->
+  <!-- ======================================= -->
+
+  <div
+    class="qr-section"
+    id="eventsSection"
+  >
 
 
     <!-- EVENTS -->
@@ -165,7 +560,6 @@
 
       </div>
 
-
       <div id="events">
 
         <p style="color:#64748b">
@@ -178,150 +572,169 @@
 
 
 
-    <!-- QR -->
+    <!-- PROFILE -->
 
-    <aside class="glass panel qr">
+    <aside class="glass profile-mini">
 
-      <h2>
-        Mon espace
-      </h2>
-
-
-      <div
-        class="qrbox"
-        style="
-          display:flex;
-          flex-direction:column;
-          align-items:center;
-          justify-content:center;
-          gap:10px;
-          padding:20px;
-        "
-      >
-
-        <!-- QR GENERATED HERE -->
+      <div class="mini-info">
 
         <div
-          id="userQR"
-          style="
-            background:white;
-            padding:10px;
-            border-radius:12px;
-            min-width:180px;
-            min-height:180px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-          "
+          class="mini-avatar"
+          id="avatar"
         >
-          <span
-            style="
-              color:#64748b;
-              font-size:13px;
-            "
-          >
-            Génération du QR...
-          </span>
+          RK
         </div>
 
+        <div>
 
-        <small>
-          QR BÉNÉVOLE
-        </small>
+          <strong id="miniName">
+            ...
+          </strong>
+
+          <p style="margin:4px 0;color:#64748b">
+            Bénévole
+          </p>
+
+        </div>
 
       </div>
 
 
-      <p>
-        Scannez ce QR Code pour accéder
-        directement à votre profil bénévole.
-      </p>
-
-
-      <!-- PROFILE BUTTON -->
-
       <a
-        class="btn ghost"
         href="#"
         id="profileBtn"
-        style="margin-top:8px"
-      >
-        👤 Mon profil
-      </a>
-
-
-      <!-- ADMIN -->
-
-      <a
         class="btn ghost"
-        href="admin.html"
-        id="adminLink"
-        style="
-          display:none;
-          margin-top:8px;
-        "
+        style="width:100%;justify-content:center"
       >
-        Administration
+        Voir mon profil
       </a>
 
     </aside>
 
   </div>
 
+
+
+  <!-- ======================================= -->
+  <!-- QR -->
+  <!-- ======================================= -->
+
+  <section class="glass qr-panel">
+
+    <span class="eyebrow">
+      IDENTIFICATION
+    </span>
+
+    <h2>
+      Mon QR Code
+    </h2>
+
+    <p>
+      Scannez ce QR Code pour ouvrir
+      directement votre profil bénévole.
+    </p>
+
+
+    <div id="userQR">
+
+      <span style="color:#64748b">
+        Génération...
+      </span>
+
+    </div>
+
+
+    <small style="color:#64748b">
+      Votre QR Code est unique.
+    </small>
+
+  </section>
+
+
+
+  <!-- ======================================= -->
+  <!-- ANNOUNCEMENTS PREVIEW -->
+  <!-- ======================================= -->
+
+  <section class="glass announcement-box">
+
+    <div class="panel-title">
+
+      <h2>
+        📢 Dernières annonces
+      </h2>
+
+    </div>
+
+    <div id="announcements">
+
+      <p style="color:#64748b">
+        Chargement...
+      </p>
+
+    </div>
+
+  </section>
+
+
 </main>
 
 
+
+<!-- ========================================= -->
 <!-- SUPABASE -->
+<!-- ========================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="app.js"></script>
 
 
+
+<!-- ========================================= -->
+<!-- DASHBOARD SCRIPT -->
+<!-- ========================================= -->
+
 <script>
 
 (async () => {
 
-  // =====================================
-  // AUTH
-  // =====================================
 
-  const u = await requireAuth();
+  /* ===================================== */
+  /* AUTH */
+  /* ===================================== */
 
-  if (!u) return;
+  const user =
+    await requireAuth();
 
-
-  // =====================================
-  // PROFILE
-  // =====================================
-
-  const p = await getProfile();
-
-  if (!p) return;
+  if (!user) return;
 
 
-  // =====================================
-  // NAME
-  // =====================================
+  /* ===================================== */
+  /* PROFILE */
+  /* ===================================== */
 
-  const displayName =
-    p.full_name ||
-    p.email.split("@")[0];
+  const profile =
+    await getProfile();
+
+  if (!profile) return;
+
+
+  const name =
+    profile.full_name ||
+    profile.email.split("@")[0];
 
 
   document.getElementById("name")
-    .textContent =
-    displayName;
+    .textContent = name;
 
 
-  // =====================================
-  // AVATAR
-  // =====================================
+  document.getElementById("miniName")
+    .textContent = name;
 
-  document.getElementById("avatar")
-    .textContent =
 
-    displayName
+  const initials =
+    name
       .split(" ")
       .map(x => x[0])
       .join("")
@@ -329,32 +742,45 @@
       .toUpperCase();
 
 
-  // =====================================
-  // PROFILE URL
-  // =====================================
+  document.getElementById("avatar")
+    .textContent = initials;
+
+
+  /* ===================================== */
+  /* PROFILE URL */
+  /* ===================================== */
 
   const profileUrl =
     new URL(
       "profile.html?id=" +
-      encodeURIComponent(u.id),
+      encodeURIComponent(user.id),
       window.location.href
     ).href;
 
 
-  // =====================================
-  // QR CODE
-  // =====================================
+  document.getElementById("profileLink")
+    .href = profileUrl;
 
-  const qrElement =
+
+  document.getElementById("profileBtn")
+    .href = profileUrl;
+
+
+
+  /* ===================================== */
+  /* QR */
+  /* ===================================== */
+
+  const qr =
     document.getElementById("userQR");
 
 
-  qrElement.innerHTML = "";
+  qr.innerHTML = "";
 
 
   if (typeof QRCode !== "undefined") {
 
-    new QRCode(qrElement, {
+    new QRCode(qr, {
 
       text: profileUrl,
 
@@ -367,42 +793,17 @@
 
     });
 
-  } else {
-
-    qrElement.innerHTML =
-      "<span style='color:red'>QR indisponible</span>";
-
   }
 
 
-  // =====================================
-  // PROFILE BUTTON
-  // =====================================
 
-  document.getElementById("profileBtn")
-    .href = profileUrl;
-
-
-  // =====================================
-  // ADMIN
-  // =====================================
-
-  if (p.role === "admin") {
-
-    document.getElementById("adminLink")
-      .style.display =
-      "inline-flex";
-
-  }
-
-
-  // =====================================
-  // EVENTS
-  // =====================================
+  /* ===================================== */
+  /* EVENTS */
+  /* ===================================== */
 
   const {
-    data,
-    error
+    data: events,
+    error: eventsError
   } =
     await supabaseClient
       .from("events")
@@ -410,142 +811,290 @@
       .order(
         "event_date",
         {
-          ascending:true
+          ascending: true
         }
       );
 
 
-  const el =
+  const eventsBox =
     document.getElementById("events");
 
 
-  if (error) {
+  if (eventsError) {
 
-    console.error(error);
+    console.error(eventsError);
 
-    el.innerHTML =
+    eventsBox.innerHTML =
       `
       <p style="color:#ef4444">
         Impossible de charger les événements.
       </p>
       `;
 
-    return;
+  } else {
+
+    document.getElementById("eventCount")
+      .textContent =
+      events?.length || 0;
+
+
+    if (events?.length) {
+
+      eventsBox.innerHTML =
+        events
+          .map(event => `
+
+            <div
+              class="dash-event"
+              style="margin-bottom:15px"
+            >
+
+              <div class="date">
+
+                <b>
+                  ${new Date(
+                    event.event_date
+                  ).getDate()}
+                </b>
+
+                <small>
+                  ${new Date(
+                    event.event_date
+                  )
+                  .toLocaleDateString(
+                    "fr-FR",
+                    {
+                      month:"short"
+                    }
+                  )
+                  .toUpperCase()}
+                </small>
+
+              </div>
+
+
+              <div>
+
+                <h3>
+                  ${escapeHtml(
+                    event.title
+                  )}
+                </h3>
+
+                <p>
+
+                  📍
+                  ${escapeHtml(
+                    event.location || "—"
+                  )}
+
+                  ·
+
+                  ${new Date(
+                    event.event_date
+                  )
+                  .toLocaleTimeString(
+                    "fr-FR",
+                    {
+                      hour:"2-digit",
+                      minute:"2-digit"
+                    }
+                  )}
+
+                </p>
+
+              </div>
+
+            </div>
+
+          `)
+          .join("");
+
+    } else {
+
+      eventsBox.innerHTML =
+        `
+        <p style="color:#64748b">
+          Aucun événement à venir.
+        </p>
+        `;
+
+    }
 
   }
 
 
-  document.getElementById("eventCount")
+
+  /* ===================================== */
+  /* HOURS */
+  /* ===================================== */
+
+  const {
+    data: hours
+  } =
+    await supabaseClient
+      .from("volunteer_hours")
+      .select("hours")
+      .eq(
+        "user_id",
+        user.id
+      );
+
+
+  const totalHours =
+    (hours || [])
+      .reduce(
+        (sum, item) =>
+          sum +
+          Number(item.hours || 0),
+        0
+      );
+
+
+  document.getElementById("hours")
     .textContent =
-    data?.length || 0;
+    totalHours + "h";
 
 
-  if (data?.length) {
 
-    el.innerHTML =
+  /* ===================================== */
+  /* CERTIFICATES */
+  /* ===================================== */
 
-      data.map(e => `
-
-        <div class="dash-event">
-
-          <div class="date">
-
-            <b>
-              ${new Date(
-                e.event_date
-              ).getDate()}
-            </b>
-
-            <small>
-              ${new Date(
-                e.event_date
-              )
-              .toLocaleDateString(
-                "fr-FR",
-                {
-                  month:"short"
-                }
-              )
-              .toUpperCase()}
-            </small>
-
-          </div>
+  const {
+    count: certificateCount
+  } =
+    await supabaseClient
+      .from("certificates")
+      .select(
+        "id",
+        {
+          count:"exact",
+          head:true
+        }
+      )
+      .eq(
+        "user_id",
+        user.id
+      );
 
 
-          <div>
+  document.getElementById(
+    "certificateCount"
+  ).textContent =
+    certificateCount || 0;
 
-            <h3>
-              ${escapeHtml(e.title)}
-            </h3>
 
-            <p>
 
-              📍
+  /* ===================================== */
+  /* ANNOUNCEMENTS */
+  /* ===================================== */
+
+  const {
+    data: announcements
+  } =
+    await supabaseClient
+      .from("announcements")
+      .select("*")
+      .eq(
+        "is_published",
+        true
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      )
+      .limit(3);
+
+
+  const announcementsBox =
+    document.getElementById(
+      "announcements"
+    );
+
+
+  if (announcements?.length) {
+
+    announcementsBox.innerHTML =
+      announcements
+        .map(a => `
+
+          <div
+            style="
+              padding:15px;
+              margin-bottom:10px;
+              border-radius:12px;
+              background:rgba(255,255,255,.05);
+            "
+          >
+
+            <strong>
+              ${escapeHtml(a.title)}
+            </strong>
+
+            <p style="
+              margin:6px 0;
+              color:#64748b;
+            ">
+
               ${escapeHtml(
-                e.location || "—"
-              )}
-
-              ·
-
-              ${new Date(
-                e.event_date
-              )
-              .toLocaleTimeString(
-                "fr-FR",
-                {
-                  hour:"2-digit",
-                  minute:"2-digit"
-                }
+                a.content
               )}
 
             </p>
 
           </div>
 
-
-          <span class="status">
-            À venir
-          </span>
-
-        </div>
-
-      `).join("");
+        `)
+        .join("");
 
   } else {
 
-    el.innerHTML =
+    announcementsBox.innerHTML =
       `
       <p style="color:#64748b">
-        Aucun événement à venir.
+        Aucune annonce pour le moment.
       </p>
       `;
 
   }
 
+
 })();
 
 
-// =====================================
-// ESCAPE HTML
-// =====================================
 
-function escapeHtml(s) {
+/* ========================================= */
+/* SECURITY */
+/* ========================================= */
 
-  return String(s ?? "")
+function escapeHtml(value) {
+
+  return String(value ?? "")
     .replace(
       /[&<>"']/g,
-      m => ({
-        "&":"&amp;",
-        "<":"&lt;",
-        ">":"&gt;",
-        '"':"&quot;",
-        "'":"&#039;"
-      }[m])
+      function(char) {
+
+        return {
+
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+
+        }[char];
+
+      }
     );
 
 }
 
 </script>
 
+
 </body>
+
 </html>
