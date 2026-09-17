@@ -148,7 +148,62 @@
     }
 
     .members {
-      overflow-x: auto;
+    <!-- MEMBRES -->
+
+<div class="section">
+
+  <div style="
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+  ">
+
+    <div>
+      <h2>👥 Gestion des membres</h2>
+      <p style="color:#777;margin-top:5px;">
+        Rechercher et gérer les bénévoles.
+      </p>
+    </div>
+
+    <input
+      type="text"
+      id="memberSearch"
+      placeholder="🔎 Rechercher un membre..."
+      style="max-width:300px;"
+    >
+
+  </div>
+
+  <div class="members" style="margin-top:20px;">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Rôle</th>
+          <th>Inscription</th>
+          <th>Profil</th>
+        </tr>
+      </thead>
+
+      <tbody id="membersList">
+
+        <tr>
+          <td colspan="4">
+            ⏳ Chargement...
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
     }
 
     table {
