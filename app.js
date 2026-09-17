@@ -629,3 +629,89 @@ if ("serviceWorker" in navigator) {
   );
 
 }
+
+/* =========================
+   PUSH NOTIFICATIONS
+========================= */
+
+async function enablePushNotifications() {
+
+  const button =
+    document.getElementById("enablePush");
+
+  const status =
+    document.getElementById("pushStatus");
+
+  if (!button || !status) return;
+
+  if (!("Notification" in window)) {
+
+    status.textContent =
+      "❌ Votre navigateur ne supporte pas les notifications.";
+
+    return;
+  }
+
+  if (!("serviceWorker" in navigator)) {
+
+    status.textContent =
+      "❌ Les notifications ne sont pas supportées.";
+
+    return;
+  }
+
+  try {
+
+    const permission =
+      await Notification.requestPermission();
+
+    if (permission !== "granted") {
+
+      status.textContent =
+        "⚠️ Autorisez les notifications dans votre navigateur.";
+
+      return;
+    }
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+    console.log(
+      "✅ Service Worker prêt",
+      registration
+    );
+
+    status.textContent =
+      "✅ Notifications activées sur cet appareil.";
+
+    button.textContent =
+      "🔔 Notifications activées";
+
+    button.disabled = true;
+
+  } catch (error) {
+
+    console.error(error);
+
+    status.textContent =
+      "❌ Erreur : " +
+      error.message;
+
+  }
+
+}
+
+
+const enablePush =
+  document.getElementById(
+    "enablePush"
+  );
+
+if (enablePush) {
+
+  enablePush.addEventListener(
+    "click",
+    enablePushNotifications
+  );
+
+}
