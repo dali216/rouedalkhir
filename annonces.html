@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Annonces — Roued Al Khair</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .annonces-page {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 15px;
+    }
+
+    .page-header {
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .page-header h1 {
+      margin: 15px 0 5px;
+    }
+
+    .page-header p {
+      opacity: .7;
+    }
+
+    .annonce {
+      padding: 22px;
+      margin-bottom: 15px;
+      border-radius: 20px;
+    }
+
+    .annonce-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .annonce h2 {
+      margin: 0;
+    }
+
+    .category {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      background: #eee;
+    }
+
+    .annonce-content {
+      margin-top: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .date {
+      margin-top: 15px;
+      font-size: 12px;
+      opacity: .55;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      opacity: .6;
+    }
+
+    @media(max-width:600px) {
+      .annonce-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<main class="annonces-page">
+
+  <div class="glass page-header">
+
+    <a href="dashboard.html">
+      ← Retour
+    </a>
+
+    <h1>📢 Annonces</h1>
+
+    <p>
+      Retrouvez toutes les informations importantes
+      de Roued Al Khair.
+    </p>
+
+  </div>
+
+
+  <div id="annonces">
+
+    <div class="glass empty">
+      ⏳ Chargement des annonces...
+    </div>
+
+  </div>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://iimzsfbkgugbqkipsdih.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_JFAxVtAkqUWJ1XSmhk7TZw_xPyT13dY";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+async function loadAnnonces() {
+
+  const container =
+    document.getElementById(
+      "annonces"
+    );
+
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("announcements")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", {
+      ascending: false
+    });
+
+
+  console.log(
+    "ANNONCES:",
+    data
+  );
+
+  console.log(
+    "ERROR:",
+    error
+  );
+
+
+  if (error) {
+
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ ${error.message}
+      </div>
+    `;
+
+    return;
+  }
+
+
+  if (!data || data.length === 0) {
+
+    container.innerHTML = `
+      <div class="glass empty">
+        📢 Aucune annonce pour le moment.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  data.forEach(
+    function(annonce) {
+
+      const article =
+        document.createElement(
+          "article"
+        );
+
+      article.className =
+        "glass annonce";
+
+
+      const date =
+        new Date(
+          annonce.created_at
+        ).toLocaleDateString(
+          "fr-FR",
+          {
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+          }
+        );
+
+
+      article.innerHTML = `
+
+        <div class="annonce-top">
+
+          <h2></h2>
+
+          <span class="category">
+            ${annonce.category || "general"}
+          </span>
+
+        </div>
+
+        <div class="annonce-content"></div>
+
+        <div class="date">
+          Publié le ${date}
+        </div>
+
+      `;
+
+
+      article.querySelector(
+        "h2"
+      ).textContent =
+        annonce.title;
+
+
+      article.querySelector(
+        ".annonce-content"
+      ).textContent =
+        annonce.content;
+
+
+      container.appendChild(
+        article
+      );
+
+    }
+  );
+
+}
+
+
+loadAnnonces();
+
+</script>
+
+</body>
+
+</html>
