@@ -1,118 +1,66 @@
-```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 
 <head>
-
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
-
-  <title>Chat — Roued Al Khair</title>
+  <title>Mon CV — Roued Al Khair</title>
 
   <link rel="stylesheet" href="style.css">
 
   <style>
 
-    .chat-page {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 15px;
-    }
-
-    .chat-header {
+    .cv-page {
+      max-width: 800px;
+      margin: 50px auto;
       padding: 20px;
-      margin-bottom: 15px;
     }
 
-    .chat-header h1 {
-      margin: 15px 0 5px;
+    .cv-card {
+      padding: 30px;
     }
 
-    .chat-header p {
-      opacity: .7;
-    }
-
-    .chat-box {
-      height: 60vh;
-      min-height: 400px;
-      overflow-y: auto;
-      padding: 20px;
-      border-radius: 20px;
-    }
-
-    .message {
-      display: flex;
-      margin-bottom: 12px;
-    }
-
-    .message.mine {
-      justify-content: flex-end;
-    }
-
-    .bubble {
-      max-width: 75%;
-      padding: 12px 16px;
-      border-radius: 17px;
-      background: white;
-      box-shadow: 0 3px 12px rgba(0,0,0,.06);
-    }
-
-    .mine .bubble {
-      background: #111;
-      color: white;
-    }
-
-    .text {
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .time {
-      font-size: 10px;
-      opacity: .55;
-      margin-top: 6px;
-      text-align: right;
-    }
-
-    .empty {
+    .upload-box {
+      border: 2px dashed #cbd5e1;
+      border-radius: 18px;
+      padding: 45px 20px;
       text-align: center;
-      padding: 60px 20px;
-      opacity: .6;
+      margin-top: 25px;
+      cursor: pointer;
     }
 
-    .chat-form {
+    .upload-box:hover {
+      border-color: #64748b;
+    }
+
+    .upload-icon {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    .file-info {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.08);
+      display: none;
+    }
+
+    .cv-actions {
+      margin-top: 20px;
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    #fileInput {
+      display: none;
+    }
+
+    #msg {
+      display: block;
       margin-top: 15px;
-      padding: 15px;
-      border-radius: 20px;
-    }
-
-    #messageInput {
-      flex: 1;
-      min-height: 50px;
-      resize: vertical;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid #ddd;
-      font-family: inherit;
-      font-size: 15px;
-    }
-
-    #sendBtn {
-      border: none;
-      border-radius: 12px;
-      padding: 0 22px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    #status {
-      text-align: center;
-      margin-top: 8px;
-      font-size: 13px;
     }
 
   </style>
@@ -123,52 +71,744 @@
 <body>
 
 
-<main class="chat-page">
+<header class="nav-wrap">
 
+  <nav class="nav glass">
 
-  <div class="glass chat-header">
+    <a
+      class="brand"
+      href="dashboard.html"
+    >
 
-    <a href="dashboard.html">
-      ← Retour
+      <span class="logo">
+        RK
+      </span>
+
+      <span>
+        Roued <b>Al Khair</b>
+      </span>
+
     </a>
 
-    <h1>💬 Chat des membres</h1>
+    <button
+      class="btn small"
+      id="logout"
+    >
+      Déconnexion
+    </button>
 
-    <p>
-      Espace de discussion de Roued Al Khair
-    </p>
+  </nav>
 
-  </div>
+</header>
+
+
+
+<main class="cv-page">
+
+
+  <a
+    href="dashboard.html"
+  >
+    ← Retour à mon espace
+  </a>
 
 
   <div
-    id="chatBox"
-    class="glass chat-box"
+    class="glass cv-card"
+    style="margin-top:20px"
   >
 
-    <div
-      id="empty"
-      class="empty"
+    <span class="eyebrow">
+      ESPACE BÉNÉVOLE
+    </span>
+
+    <h1>
+      📄 Mon CV
+    </h1>
+
+    <p>
+      Ajoutez votre CV afin que l'administration
+      puisse consulter votre parcours.
+    </p>
+
+
+
+    <!-- UPLOAD -->
+
+    <label
+      for="fileInput"
+      class="upload-box"
     >
-      ⏳ Chargement des messages...
+
+      <div class="upload-icon">
+        📄
+      </div>
+
+      <strong>
+        Cliquez pour sélectionner votre CV
+      </strong>
+
+      <p>
+        Format PDF uniquement — maximum 5 MB
+      </p>
+
+    </label>
+
+
+    <input
+      type="file"
+      id="fileInput"
+      accept="application/pdf,.pdf"
+    >
+
+
+
+    <!-- FILE INFO -->
+
+    <div
+      id="fileInfo"
+      class="file-info"
+    >
+
+      <strong id="fileName">
+        —
+      </strong>
+
+      <br>
+
+      <small id="fileSize">
+        —
+      </small>
+
     </div>
+
+
+
+    <!-- ACTIONS -->
+
+    <div class="cv-actions">
+
+      <button
+        class="btn"
+        id="uploadBtn"
+        disabled
+      >
+        📤 Envoyer mon CV
+      </button>
+
+      <button
+        class="btn ghost"
+        id="deleteBtn"
+        style="display:none"
+      >
+        🗑️ Supprimer
+      </button>
+
+    </div>
+
+
+    <span id="msg"></span>
+
+
+    <!-- CURRENT CV -->
+
+    <div
+      id="currentCV"
+      style="
+        margin-top:30px;
+        display:none;
+      "
+    >
+
+      <h3>
+        Mon CV actuel
+      </h3>
+
+      <p id="currentName">
+        —
+      </p>
+
+      <div class="cv-actions">
+
+        <button
+          class="btn ghost"
+          id="viewBtn"
+        >
+          👁️ Voir mon CV
+        </button>
+
+      </div>
+
+    </div>
+
 
   </div>
 
+</main>
 
-  <form
-    id="chatForm"
-    class="glass chat-form"
-  >
 
-    <textarea
-      id="messageInput"
-      placeholder="Écrire un message..."
-      maxlength="1000"
-      required
-    ></textarea>
 
-    <button
-      id="sendBtn"
-      t
-```
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="app.js"></script>
+
+
+<script>
+
+(async () => {
+
+
+  /* ===================================== */
+  /* AUTH */
+  /* ===================================== */
+
+  const user =
+    await requireAuth();
+
+  if (!user) return;
+
+
+  let selectedFile = null;
+
+  let currentDocument = null;
+
+
+
+  /* ===================================== */
+  /* ELEMENTS */
+  /* ===================================== */
+
+  const fileInput =
+    document.getElementById(
+      "fileInput"
+    );
+
+  const uploadBtn =
+    document.getElementById(
+      "uploadBtn"
+    );
+
+  const deleteBtn =
+    document.getElementById(
+      "deleteBtn"
+    );
+
+  const fileInfo =
+    document.getElementById(
+      "fileInfo"
+    );
+
+  const fileName =
+    document.getElementById(
+      "fileName"
+    );
+
+  const fileSize =
+    document.getElementById(
+      "fileSize"
+    );
+
+  const msg =
+    document.getElementById(
+      "msg"
+    );
+
+
+
+  /* ===================================== */
+  /* LOAD CURRENT CV */
+  /* ===================================== */
+
+  async function loadCV() {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("volunteer_documents")
+        .select("*")
+        .eq(
+          "user_id",
+          user.id
+        )
+        .eq(
+          "document_type",
+          "cv"
+        )
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        )
+        .limit(1)
+        .maybeSingle();
+
+
+    if (error) {
+
+      console.error(error);
+
+      return;
+
+    }
+
+
+    if (!data) return;
+
+
+    currentDocument = data;
+
+
+    document.getElementById(
+      "currentCV"
+    ).style.display = "block";
+
+
+    document.getElementById(
+      "currentName"
+    ).textContent =
+      data.file_name || "CV";
+
+
+    deleteBtn.style.display =
+      "inline-flex";
+
+
+    document.getElementById(
+      "viewBtn"
+    ).onclick =
+      async () => {
+
+        const {
+          data: signed,
+          error
+        } =
+          await supabaseClient
+            .storage
+            .from("cvs")
+            .createSignedUrl(
+              data.file_path,
+              300
+            );
+
+
+        if (error) {
+
+          alert(
+            "Impossible d'ouvrir le CV."
+          );
+
+          return;
+
+        }
+
+
+        window.open(
+          signed.signedUrl,
+          "_blank"
+        );
+
+      };
+
+  }
+
+
+  await loadCV();
+
+
+
+  /* ===================================== */
+  /* SELECT FILE */
+  /* ===================================== */
+
+  fileInput.addEventListener(
+    "change",
+    function() {
+
+      const file =
+        this.files[0];
+
+      if (!file) return;
+
+
+      if (
+        file.type !==
+        "application/pdf"
+      ) {
+
+        msg.textContent =
+          "❌ Sélectionnez un fichier PDF.";
+
+        msg.style.color =
+          "#ef4444";
+
+        this.value = "";
+
+        return;
+
+      }
+
+
+      if (
+        file.size >
+        5 * 1024 * 1024
+      ) {
+
+        msg.textContent =
+          "❌ Le fichier doit faire moins de 5 MB.";
+
+        msg.style.color =
+          "#ef4444";
+
+        this.value = "";
+
+        return;
+
+      }
+
+
+      selectedFile = file;
+
+
+      fileName.textContent =
+        file.name;
+
+
+      fileSize.textContent =
+        (
+          file.size /
+          1024 /
+          1024
+        ).toFixed(2)
+        + " MB";
+
+
+      fileInfo.style.display =
+        "block";
+
+
+      uploadBtn.disabled =
+        false;
+
+
+      msg.textContent = "";
+
+    }
+  );
+
+
+
+  /* ===================================== */
+  /* UPLOAD */
+  /* ===================================== */
+
+  uploadBtn.addEventListener(
+    "click",
+    async function() {
+
+      if (!selectedFile) return;
+
+
+      uploadBtn.disabled =
+        true;
+
+      uploadBtn.textContent =
+        "⏳ Envoi...";
+
+
+      msg.textContent = "";
+
+
+      try {
+
+
+        /* =============================== */
+        /* DELETE OLD FILE */
+        /* =============================== */
+
+        if (currentDocument) {
+
+          await supabaseClient
+            .storage
+            .from("cvs")
+            .remove([
+              currentDocument.file_path
+            ]);
+
+
+          await supabaseClient
+            .from("volunteer_documents")
+            .delete()
+            .eq(
+              "id",
+              currentDocument.id
+            );
+
+        }
+
+
+
+        /* =============================== */
+        /* UNIQUE PATH */
+        /* =============================== */
+
+        const filePath =
+          user.id +
+          "/cv_" +
+          Date.now() +
+          ".pdf";
+
+
+
+        /* =============================== */
+        /* STORAGE UPLOAD */
+        /* =============================== */
+
+        const {
+          error: uploadError
+        } =
+          await supabaseClient
+            .storage
+            .from("cvs")
+            .upload(
+              filePath,
+              selectedFile,
+              {
+                contentType:
+                  "application/pdf",
+                upsert:false
+              }
+            );
+
+
+        if (uploadError) {
+
+          throw uploadError;
+
+        }
+
+
+
+        /* =============================== */
+        /* DATABASE */
+        /* =============================== */
+
+        const {
+          data: document,
+          error: dbError
+        } =
+          await supabaseClient
+            .from(
+              "volunteer_documents"
+            )
+            .insert({
+
+              user_id:
+                user.id,
+
+              document_type:
+                "cv",
+
+              file_name:
+                selectedFile.name,
+
+              file_path:
+                filePath
+
+            })
+            .select()
+            .single();
+
+
+        if (dbError) {
+
+          await supabaseClient
+            .storage
+            .from("cvs")
+            .remove([
+              filePath
+            ]);
+
+          throw dbError;
+
+        }
+
+
+        currentDocument =
+          document;
+
+
+        msg.textContent =
+          "✅ Votre CV a été enregistré.";
+
+        msg.style.color =
+          "#16a34a";
+
+
+        fileInput.value = "";
+
+        selectedFile = null;
+
+        uploadBtn.disabled =
+          true;
+
+
+        uploadBtn.textContent =
+          "📤 Envoyer mon CV";
+
+
+        document.getElementById(
+          "currentCV"
+        ).style.display =
+          "block";
+
+
+        document.getElementById(
+          "currentName"
+        ).textContent =
+          document.file_name;
+
+
+        deleteBtn.style.display =
+          "inline-flex";
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        msg.textContent =
+          "❌ " +
+          error.message;
+
+        msg.style.color =
+          "#ef4444";
+
+
+        uploadBtn.disabled =
+          false;
+
+        uploadBtn.textContent =
+          "📤 Envoyer mon CV";
+
+      }
+
+    }
+  );
+
+
+
+  /* ===================================== */
+  /* DELETE CV */
+  /* ===================================== */
+
+  deleteBtn.addEventListener(
+    "click",
+    async function() {
+
+      if (!currentDocument)
+        return;
+
+
+      if (
+        !confirm(
+          "Voulez-vous supprimer votre CV ?"
+        )
+      ) {
+        return;
+      }
+
+
+      deleteBtn.disabled =
+        true;
+
+
+      const {
+        error: storageError
+      } =
+        await supabaseClient
+          .storage
+          .from("cvs")
+          .remove([
+            currentDocument.file_path
+          ]);
+
+
+      if (storageError) {
+
+        console.error(
+          storageError
+        );
+
+      }
+
+
+      const {
+        error: dbError
+      } =
+        await supabaseClient
+          .from(
+            "volunteer_documents"
+          )
+          .delete()
+          .eq(
+            "id",
+            currentDocument.id
+          );
+
+
+      if (dbError) {
+
+        msg.textContent =
+          "❌ " +
+          dbError.message;
+
+        msg.style.color =
+          "#ef4444";
+
+        deleteBtn.disabled =
+          false;
+
+        return;
+
+      }
+
+
+      currentDocument =
+        null;
+
+
+      document.getElementById(
+        "currentCV"
+      ).style.display =
+        "none";
+
+
+      deleteBtn.style.display =
+        "none";
+
+
+      msg.textContent =
+        "✅ CV supprimé.";
+
+      msg.style.color =
+        "#16a34a";
+
+
+      deleteBtn.disabled =
+        false;
+
+    }
+  );
+
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
