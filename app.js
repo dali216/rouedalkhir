@@ -8,7 +8,7 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   "sb_publishable_JFAxVtAkqUWJ1XSmhk7TZw_xPyT13dY";
 
-const supabaseClient =
+window.supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY,
@@ -99,7 +99,7 @@ async function getProfile() {
       user
     }
   } =
-    await supabaseClient.auth.getUser();
+    await window.supabaseClient.auth.getUser();
 
   if (!user) {
     return null;
@@ -109,7 +109,7 @@ async function getProfile() {
     data: profile,
     error
   } =
-    await supabaseClient
+    await window.supabaseClient
       .from("profiles")
       .select("*")
       .eq("id", user.id)
@@ -159,7 +159,7 @@ async function requireAuth(
       user
     }
   } =
-    await supabaseClient.auth.getUser();
+    await window.supabaseClient.auth.getUser();
 
   if (!user) {
 
@@ -343,7 +343,7 @@ if (registerForm) {
           data,
           error
         } =
-          await supabaseClient.auth
+          await window.supabaseClient.auth
             .signUp({
 
               email:
@@ -501,7 +501,7 @@ if (resendEmail) {
         const {
           error
         } =
-          await supabaseClient.auth
+          await window.supabaseClient.auth
             .resend({
 
               type:
@@ -625,7 +625,7 @@ if (loginForm) {
           data,
           error
         } =
-          await supabaseClient.auth
+          await window.supabaseClient.auth
             .signInWithPassword({
 
               email:
@@ -718,7 +718,7 @@ if (logout) {
 
       try {
 
-        await supabaseClient.auth
+        await window.supabaseClient.auth
           .signOut();
 
       } catch (error) {
@@ -861,16 +861,12 @@ async function enablePushNotifications() {
 
   try {
 
-    // ------------------------------
-    // AUTH USER
-    // ------------------------------
-
     const {
       data: {
         user
       }
     } =
-      await supabaseClient.auth.getUser();
+      await window.supabaseClient.auth.getUser();
 
 
     if (!user) {
@@ -881,10 +877,6 @@ async function enablePushNotifications() {
 
     }
 
-
-    // ------------------------------
-    // SERVICE WORKER
-    // ------------------------------
 
     const registration =
       await registerServiceWorker();
@@ -898,10 +890,6 @@ async function enablePushNotifications() {
 
     }
 
-
-    // ------------------------------
-    // PERMISSION
-    // ------------------------------
 
     const permission =
       await Notification.requestPermission();
@@ -917,10 +905,6 @@ async function enablePushNotifications() {
 
     }
 
-
-    // ------------------------------
-    // PUSH SUBSCRIPTION
-    // ------------------------------
 
     let subscription =
       await registration.pushManager.getSubscription();
@@ -971,14 +955,10 @@ async function enablePushNotifications() {
     }
 
 
-    // ------------------------------
-    // SAVE IN SUPABASE
-    // ------------------------------
-
     const {
       error
     } =
-      await supabaseClient
+      await window.supabaseClient
         .from("push_subscriptions")
         .upsert(
           {
@@ -1014,10 +994,6 @@ async function enablePushNotifications() {
 
     }
 
-
-    // ------------------------------
-    // SUCCESS
-    // ------------------------------
 
     status.innerHTML =
       "✅ Notifications activées sur cet appareil.";
@@ -1081,7 +1057,7 @@ if (enablePush) {
 // AUTH EVENTS
 // ========================================
 
-supabaseClient.auth
+window.supabaseClient.auth
   .onAuthStateChange(
     (event, session) => {
 
