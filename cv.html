@@ -1,88 +1,174 @@
+```html
 <!DOCTYPE html>
-async function loadMessages() {
+<html lang="fr">
 
-  console.log("1 - بداية تحميل chat");
+<head>
 
-  const {
-    data,
-    error
-  } = await supabaseClient
-    .from("public_chat_messages")
-    .select("*")
-    .order("created_at", {
-      ascending: true
-    });
+  <meta charset="UTF-8">
 
-  console.log("2 - DATA:", data);
-  console.log("3 - ERROR:", error);
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
 
-  if (error) {
-    document.getElementById("empty").innerHTML =
-      "❌ " + error.message;
+  <title>Chat — Roued Al Khair</title>
 
-    return;
-  }
+  <link rel="stylesheet" href="style.css">
 
-  const chatBox =
-    document.getElementById("chatBox");
+  <style>
 
-  chatBox.innerHTML = "";
+    .chat-page {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 15px;
+    }
 
-  if (!data || data.length === 0) {
+    .chat-header {
+      padding: 20px;
+      margin-bottom: 15px;
+    }
 
-    chatBox.innerHTML = `
-      <div class="empty">
-        💬 Aucun message pour le moment.<br>
-        Soyez le premier à écrire !
-      </div>
-    `;
+    .chat-header h1 {
+      margin: 15px 0 5px;
+    }
 
-    messagesLoaded = true;
-    return;
-  }
+    .chat-header p {
+      opacity: .7;
+    }
 
-  data.forEach(msg => {
+    .chat-box {
+      height: 60vh;
+      min-height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      border-radius: 20px;
+    }
 
-    const wrapper =
-      document.createElement("div");
+    .message {
+      display: flex;
+      margin-bottom: 12px;
+    }
 
-    const isMine =
-      msg.user_id === currentUser.id;
+    .message.mine {
+      justify-content: flex-end;
+    }
 
-    wrapper.className =
-      "message " +
-      (isMine ? "mine" : "");
+    .bubble {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: 17px;
+      background: white;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
 
-    const bubble =
-      document.createElement("div");
+    .mine .bubble {
+      background: #111;
+      color: white;
+    }
 
-    bubble.className = "bubble";
+    .text {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
 
-    bubble.innerHTML = `
-      <div class="text"></div>
-      <div class="time"></div>
-    `;
+    .time {
+      font-size: 10px;
+      opacity: .55;
+      margin-top: 6px;
+      text-align: right;
+    }
 
-    bubble.querySelector(".text")
-      .textContent = msg.message;
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      opacity: .6;
+    }
 
-    bubble.querySelector(".time")
-      .textContent =
-      new Date(msg.created_at)
-        .toLocaleString("fr-FR", {
-          day: "2-digit",
-          month: "2-digit",
-          hour: "2-digit",
-          minute: "2-digit"
-        });
+    .chat-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 20px;
+    }
 
-    wrapper.appendChild(bubble);
+    #messageInput {
+      flex: 1;
+      min-height: 50px;
+      resize: vertical;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-family: inherit;
+      font-size: 15px;
+    }
 
-    chatBox.appendChild(wrapper);
-  });
+    #sendBtn {
+      border: none;
+      border-radius: 12px;
+      padding: 0 22px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-  messagesLoaded = true;
+    #status {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 13px;
+    }
 
-  chatBox.scrollTop =
-    chatBox.scrollHeight;
-}
+  </style>
+
+</head>
+
+
+<body>
+
+
+<main class="chat-page">
+
+
+  <div class="glass chat-header">
+
+    <a href="dashboard.html">
+      ← Retour
+    </a>
+
+    <h1>💬 Chat des membres</h1>
+
+    <p>
+      Espace de discussion de Roued Al Khair
+    </p>
+
+  </div>
+
+
+  <div
+    id="chatBox"
+    class="glass chat-box"
+  >
+
+    <div
+      id="empty"
+      class="empty"
+    >
+      ⏳ Chargement des messages...
+    </div>
+
+  </div>
+
+
+  <form
+    id="chatForm"
+    class="glass chat-form"
+  >
+
+    <textarea
+      id="messageInput"
+      placeholder="Écrire un message..."
+      maxlength="1000"
+      required
+    ></textarea>
+
+    <button
+      id="sendBtn"
+      t
+```
