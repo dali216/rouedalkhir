@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Créer un compte — Roued Al Khair</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,59 +14,119 @@
 
 <div class="auth glass">
 
-  <a class="back" href="login.html">← Retour</a>
+  <a class="back" href="login.html">
+    ← Retour
+  </a>
 
-  <div class="logo big">RK</div>
+  <div class="logo big">
+    RK
+  </div>
 
-  <span class="eyebrow">Espace bénévole</span>
+  <span class="eyebrow">
+    Espace bénévole
+  </span>
 
-  <h1>Créer votre<br><span>compte.</span></h1>
+  <h1>
+    Créer votre<br>
+    <span>compte.</span>
+  </h1>
 
-  <p>Rejoignez l'équipe de bénévoles de Roued Al Khair.</p>
+  <p>
+    Rejoignez l'équipe de bénévoles de Roued Al Khair.
+  </p>
+
 
   <form id="register">
 
-    <label for="name">Nom complet</label>
+    <label for="name">
+      Nom complet
+    </label>
+
     <input
       id="name"
       type="text"
       required
+      autocomplete="name"
       placeholder="Votre nom complet"
     >
 
-    <label for="email">Email</label>
+
+    <label for="email">
+      Email
+    </label>
+
     <input
       id="email"
       type="email"
       required
+      autocomplete="email"
       placeholder="vous@email.com"
     >
 
-    <label for="password">Mot de passe</label>
+
+    <label for="password">
+      Mot de passe
+    </label>
+
     <input
       id="password"
       type="password"
       minlength="6"
       required
+      autocomplete="new-password"
       placeholder="Minimum 6 caractères"
     >
 
-    <button class="btn" type="submit">
+
+    <button
+      class="btn"
+      type="submit"
+    >
       Créer mon compte →
     </button>
 
   </form>
 
+
+  <!-- RESEND EMAIL -->
+
+  <button
+    type="button"
+    id="resendEmail"
+    class="btn ghost"
+    style="margin-top:12px;display:none;"
+  >
+    إعادة إرسال رابط التأكيد
+  </button>
+
+
+  <!-- MESSAGE -->
+
   <small id="msg"></small>
 
-  <div style="margin-top:20px;text-align:center;">
-    <span>Vous avez déjà un compte ? </span>
-    <a href="login.html">Se connecter</a>
+
+  <div
+    style="
+      margin-top:20px;
+      text-align:center;
+    "
+  >
+
+    <span>
+      Vous avez déjà un compte ?
+    </span>
+
+    <a href="login.html">
+      Se connecter
+    </a>
+
   </div>
 
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="app.js"></script>
 
 </body>
