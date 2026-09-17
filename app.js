@@ -11,7 +11,15 @@ const SUPABASE_KEY =
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_KEY
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storage: window.localStorage
+      }
+    }
   );
 
 
@@ -24,6 +32,128 @@ function getRedirectUrl() {
     "login.html",
     window.location.href
   ).href;
+}
+
+
+// ========================================
+// QR CODE USER
+// ========================================
+
+function generateUserQR(userId, elementId) {
+
+  const element =
+    document.getElementById(elementId);
+
+  if (!element || !userId) return;
+
+  const profileUrl =
+    new URL(
+      "profile.html?id=" + encodeURIComponent(userId),
+      window.location.href
+    ).href;
+
+  element.innerHTML = "";
+
+  new QRCode(element, {
+    text: profileUrl,
+    width: 180,
+    height: 180,
+    correctLevel: QRCode.CorrectLevel.H
+  });
+}
+
+
+// ========================================
+// GET PROFILE
+// ========================================
+
+async function getProfile() {
+
+  const {
+    data: {
+      user
+    }
+  } =
+    await supabaseClient.auth.getUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const {
+    data: profile
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+
+  if (profile) {
+
+    return {
+      ...profile,
+      email: user.email
+    };
+
+  }
+
+  return {
+    id: user.id,
+    email: user.email,
+    role: "volunteer"
+  };
+}
+
+
+// ========================================
+// AUTH PROTECTION
+// ========================================
+
+async function requireAuth(
+  target = "login.html"
+) {
+
+  const {
+    data: {
+      user
+    }
+  } =
+    await supabaseClient.auth.getUser();
+
+  if (!user) {
+
+    window.location.href =
+      target;
+
+    return null;
+  }
+
+  return user;
+}
+
+
+// ========================================
+// ADMIN
+// ========================================
+
+async function requireAdmin() {
+
+  const profile =
+    await getProfile();
+
+  if (
+    !profile ||
+    profile.role !== "admin"
+  ) {
+
+    window.location.href =
+      "dashboard.html";
+
+    return null;
+  }
+
+  return profile;
 }
 
 
@@ -63,7 +193,6 @@ if (registerForm) {
           .getElementById("password")
           .value;
 
-
       if (!name) {
         msg.textContent =
           "❌ Entrez votre nom.";
@@ -82,16 +211,13 @@ if (registerForm) {
         return;
       }
 
-
       msg.innerHTML =
         "⏳ Création du compte...";
-
 
       try {
 
         const redirectUrl =
           getRedirectUrl();
-
 
         const {
           data,
@@ -116,13 +242,6 @@ if (registerForm) {
 
           });
 
-
-        console.log(
-          "SIGNUP:",
-          data
-        );
-
-
         if (error) {
 
           console.error(
@@ -136,10 +255,8 @@ if (registerForm) {
           return;
         }
 
-
         if (data.user) {
 
-          // Verification email
           if (!data.session) {
 
             msg.innerHTML =
@@ -174,7 +291,6 @@ if (registerForm) {
             }, 1000);
 
           }
-
         }
 
       } catch (error) {
@@ -184,12 +300,10 @@ if (registerForm) {
         msg.innerHTML =
           "❌ Erreur : " +
           error.message;
-
       }
 
     }
   );
-
 }
 
 
@@ -218,7 +332,6 @@ if (resendEmail) {
           .trim()
           .toLowerCase();
 
-
       if (!email) {
 
         msg.innerHTML =
@@ -227,19 +340,16 @@ if (resendEmail) {
         return;
       }
 
-
       resendEmail.disabled =
         true;
 
       resendEmail.textContent =
         "⏳ Envoi...";
 
-
       try {
 
         const redirectUrl =
           getRedirectUrl();
-
 
         const {
           error
@@ -259,13 +369,7 @@ if (resendEmail) {
 
           });
 
-
         if (error) {
-
-          console.error(
-            "RESEND ERROR:",
-            error
-          );
 
           msg.innerHTML =
             "❌ " + error.message;
@@ -279,14 +383,12 @@ if (resendEmail) {
           return;
         }
 
-
         msg.innerHTML =
           "✅ رابط تأكيد جديد تم إرساله.<br>" +
           "تفقد Email و Spam.";
 
         resendEmail.textContent =
           "تم الإرسال ✓";
-
 
         setTimeout(() => {
 
@@ -298,10 +400,7 @@ if (resendEmail) {
 
         }, 60000);
 
-
       } catch (error) {
-
-        console.error(error);
 
         msg.innerHTML =
           "❌ " + error.message;
@@ -315,7 +414,6 @@ if (resendEmail) {
 
     }
   );
-
 }
 
 
@@ -349,10 +447,8 @@ if (loginForm) {
           .getElementById("password")
           .value;
 
-
       msg.innerHTML =
         "⏳ Connexion...";
-
 
       const {
         data,
@@ -367,10 +463,7 @@ if (loginForm) {
 
           });
 
-
       if (error) {
-
-        console.error(error);
 
         if (
           error.message
@@ -388,18 +481,15 @@ if (loginForm) {
           msg.innerHTML =
             "❌ " +
             error.message;
-
         }
 
         return;
       }
 
-
       if (data.user) {
 
         const profile =
           await getProfile();
-
 
         if (
           profile &&
@@ -413,121 +503,11 @@ if (loginForm) {
 
           window.location.href =
             "dashboard.html";
-
         }
-
       }
 
     }
   );
-
-}
-
-
-// ========================================
-// GET PROFILE
-// ========================================
-
-async function getProfile() {
-
-  const {
-    data: {
-      user
-    }
-  } =
-    await supabaseClient.auth
-      .getUser();
-
-
-  if (!user) {
-    return null;
-  }
-
-
-  const {
-    data: profile
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .maybeSingle();
-
-
-  if (profile) {
-
-    return {
-      ...profile,
-      email: user.email
-    };
-
-  }
-
-
-  return {
-    id: user.id,
-    email: user.email,
-    role: "volunteer"
-  };
-
-}
-
-
-// ========================================
-// AUTH PROTECTION
-// ========================================
-
-async function requireAuth(
-  target = "login.html"
-) {
-
-  const {
-    data: {
-      user
-    }
-  } =
-    await supabaseClient.auth
-      .getUser();
-
-
-  if (!user) {
-
-    window.location.href =
-      target;
-
-    return null;
-  }
-
-
-  return user;
-
-}
-
-
-// ========================================
-// ADMIN
-// ========================================
-
-async function requireAdmin() {
-
-  const profile =
-    await getProfile();
-
-
-  if (
-    !profile ||
-    profile.role !== "admin"
-  ) {
-
-    window.location.href =
-      "dashboard.html";
-
-    return null;
-  }
-
-
-  return profile;
-
 }
 
 
@@ -554,7 +534,6 @@ if (logout) {
 
     }
   );
-
 }
 
 
