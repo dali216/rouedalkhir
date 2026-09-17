@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="fr">
 <head>
@@ -48,7 +49,6 @@
 
   </form>
 
-  <!-- SIGN UP -->
   <div class="signup-link">
     <span>Vous n'avez pas encore de compte ?</span>
     <a href="register.html">Créer un compte</a>
@@ -69,5 +69,26 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="app.js"></script>
 
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  // Vérifier si l'utilisateur est déjà connecté
+  if (typeof supabase !== "undefined") {
+
+    const {
+      data: { session }
+    } = await supabase.auth.getSession();
+
+    if (session) {
+      // Déjà connecté → ne pas afficher Login
+      window.location.href = "dashboard.html";
+    }
+
+  }
+
+});
+</script>
+
 </body>
 </html>
+```
