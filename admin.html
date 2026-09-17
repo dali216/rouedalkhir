@@ -1,0 +1,24 @@
+<!doctype html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Administration — Roued Al Khair</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="nav-wrap"><nav class="nav glass"><a class="brand" href="index.html"><span class="logo">RK</span><span>Roued <b>Al Khair</b></span></a>
+<div style="margin-left:auto;display:flex;gap:8px"><a class="btn small ghost" href="dashboard.html">Dashboard</a><button class="btn small" id="logout">Déconnexion</button></div></nav></header>
+<main class="dashboard"><div class="dash-head"><div><span class="eyebrow">Administration</span><h1>Gestion de <span>l'association.</span></h1><p>Événements, bénévoles et identité du site.</p></div></div>
+<div class="dash-grid"><div class="metric glass"><small>Bénévoles</small><strong id="usersCount">—</strong><span>comptes enregistrés</span></div><div class="metric glass"><small>Événements</small><strong id="eventsCount">—</strong><span>dans l'agenda</span></div><div class="metric glass"><small>Rôle</small><strong>ADMIN</strong><span>accès gestion</span></div><div class="metric glass"><small>Logo</small><strong>✓</strong><span>personnalisable</span></div></div>
+<div class="dash-main"><section class="glass panel"><div class="panel-title"><h2>Ajouter un événement</h2></div>
+<form id="eventForm"><label>Titre</label><input id="title" required placeholder="Ex. Journée solidaire"><label>Date et heure</label><input id="date" type="datetime-local" required><label>Lieu</label><input id="location" placeholder="Ex. Mégrine"><label>Description</label><input id="description" placeholder="Description courte"><button class="btn" style="margin-top:20px">Ajouter l'événement →</button></form><small id="eventMsg"></small></section>
+<aside class="glass panel"><h2>Logo du site</h2><p style="color:#64748b;font-size:12px;line-height:1.6">Pour changer le logo facilement, remplacez <b>RK</b> dans les éléments avec la classe <b>logo</b>, ou utilisez une URL d'image ci-dessous.</p>
+<label>URL du logo</label><input id="logoUrl" placeholder="https://.../logo.png"><button class="btn" id="saveLogo" style="margin-top:15px">Enregistrer le logo</button><small id="logoMsg"></small></aside></div>
+<section class="glass panel" style="margin-top:16px"><div class="panel-title"><h2>Événements existants</h2></div><div id="eventList">Chargement...</div></section>
+<section class="glass panel" style="margin-top:16px"><div class="panel-title"><h2>Rôles bénévoles</h2></div><p style="color:#64748b;font-size:12px">Les rôles sont gérés dans Supabase. Utilisez le SQL fourni avec ce projet pour attribuer <b>admin</b> ou <b>volunteer</b>. Le rôle admin protège cette page côté base de données.</p></section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script>
+<script>
+(async()=>{const p=await requireAdmin();if(!p)return;
+const {data:profiles}=await supabaseClient.from('profiles').select('id,role'); document.getElementById('usersCount').textContent=profiles?.length||0;
+loadEvents();
+document.getElementById('eventForm').onsubmit=async e=>{e.preventDefault();const {error}=await supabaseClient.from('events').insert({title:title.value,description:description.value,location:location.value,event_date:date.value,created_by:p.id});eventMsg.textContent=error?'Erreur : '+error.message:'Événement ajouté !';if(!error){e.target.reset();loadEvents()}};
+document.getElementById('saveLogo').onclick=()=>{const u=logoUrl.value.trim();if(!u)return;localStorage.setItem('siteLogo',u);logoMsg.textContent='Logo enregistré sur ce navigateur.';};
+})(); async function loadEvents(){const {data}=await supabaseClient.from('events').select('*').order('event_date',{ascending:true});eventsCount.textContent=data?.length||0;eventList.innerHTML=data?.length?data.map(e=>`<div class="dash-event"><div class="date"><b>${new Date(e.event_date).getDate()}</b><small>${new Date(e.event_date).toLocaleDateString('fr-FR',{month:'short'}).toUpperCase()}</small></div><div><h3>${escapeHtml(e.title)}</h3><p>📍 ${escapeHtml(e.location||'—')}</p></div><button class="btn tiny ghost" onclick="deleteEvent('${e.id}')">Supprimer</button></div>`).join(''):'<p style="color:#64748b">Aucun événement.</p>'}
+async function deleteEvent(id){if(!confirm('Supprimer cet événement ?'))return;await supabaseClient.from('events').delete().eq('id',id);loadEvents()}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+</script></body></html>

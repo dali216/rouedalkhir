@@ -1,0 +1,18 @@
+<!doctype html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard bénévole — Roued Al Khair</title><link rel="stylesheet" href="style.css"></head><body>
+<header class="nav-wrap"><nav class="nav glass"><a class="brand" href="index.html"><span class="logo" id="navLogo">RK</span><span>Roued <b>Al Khair</b></span></a>
+<div style="margin-left:auto;display:flex;gap:8px"><a class="btn small ghost" href="index.html">Site public</a><button class="btn small" id="logout">Déconnexion</button></div></nav></header>
+<main class="dashboard"><div class="dash-head"><div><span class="eyebrow">Espace bénévole</span><h1>Bonjour, <span id="name">...</span> 👋</h1><p>Voici votre activité et vos prochaines missions.</p></div><div class="avatar" id="avatar">RK</div></div>
+<div class="dash-grid"><div class="metric glass"><small>Points</small><strong>240</strong><span>+32 ce mois</span></div><div class="metric glass"><small>Heures</small><strong>48h</strong><span>de bénévolat</span></div><div class="metric glass"><small>Événements</small><strong id="eventCount">0</strong><span>participations</span></div><div class="metric glass"><small>Certificats</small><strong>4</strong><span>disponibles</span></div></div>
+<div class="dash-main"><section class="glass panel"><div class="panel-title"><h2>Prochains événements</h2></div><div id="events"><p style="color:#64748b">Chargement...</p></div></section>
+<aside class="glass panel qr"><h2>Mon espace</h2><div class="qrbox">▦<small>QR BÉNÉVOLE</small></div><p>Votre présence peut être enregistrée par l'équipe.</p><a class="btn ghost" href="admin.html" id="adminLink" style="display:none">Administration</a></aside></div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script>
+<script>
+(async()=>{const u=await requireAuth(); if(!u)return; const p=await getProfile(); if(!p)return;
+document.getElementById('name').textContent=p.full_name||p.email.split('@')[0]; document.getElementById('avatar').textContent=(p.full_name||'RK').split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+if(p.role==='admin')document.getElementById('adminLink').style.display='inline-flex';
+const {data}=await supabaseClient.from('events').select('*').order('event_date',{ascending:true});
+const el=document.getElementById('events'); document.getElementById('eventCount').textContent=data?.length||0;
+el.innerHTML=data?.length?data.map(e=>`<div class="dash-event"><div class="date"><b>${new Date(e.event_date).getDate()}</b><small>${new Date(e.event_date).toLocaleDateString('fr-FR',{month:'short'}).toUpperCase()}</small></div><div><h3>${escapeHtml(e.title)}</h3><p>📍 ${escapeHtml(e.location||'—')} · ${new Date(e.event_date).toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}</p></div><span class="status">À venir</span></div>`).join(''):'<p style="color:#64748b">Aucun événement à venir.</p>';
+})(); function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+</script></body></html>

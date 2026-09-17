@@ -1,0 +1,70 @@
+```html
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion — Roued Al Khair</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+<div class="auth glass">
+  <a class="back" href="index.html">← Retour</a>
+
+  <div class="logo big">RK</div>
+
+  <span class="eyebrow">Espace bénévole</span>
+
+  <h1>Bienvenue<br><span>à nouveau.</span></h1>
+
+  <p>
+    Connectez-vous pour retrouver vos événements,
+    heures, certificats et discussions.
+  </p>
+
+  <form id="login">
+
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      placeholder="vous@email.com"
+      required
+    >
+
+    <label for="password">Mot de passe</label>
+    <input
+      type="password"
+      id="password"
+      placeholder="Votre mot de passe"
+      required
+    >
+
+    <button class="btn" type="submit">
+      Se connecter →
+    </button>
+
+  </form>
+
+  <div class="divider">
+    <span>ou</span>
+  </div>
+
+  <button class="btn ghost" id="demo">
+    Voir le dashboard démo
+  </button>
+
+  <small id="msg"></small>
+
+</div>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Notre application -->
+<script src="app.js"></script>
+</body>
+</html>
+```
