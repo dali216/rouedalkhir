@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+
 .admin-wrap{
   max-width:1250px;
   margin:auto;
@@ -24,8 +25,14 @@
   margin-bottom:30px;
 }
 
-.admin-header h1{margin:5px 0}
-.admin-header p{opacity:.65;margin:0}
+.admin-header h1{
+  margin:5px 0;
+}
+
+.admin-header p{
+  opacity:.65;
+  margin:0;
+}
 
 .stats{
   display:grid;
@@ -39,7 +46,9 @@
   border-radius:20px;
 }
 
-.stat-card small{opacity:.65}
+.stat-card small{
+  opacity:.65;
+}
 
 .stat-number{
   font-size:32px;
@@ -60,7 +69,9 @@
   margin-bottom:18px;
 }
 
-.section-title h2{margin:3px 0}
+.section-title h2{
+  margin:3px 0;
+}
 
 .form-box{
   padding:25px;
@@ -91,6 +102,10 @@
   resize:vertical;
 }
 
+.form-box input[type="file"]{
+  padding:10px;
+}
+
 .full{
   grid-column:1/-1;
 }
@@ -111,7 +126,8 @@ table{
   min-width:700px;
 }
 
-th,td{
+th,
+td{
   padding:14px;
   text-align:left;
   border-bottom:1px solid rgba(0,0,0,.08);
@@ -144,6 +160,12 @@ th{
   border-radius:9px;
   cursor:pointer;
   font-weight:700;
+  margin:2px;
+}
+
+.mini-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
 
 .danger{
@@ -200,11 +222,25 @@ th{
   opacity:.65;
 }
 
+.file-info{
+  display:block;
+  margin-top:7px;
+  opacity:.6;
+  font-size:13px;
+}
+
+.certificate-icon{
+  font-size:22px;
+}
+
 @media(max-width:600px){
+
   .admin-wrap{
     padding:20px 12px 50px;
   }
+
 }
+
 </style>
 </head>
 
@@ -212,16 +248,24 @@ th{
 
 <div class="admin-wrap">
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 
 <header class="admin-header">
 
 <div>
-<span class="eyebrow">ROUED AL KHAIR</span>
 
-<h1>Administration</h1>
+<span class="eyebrow">
+ROUED AL KHAIR
+</span>
 
-<p>Gestion de l'association</p>
+<h1>
+Administration
+</h1>
+
+<p>
+Gestion de l'association
+</p>
+
 </div>
 
 <button
@@ -234,12 +278,15 @@ Déconnexion
 </header>
 
 
-<!-- STATS -->
+<!-- ================= STATS ================= -->
 
 <section class="stats">
 
 <div class="glass stat-card">
-<small>👥 Membres</small>
+
+<small>
+👥 Membres
+</small>
 
 <div
 id="membersCount"
@@ -247,11 +294,15 @@ class="stat-number"
 >
 0
 </div>
+
 </div>
 
 
 <div class="glass stat-card">
-<small>📅 Événements</small>
+
+<small>
+📅 Événements
+</small>
 
 <div
 id="eventsCount"
@@ -259,11 +310,15 @@ class="stat-number"
 >
 0
 </div>
+
 </div>
 
 
 <div class="glass stat-card">
-<small>📢 Annonces</small>
+
+<small>
+📢 Annonces
+</small>
 
 <div
 id="announcementsCount"
@@ -271,11 +326,15 @@ class="stat-number"
 >
 0
 </div>
+
 </div>
 
 
 <div class="glass stat-card">
-<small>⏱ Heures bénévoles</small>
+
+<small>
+⏱ Heures bénévoles
+</small>
 
 <div
 id="hoursCount"
@@ -283,20 +342,28 @@ class="stat-number"
 >
 0
 </div>
+
 </div>
 
 </section>
 
 
-<!-- MEMBERS -->
+<!-- ================= MEMBERS ================= -->
 
 <section class="section">
 
 <div class="section-title">
 
 <div>
-<span class="eyebrow">MEMBRES</span>
-<h2>Gestion des membres</h2>
+
+<span class="eyebrow">
+MEMBRES
+</span>
+
+<h2>
+Gestion des membres
+</h2>
+
 </div>
 
 </div>
@@ -304,7 +371,9 @@ class="stat-number"
 
 <div class="glass form-box">
 
-<label>🔎 Rechercher</label>
+<label>
+🔎 Rechercher
+</label>
 
 <input
 id="memberSearch"
@@ -319,20 +388,37 @@ placeholder="Nom du membre..."
 <table>
 
 <thead>
+
 <tr>
-<th>Nom</th>
-<th>ID</th>
-<th>Rôle</th>
-<th>Actions</th>
+
+<th>
+Nom
+</th>
+
+<th>
+ID
+</th>
+
+<th>
+Rôle
+</th>
+
+<th>
+Actions
+</th>
+
 </tr>
+
 </thead>
 
 <tbody id="membersTable">
 
 <tr>
+
 <td colspan="4">
 Chargement...
 </td>
+
 </tr>
 
 </tbody>
@@ -344,15 +430,22 @@ Chargement...
 </section>
 
 
-<!-- CREATE EVENT -->
+<!-- ================= CREATE EVENT ================= -->
 
 <section class="section">
 
 <div class="section-title">
 
 <div>
-<span class="eyebrow">ÉVÉNEMENTS</span>
-<h2>Créer un événement</h2>
+
+<span class="eyebrow">
+ÉVÉNEMENTS
+</span>
+
+<h2>
+Créer un événement
+</h2>
+
 </div>
 
 </div>
@@ -366,40 +459,54 @@ class="glass form-box"
 <div class="form-grid">
 
 <div>
-<label>Titre</label>
+
+<label>
+Titre
+</label>
 
 <input
 id="eventTitle"
 required
 placeholder="Distribution alimentaire"
 >
+
 </div>
 
 
 <div>
-<label>Lieu</label>
+
+<label>
+Lieu
+</label>
 
 <input
 id="eventLocation"
 placeholder="Tunis"
 >
+
 </div>
 
 
 <div>
-<label>Date et heure</label>
+
+<label>
+Date et heure
+</label>
 
 <input
 id="eventDate"
 type="datetime-local"
 required
 >
+
 </div>
 
 
 <div class="full">
 
-<label>Description</label>
+<label>
+Description
+</label>
 
 <textarea
 id="eventDescription"
@@ -429,13 +536,14 @@ class="message"
 </section>
 
 
-<!-- EVENTS -->
+<!-- ================= EVENTS ================= -->
 
 <section class="section">
 
 <div class="section-title">
 
 <div>
+
 <span class="eyebrow">
 PARTICIPANTS
 </span>
@@ -460,13 +568,14 @@ PARTICIPANTS
 </section>
 
 
-<!-- ADD HOURS -->
+<!-- ================= HOURS ================= -->
 
 <section class="section">
 
 <div class="section-title">
 
 <div>
+
 <span class="eyebrow">
 BÉNÉVOLAT
 </span>
@@ -560,7 +669,6 @@ placeholder="Ex: Préparation et distribution des repas"
 
 </div>
 
-
 <br>
 
 <button
@@ -570,7 +678,6 @@ type="submit"
 + Ajouter les heures
 </button>
 
-
 <div
 id="hoursMessage"
 class="message"
@@ -579,9 +686,7 @@ class="message"
 </form>
 
 
-<div
-id="hoursAdmin"
->
+<div id="hoursAdmin">
 
 <div class="glass empty">
 ⏳ Chargement...
@@ -592,13 +697,145 @@ id="hoursAdmin"
 </section>
 
 
-<!-- ANNOUNCEMENTS -->
+<!-- ================= CERTIFICATES ================= -->
 
 <section class="section">
 
 <div class="section-title">
 
 <div>
+
+<span class="eyebrow">
+CERTIFICATS
+</span>
+
+<h2>
+Ajouter un certificat
+</h2>
+
+</div>
+
+</div>
+
+
+<form
+id="certificateForm"
+class="glass form-box"
+>
+
+<div class="form-grid">
+
+
+<div>
+
+<label>
+👤 Bénévole
+</label>
+
+<select
+id="certificateUser"
+required
+>
+
+<option value="">
+Choisir un bénévole
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+🏆 Titre du certificat
+</label>
+
+<input
+id="certificateTitle"
+type="text"
+required
+placeholder="Certificat de participation"
+>
+
+</div>
+
+
+<div class="full">
+
+<label>
+📝 Description / Motif
+</label>
+
+<textarea
+id="certificateDescription"
+placeholder="Participation aux activités de l'association..."
+></textarea>
+
+</div>
+
+
+<div class="full">
+
+<label>
+📄 Fichier PDF
+</label>
+
+<input
+id="certificateFile"
+type="file"
+accept="application/pdf,.pdf"
+required
+>
+
+<span class="file-info">
+PDF uniquement — maximum 10 MB
+</span>
+
+</div>
+
+</div>
+
+
+<br>
+
+<button
+id="certificateSubmit"
+class="btn"
+type="submit"
+>
+🏆 Ajouter le certificat
+</button>
+
+
+<div
+id="certificateMessage"
+class="message"
+></div>
+
+</form>
+
+
+<div id="certificatesAdmin">
+
+<div class="glass empty">
+⏳ Chargement...
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ANNOUNCEMENTS ================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
 <span class="eyebrow">
 COMMUNICATION
 </span>
@@ -710,20 +947,27 @@ class="message"
 </div>
 
 
+<!-- ================= SCRIPTS ================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="app.js"></script>
 
-
 <script>
 
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
 let adminProfile = null;
+
 let allMembers = [];
 
 
-/* =========================
-INIT
-========================= */
+/* ==========================================
+   INIT
+========================================== */
 
 async function initAdmin(){
 
@@ -731,23 +975,34 @@ adminProfile =
 await requireAdmin();
 
 if(!adminProfile){
+
 return;
+
 }
 
+
 await Promise.all([
+
 loadMembers(),
+
 loadEvents(),
+
 loadAnnouncements(),
+
 loadHours(),
-loadHoursAdmin()
+
+loadHoursAdmin(),
+
+loadCertificatesAdmin()
+
 ]);
 
 }
 
 
-/* =========================
-MEMBERS
-========================= */
+/* ==========================================
+   MEMBERS
+========================================== */
 
 async function loadMembers(){
 
@@ -756,15 +1011,19 @@ document.getElementById(
 "membersTable"
 );
 
+
 const {
 data,
 error
 } =
 await supabaseClient
+
 .from("profiles")
+
 .select(
 "id,full_name,role,created_at"
 )
+
 .order(
 "created_at",
 {
@@ -772,24 +1031,33 @@ ascending:false
 }
 );
 
+
 if(error){
 
 console.error(error);
 
-tbody.innerHTML =
-`
+tbody.innerHTML = `
+
 <tr>
+
 <td colspan="4">
+
 ❌ Erreur de chargement.
+
 </td>
+
 </tr>
+
 `;
 
 return;
+
 }
+
 
 allMembers =
 data || [];
+
 
 document.getElementById(
 "membersCount"
@@ -797,9 +1065,14 @@ document.getElementById(
 allMembers.length;
 
 
-renderMembers(allMembers);
+renderMembers(
+allMembers
+);
+
 
 populateHourUsers();
+
+populateCertificateUsers();
 
 }
 
@@ -813,49 +1086,74 @@ document.getElementById(
 "membersTable"
 );
 
+
 if(!members.length){
 
-tbody.innerHTML =
-`
+tbody.innerHTML = `
+
 <tr>
+
 <td colspan="4">
+
 Aucun membre.
+
 </td>
+
 </tr>
+
 `;
 
 return;
+
 }
 
+
 tbody.innerHTML = "";
+
 
 members.forEach(
 member => {
 
+
 const tr =
-document.createElement("tr");
+document.createElement(
+"tr"
+);
+
 
 const role =
-member.role || "volunteer";
+member.role ||
+"volunteer";
 
-tr.innerHTML =
-`
+
+tr.innerHTML = `
+
 <td>
+
 <strong>
+
 ${escapeHTML(
 member.full_name ||
 "Sans nom"
 )}
+
 </strong>
+
 </td>
 
+
 <td>
+
 <small>
+
 ${escapeHTML(
 member.id
 )}
+
 </small>
+
 </td>
+
 
 <td>
 
@@ -864,16 +1162,20 @@ role === "admin"
 ? "admin"
 : "volunteer"
 }">
+
 ${
 role === "admin"
 ? "Admin"
 : "Bénévole"
 }
+
 </span>
 
 </td>
 
+
 <td>
+
 
 <button
 class="mini-btn"
@@ -882,12 +1184,15 @@ onclick="changeRole(
 '${role}'
 )"
 >
+
 ${
 role === "admin"
 ? "→ Bénévole"
 : "→ Admin"
 }
+
 </button>
+
 
 <button
 class="mini-btn"
@@ -895,13 +1200,20 @@ onclick="openProfile(
 '${member.id}'
 )"
 >
+
 Profil
+
 </button>
 
+
 </td>
+
 `;
 
-tbody.appendChild(tr);
+
+tbody.appendChild(
+tr
+);
 
 });
 
@@ -918,18 +1230,23 @@ currentRole === "admin"
 ? "volunteer"
 : "admin";
 
+
 const {
 error
 } =
 await supabaseClient
+
 .from("profiles")
+
 .update({
 role:newRole
 })
+
 .eq(
 "id",
 userId
 );
+
 
 if(error){
 
@@ -939,7 +1256,9 @@ error.message
 );
 
 return;
+
 }
+
 
 await loadMembers();
 
@@ -972,22 +1291,25 @@ this.value
 .toLowerCase()
 .trim();
 
+
 renderMembers(
+
 allMembers.filter(
 m =>
 (m.full_name || "")
 .toLowerCase()
 .includes(value)
 )
+
 );
 
 }
 );
 
 
-/* =========================
-CREATE EVENT
-========================= */
+/* ==========================================
+   CREATE EVENT
+========================================== */
 
 document.getElementById(
 "eventForm"
@@ -997,28 +1319,34 @@ async function(e){
 
 e.preventDefault();
 
+
 const message =
 document.getElementById(
 "eventMessage"
 );
 
+
 message.textContent =
 "⏳ Création...";
+
 
 const title =
 document.getElementById(
 "eventTitle"
 ).value.trim();
 
+
 const location =
 document.getElementById(
 "eventLocation"
 ).value.trim();
 
+
 const eventDate =
 document.getElementById(
 "eventDate"
 ).value;
+
 
 const description =
 document.getElementById(
@@ -1030,13 +1358,21 @@ const {
 error
 } =
 await supabaseClient
+
 .from("events")
+
 .insert({
+
 title:title,
+
 description:description,
+
 location:location,
+
 event_date:eventDate,
+
 created_by:adminProfile.id
+
 });
 
 
@@ -1049,25 +1385,27 @@ error.message
 );
 
 return;
+
 }
 
 
 message.innerHTML =
 "✅ Événement créé !";
 
+
 this.reset();
+
 
 await loadEvents();
 
 await populateHourEvents();
 
-}
-);
+});
 
 
-/* =========================
-EVENTS
-========================= */
+/* ==========================================
+   EVENTS
+========================================== */
 
 async function loadEvents(){
 
@@ -1076,15 +1414,19 @@ document.getElementById(
 "eventsAdmin"
 );
 
+
 const {
 data:events,
 error
 } =
 await supabaseClient
+
 .from("events")
+
 .select(
 "id,title,description,location,event_date,created_at"
 )
+
 .order(
 "event_date",
 {
@@ -1092,16 +1434,21 @@ ascending:true
 }
 );
 
+
 if(error){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="glass empty">
+
 ❌ Erreur.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
@@ -1113,14 +1460,18 @@ document.getElementById(
 
 if(!events.length){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="glass empty">
+
 📅 Aucun événement.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
@@ -1131,10 +1482,12 @@ for(
 const event of events
 ){
 
+
 const card =
 document.createElement(
 "div"
 );
+
 
 card.className =
 "glass event-admin-card";
@@ -1142,7 +1495,9 @@ card.className =
 
 const date =
 event.event_date
+
 ?
+
 new Date(
 event.event_date
 ).toLocaleString(
@@ -1152,21 +1507,27 @@ dateStyle:"medium",
 timeStyle:"short"
 }
 )
+
 :
+
 "Date à confirmer";
 
 
-card.innerHTML =
-`
+card.innerHTML = `
+
 <div class="event-admin-head">
+
 
 <div>
 
 <h3>
+
 ${escapeHTML(
 event.title
 )}
+
 </h3>
+
 
 <div class="event-meta">
 
@@ -1175,27 +1536,39 @@ event.title
 ${
 event.location
 ?
+
 " · 📍 " +
 escapeHTML(
 event.location
 )
+
 :
+
 ""
 }
 
 </div>
 
+
 ${
 event.description
+
 ?
+
 `
+
 <p>
+
 ${escapeHTML(
 event.description
 )}
+
 </p>
+
 `
+
 :
+
 ""
 }
 
@@ -1204,12 +1577,16 @@ event.description
 
 <div class="event-actions">
 
+
 <span
 class="participant-count"
 id="count-${event.id}"
 >
+
 ⏳
+
 </span>
+
 
 <button
 class="mini-btn danger"
@@ -1217,8 +1594,11 @@ onclick="deleteEvent(
 '${event.id}'
 )"
 >
+
 Supprimer
+
 </button>
+
 
 </div>
 
@@ -1231,13 +1611,20 @@ style="margin-top:20px"
 >
 
 <div class="empty">
+
 ⏳ Chargement...
+
 </div>
 
 </div>
+
 `;
 
-container.appendChild(card);
+
+container.appendChild(
+card
+);
+
 
 await loadParticipants(
 event.id
@@ -1245,14 +1632,15 @@ event.id
 
 }
 
+
 await populateHourEvents();
 
 }
 
 
-/* =========================
-PARTICIPANTS
-========================= */
+/* ==========================================
+   PARTICIPANTS
+========================================== */
 
 async function loadParticipants(
 eventId
@@ -1263,6 +1651,7 @@ document.getElementById(
 "participants-" +
 eventId
 );
+
 
 const count =
 document.getElementById(
@@ -1276,14 +1665,18 @@ data:list,
 error
 } =
 await supabaseClient
+
 .from("event_participants")
+
 .select(
 "id,user_id,status,created_at"
 )
+
 .eq(
 "event_id",
 eventId
 )
+
 .order(
 "created_at",
 {
@@ -1294,14 +1687,18 @@ ascending:true
 
 if(error){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="empty">
+
 ❌ Erreur.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
@@ -1322,20 +1719,25 @@ count.textContent =
 
 if(!participants.length){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="empty">
+
 Aucun participant.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
 const ids =
 participants.map(
-p => p.user_id
+p =>
+p.user_id
 );
 
 
@@ -1343,10 +1745,13 @@ const {
 data:profiles
 } =
 await supabaseClient
+
 .from("profiles")
+
 .select(
 "id,full_name"
 )
+
 .in(
 "id",
 ids
@@ -1355,17 +1760,21 @@ ids
 
 const profileMap =
 new Map(
-(profiles || []).map(
-p => [
+
+(profiles || [])
+.map(
+p =>
+[
 p.id,
 p
 ]
 )
+
 );
 
 
-let html =
-`
+let html = `
+
 <div class="table-wrap">
 
 <table>
@@ -1373,24 +1782,37 @@ let html =
 <thead>
 
 <tr>
-<th>Bénévole</th>
-<th>Inscription</th>
-<th>Statut</th>
+
+<th>
+Bénévole
+</th>
+
+<th>
+Inscription
+</th>
+
+<th>
+Statut
+</th>
+
 </tr>
 
 </thead>
 
 <tbody>
+
 `;
 
 
 participants.forEach(
 p => {
 
+
 const profile =
 profileMap.get(
 p.user_id
 );
+
 
 const name =
 profile?.full_name ||
@@ -1399,29 +1821,41 @@ profile?.full_name ||
 
 const date =
 p.created_at
+
 ?
+
 new Date(
 p.created_at
 ).toLocaleDateString(
 "fr-FR"
 )
+
 :
+
 "-";
 
 
-html +=
-`
+html += `
+
 <tr>
 
 <td>
+
 <strong>
+
 ${escapeHTML(name)}
+
 </strong>
+
 </td>
 
+
 <td>
+
 ${date}
+
 </td>
+
 
 <td>
 
@@ -1434,66 +1868,90 @@ this.value,
 )"
 >
 
+
 <option
 value="registered"
-${p.status === "registered"
+${
+p.status === "registered"
 ? "selected"
-: ""}
+: ""
+}
 >
+
 Inscrit
+
 </option>
+
 
 <option
 value="present"
-${p.status === "present"
+${
+p.status === "present"
 ? "selected"
-: ""}
+: ""
+}
 >
+
 Présent
+
 </option>
+
 
 <option
 value="absent"
-${p.status === "absent"
+${
+p.status === "absent"
 ? "selected"
-: ""}
+: ""
+}
 >
+
 Absent
+
 </option>
+
 
 <option
 value="cancelled"
-${p.status === "cancelled"
+${
+p.status === "cancelled"
 ? "selected"
-: ""}
+: ""
+}
 >
+
 Annulé
+
 </option>
+
 
 </select>
 
 </td>
 
 </tr>
+
 `;
 
 });
 
 
-html +=
-`
+html += `
+
 </tbody>
+
 </table>
+
 </div>
+
 `;
+
 
 container.innerHTML =
 html;
 
 }
 
-
-/* STATUS */
 
 async function changeParticipantStatus(
 id,
@@ -1505,14 +1963,18 @@ const {
 error
 } =
 await supabaseClient
+
 .from("event_participants")
+
 .update({
 status:status
 })
+
 .eq(
 "id",
 id
 );
+
 
 if(error){
 
@@ -1522,7 +1984,9 @@ error.message
 );
 
 return;
+
 }
+
 
 await loadParticipants(
 eventId
@@ -1542,7 +2006,9 @@ if(
 "Supprimer cet événement ?"
 )
 ){
+
 return;
+
 }
 
 
@@ -1550,8 +2016,11 @@ const {
 error
 } =
 await supabaseClient
+
 .from("events")
+
 .delete()
+
 .eq(
 "id",
 id
@@ -1566,6 +2035,7 @@ error.message
 );
 
 return;
+
 }
 
 
@@ -1574,9 +2044,9 @@ await loadEvents();
 }
 
 
-/* =========================
-HOURS USERS
-========================= */
+/* ==========================================
+   HOURS USERS
+========================================== */
 
 function populateHourUsers(){
 
@@ -1585,28 +2055,36 @@ document.getElementById(
 "hoursUser"
 );
 
-select.innerHTML =
-`
+
+select.innerHTML = `
+
 <option value="">
+
 Choisir un bénévole
+
 </option>
+
 `;
 
 
 allMembers.forEach(
 member => {
 
+
 const option =
 document.createElement(
 "option"
 );
 
+
 option.value =
 member.id;
+
 
 option.textContent =
 member.full_name ||
 "Bénévole";
+
 
 select.appendChild(
 option
@@ -1617,9 +2095,9 @@ option
 }
 
 
-/* =========================
-HOURS EVENTS
-========================= */
+/* ==========================================
+   HOURS EVENTS
+========================================== */
 
 async function populateHourEvents(){
 
@@ -1634,10 +2112,13 @@ data,
 error
 } =
 await supabaseClient
+
 .from("events")
+
 .select(
 "id,title,event_date"
 )
+
 .order(
 "event_date",
 {
@@ -1647,31 +2128,40 @@ ascending:false
 
 
 if(error){
+
 return;
+
 }
 
 
-select.innerHTML =
-`
+select.innerHTML = `
+
 <option value="">
+
 Aucun événement
+
 </option>
+
 `;
 
 
 (data || []).forEach(
 event => {
 
+
 const option =
 document.createElement(
 "option"
 );
 
+
 option.value =
 event.id;
 
+
 option.textContent =
 event.title;
+
 
 select.appendChild(
 option
@@ -1682,9 +2172,9 @@ option
 }
 
 
-/* =========================
-ADD HOURS
-========================= */
+/* ==========================================
+   ADD HOURS
+========================================== */
 
 document.getElementById(
 "hoursForm"
@@ -1733,6 +2223,7 @@ message.innerHTML =
 "❌ Choisissez un bénévole.";
 
 return;
+
 }
 
 
@@ -1742,6 +2233,7 @@ message.innerHTML =
 "❌ Entrez un nombre d'heures valide.";
 
 return;
+
 }
 
 
@@ -1753,13 +2245,21 @@ const {
 error
 } =
 await supabaseClient
+
 .from("volunteer_hours")
+
 .insert({
+
 user_id:userId,
-event_id:eventId || null,
+
+event_id:
+eventId || null,
+
 hours:amount,
+
 description:
 description || null
+
 });
 
 
@@ -1774,6 +2274,7 @@ error.message
 );
 
 return;
+
 }
 
 
@@ -1788,13 +2289,12 @@ await loadHours();
 
 await loadHoursAdmin();
 
-}
-);
+});
 
 
-/* =========================
-HOURS LIST ADMIN
-========================= */
+/* ==========================================
+   HOURS ADMIN
+========================================== */
 
 async function loadHoursAdmin(){
 
@@ -1809,10 +2309,13 @@ data,
 error
 } =
 await supabaseClient
+
 .from("volunteer_hours")
+
 .select(
 "id,user_id,event_id,hours,description,created_at"
 )
+
 .order(
 "created_at",
 {
@@ -1825,47 +2328,70 @@ if(error){
 
 console.error(error);
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="glass empty">
+
 ❌ Erreur de chargement des heures.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
 if(!data || !data.length){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="glass empty">
+
 ⏱️ Aucune heure enregistrée.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
-const userIds =
-[
+const userIds = [
+
 ...new Set(
+
 data.map(
-x => x.user_id
+x =>
+x.user_id
 )
+
 )
+
 ];
 
 
-const eventIds =
-[
+const eventIds = [
+
 ...new Set(
+
 data
-.filter(x => x.event_id)
-.map(x => x.event_id)
+
+.filter(
+x =>
+x.event_id
 )
+
+.map(
+x =>
+x.event_id
+)
+
+)
+
 ];
 
 
@@ -1873,10 +2399,13 @@ const {
 data:profiles
 } =
 await supabaseClient
+
 .from("profiles")
+
 .select(
 "id,full_name"
 )
+
 .in(
 "id",
 userIds
@@ -1887,17 +2416,24 @@ const {
 data:events
 } =
 eventIds.length
+
 ?
+
 await supabaseClient
+
 .from("events")
+
 .select(
 "id,title"
 )
+
 .in(
 "id",
 eventIds
 )
+
 :
+
 {
 data:[]
 };
@@ -1905,28 +2441,36 @@ data:[]
 
 const profileMap =
 new Map(
-(profiles || []).map(
-p => [
+
+(profiles || [])
+.map(
+p =>
+[
 p.id,
 p.full_name
 ]
 )
+
 );
 
 
 const eventMap =
 new Map(
-(events || []).map(
-e => [
+
+(events || [])
+.map(
+e =>
+[
 e.id,
 e.title
 ]
 )
+
 );
 
 
-let html =
-`
+let html = `
+
 <div class="glass table-wrap">
 
 <table>
@@ -1934,93 +2478,152 @@ let html =
 <thead>
 
 <tr>
-<th>Bénévole</th>
-<th>Événement</th>
-<th>Heures</th>
-<th>Description</th>
-<th>Date</th>
+
+<th>
+Bénévole
+</th>
+
+<th>
+Événement
+</th>
+
+<th>
+Heures
+</th>
+
+<th>
+Description
+</th>
+
+<th>
+Date
+</th>
+
 </tr>
 
 </thead>
 
 <tbody>
+
 `;
 
 
 data.forEach(
 item => {
 
-html +=
-`
+
+html += `
+
 <tr>
 
 <td>
+
 <strong>
+
 ${escapeHTML(
+
 profileMap.get(
 item.user_id
 ) ||
+
 "Bénévole"
+
 )}
+
 </strong>
+
 </td>
 
+
 <td>
+
 ${
 item.event_id
+
 ?
+
 escapeHTML(
+
 eventMap.get(
 item.event_id
 ) ||
+
 "Événement"
+
 )
+
 :
+
 "-"
+
 }
+
 </td>
 
+
 <td>
+
 <strong>
+
 ${Number(
 item.hours
-).toFixed(2)
-} h
+).toFixed(2)}
+h
+
 </strong>
+
 </td>
 
+
 <td>
+
 ${escapeHTML(
+
 item.description ||
 "-"
+
 )}
+
 </td>
 
+
 <td>
+
 ${
 item.created_at
+
 ?
+
 new Date(
 item.created_at
-).toLocaleDateString(
+)
+.toLocaleDateString(
 "fr-FR"
 )
+
 :
+
 "-"
+
 }
+
 </td>
 
 </tr>
+
 `;
 
 });
 
 
-html +=
-`
+html += `
+
 </tbody>
+
 </table>
+
 </div>
+
 `;
 
 
@@ -2030,9 +2633,841 @@ html;
 }
 
 
-/* =========================
-ANNOUNCEMENTS
-========================= */
+/* ==========================================
+   CERTIFICATE USERS
+========================================== */
+
+function populateCertificateUsers(){
+
+const select =
+document.getElementById(
+"certificateUser"
+);
+
+
+if(!select){
+
+return;
+
+}
+
+
+select.innerHTML = `
+
+<option value="">
+
+Choisir un bénévole
+
+</option>
+
+`;
+
+
+allMembers.forEach(
+member => {
+
+
+const option =
+document.createElement(
+"option"
+);
+
+
+option.value =
+member.id;
+
+
+option.textContent =
+member.full_name ||
+"Bénévole sans nom";
+
+
+select.appendChild(
+option
+);
+
+});
+
+}
+
+
+/* ==========================================
+   LOAD CERTIFICATES
+========================================== */
+
+async function loadCertificatesAdmin(){
+
+const container =
+document.getElementById(
+"certificatesAdmin"
+);
+
+
+if(!container){
+
+return;
+
+}
+
+
+const {
+data,
+error
+} =
+await supabaseClient
+
+.from("certificates")
+
+.select(
+"id,user_id,title,description,file_path,issued_at"
+)
+
+.order(
+"issued_at",
+{
+ascending:false
+}
+);
+
+
+if(error){
+
+console.error(error);
+
+container.innerHTML = `
+
+<div class="glass empty">
+
+❌ Erreur de chargement des certificats.
+
+<br>
+
+<small>
+
+${escapeHTML(
+error.message
+)}
+
+</small>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if(!data || !data.length){
+
+container.innerHTML = `
+
+<div class="glass empty">
+
+🏆 Aucun certificat enregistré.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+const userIds = [
+
+...new Set(
+
+data.map(
+item =>
+item.user_id
+)
+
+)
+
+];
+
+
+const {
+data:profiles
+} =
+await supabaseClient
+
+.from("profiles")
+
+.select(
+"id,full_name"
+)
+
+.in(
+"id",
+userIds
+);
+
+
+const profileMap =
+new Map(
+
+(profiles || [])
+.map(
+p =>
+[
+p.id,
+p.full_name
+]
+)
+
+);
+
+
+let html = `
+
+<div class="glass table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Bénévole
+</th>
+
+<th>
+Certificat
+</th>
+
+<th>
+Date
+</th>
+
+<th>
+PDF
+</th>
+
+<th>
+Action
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+`;
+
+
+data.forEach(
+certificate => {
+
+
+const name =
+profileMap.get(
+certificate.user_id
+) ||
+"Bénévole";
+
+
+const date =
+certificate.issued_at
+
+?
+
+new Date(
+certificate.issued_at
+)
+.toLocaleDateString(
+"fr-FR"
+)
+
+:
+
+"-";
+
+
+html += `
+
+<tr>
+
+<td>
+
+<strong>
+
+${escapeHTML(name)}
+
+</strong>
+
+</td>
+
+
+<td>
+
+<strong>
+
+${escapeHTML(
+certificate.title
+)}
+
+</strong>
+
+
+${
+certificate.description
+
+?
+
+`
+
+<br>
+
+<small>
+
+${escapeHTML(
+certificate.description
+)}
+
+</small>
+
+`
+
+:
+
+""
+}
+
+</td>
+
+
+<td>
+
+${date}
+
+</td>
+
+
+<td>
+
+${
+certificate.file_path
+
+?
+
+`
+
+<button
+class="mini-btn"
+onclick="openCertificate(
+'${escapeHTML(
+certificate.file_path
+)}'
+)"
+>
+
+📄 Voir
+
+</button>
+
+`
+
+:
+
+`
+
+<span>
+Pas de PDF
+</span>
+
+`
+}
+
+</td>
+
+
+<td>
+
+<button
+class="mini-btn danger"
+onclick="deleteCertificate(
+'${certificate.id}',
+'${escapeHTML(
+certificate.file_path || ""
+)}'
+)"
+>
+
+Supprimer
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+
+html += `
+
+</tbody>
+
+</table>
+
+</div>
+
+`;
+
+
+container.innerHTML =
+html;
+
+}
+
+
+/* ==========================================
+   OPEN CERTIFICATE
+========================================== */
+
+async function openCertificate(
+filePath
+){
+
+if(!filePath){
+
+alert(
+"❌ Fichier introuvable."
+);
+
+return;
+
+}
+
+
+const {
+data,
+error
+} =
+await supabaseClient
+
+.storage
+
+.from("certificates")
+
+.createSignedUrl(
+filePath,
+3600
+);
+
+
+if(error){
+
+console.error(error);
+
+alert(
+"❌ Impossible d'ouvrir le PDF.\n\n" +
+error.message
+);
+
+return;
+
+}
+
+
+if(data?.signedUrl){
+
+window.open(
+data.signedUrl,
+"_blank"
+);
+
+}
+
+}
+
+
+/* ==========================================
+   DELETE CERTIFICATE
+========================================== */
+
+async function deleteCertificate(
+id,
+filePath
+){
+
+if(
+!confirm(
+"Supprimer ce certificat ?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+
+/* DELETE PDF */
+
+if(filePath){
+
+const {
+error:storageError
+} =
+await supabaseClient
+
+.storage
+
+.from("certificates")
+
+.remove([
+filePath
+]);
+
+
+if(storageError){
+
+console.error(
+storageError
+);
+
+}
+
+}
+
+
+/* DELETE DATABASE */
+
+const {
+error
+} =
+await supabaseClient
+
+.from("certificates")
+
+.delete()
+
+.eq(
+"id",
+id
+);
+
+
+if(error){
+
+throw error;
+
+}
+
+
+await loadCertificatesAdmin();
+
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"❌ " +
+error.message
+);
+
+}
+
+}
+
+
+/* ==========================================
+   CREATE CERTIFICATE
+========================================== */
+
+const certificateForm =
+document.getElementById(
+"certificateForm"
+);
+
+
+if(certificateForm){
+
+certificateForm.addEventListener(
+"submit",
+async function(e){
+
+e.preventDefault();
+
+
+const message =
+document.getElementById(
+"certificateMessage"
+);
+
+
+const submit =
+document.getElementById(
+"certificateSubmit"
+);
+
+
+const userId =
+document.getElementById(
+"certificateUser"
+).value;
+
+
+const title =
+document.getElementById(
+"certificateTitle"
+).value.trim();
+
+
+const description =
+document.getElementById(
+"certificateDescription"
+).value.trim();
+
+
+const file =
+document.getElementById(
+"certificateFile"
+).files[0];
+
+
+if(!userId){
+
+message.innerHTML =
+"❌ Choisissez un bénévole.";
+
+return;
+
+}
+
+
+if(!title){
+
+message.innerHTML =
+"❌ Entrez le titre du certificat.";
+
+return;
+
+}
+
+
+if(!file){
+
+message.innerHTML =
+"❌ Sélectionnez un fichier PDF.";
+
+return;
+
+}
+
+
+const isPDF =
+file.type ===
+"application/pdf"
+
+||
+
+file.name
+.toLowerCase()
+.endsWith(
+".pdf"
+);
+
+
+if(!isPDF){
+
+message.innerHTML =
+"❌ Le fichier doit être un PDF.";
+
+return;
+
+}
+
+
+if(
+file.size >
+10 * 1024 * 1024
+){
+
+message.innerHTML =
+"❌ Le PDF ne doit pas dépasser 10 MB.";
+
+return;
+
+}
+
+
+submit.disabled =
+true;
+
+submit.textContent =
+"⏳ Upload du PDF...";
+
+message.innerHTML =
+"";
+
+
+try{
+
+
+/* SAFE FILE NAME */
+
+const safeName =
+file.name
+
+.replace(
+/[^a-zA-Z0-9._-]/g,
+"_"
+);
+
+
+/* PATH */
+
+const filePath =
+userId +
+"/" +
+Date.now() +
+"_" +
+safeName;
+
+
+/* UPLOAD */
+
+const {
+error:uploadError
+} =
+await supabaseClient
+
+.storage
+
+.from("certificates")
+
+.upload(
+filePath,
+file,
+{
+
+contentType:
+"application/pdf",
+
+upsert:false
+
+}
+);
+
+
+if(uploadError){
+
+console.error(
+uploadError
+);
+
+throw uploadError;
+
+}
+
+
+/* DATABASE */
+
+const {
+error:insertError
+} =
+await supabaseClient
+
+.from("certificates")
+
+.insert({
+
+user_id:
+userId,
+
+title:
+title,
+
+description:
+description ||
+null,
+
+file_path:
+filePath
+
+});
+
+
+if(insertError){
+
+
+/* DELETE PDF */
+
+await supabaseClient
+
+.storage
+
+.from("certificates")
+
+.remove([
+filePath
+]);
+
+
+console.error(
+insertError
+);
+
+throw insertError;
+
+}
+
+
+message.innerHTML =
+"✅ <strong>Certificat ajouté avec succès !</strong>";
+
+
+certificateForm.reset();
+
+
+await loadCertificatesAdmin();
+
+
+}
+catch(error){
+
+console.error(error);
+
+message.innerHTML =
+"❌ " +
+escapeHTML(
+error.message ||
+"Erreur lors de l'ajout."
+);
+
+}
+finally{
+
+submit.disabled =
+false;
+
+submit.textContent =
+"🏆 Ajouter le certificat";
+
+}
+
+});
+
+}
+
+
+/* ==========================================
+   ANNOUNCEMENTS
+========================================== */
 
 async function loadAnnouncements(){
 
@@ -2047,10 +3482,13 @@ data,
 error
 } =
 await supabaseClient
+
 .from("announcements")
+
 .select(
 "id,title,content,category,is_published,created_at"
 )
+
 .order(
 "created_at",
 {
@@ -2061,14 +3499,18 @@ ascending:false
 
 if(error){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="glass empty">
+
 ❌ Erreur.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
@@ -2080,14 +3522,18 @@ document.getElementById(
 
 if(!data.length){
 
-container.innerHTML =
-`
+container.innerHTML = `
+
 <div class="glass empty">
+
 📢 Aucune annonce.
+
 </div>
+
 `;
 
 return;
+
 }
 
 
@@ -2097,49 +3543,68 @@ container.innerHTML = "";
 data.forEach(
 item => {
 
+
 const card =
 document.createElement(
 "div"
 );
 
+
 card.className =
 "glass event-admin-card";
 
 
-card.innerHTML =
-`
+card.innerHTML = `
+
 <div class="event-admin-head">
+
 
 <div>
 
 <h3>
+
 📢 ${escapeHTML(
 item.title
 )}
+
 </h3>
 
+
 <div class="event-meta">
+
 ${escapeHTML(
 item.category
 )}
+
 ·
+
 ${
 item.created_at
+
 ?
+
 new Date(
 item.created_at
-).toLocaleDateString(
+)
+.toLocaleDateString(
 "fr-FR"
 )
+
 :
+
 ""
+
 }
+
 </div>
 
+
 <p>
+
 ${escapeHTML(
 item.content
 )}
+
 </p>
 
 </div>
@@ -2151,10 +3616,13 @@ onclick="deleteAnnouncement(
 '${item.id}'
 )"
 >
+
 Supprimer
+
 </button>
 
 </div>
+
 `;
 
 
@@ -2210,13 +3678,21 @@ const {
 error
 } =
 await supabaseClient
+
 .from("announcements")
+
 .insert({
+
 title:title,
+
 content:content,
+
 category:category,
+
 is_published:true,
+
 created_by:adminProfile.id
+
 });
 
 
@@ -2229,6 +3705,7 @@ error.message
 );
 
 return;
+
 }
 
 
@@ -2255,7 +3732,9 @@ if(
 "Supprimer cette annonce ?"
 )
 ){
+
 return;
+
 }
 
 
@@ -2263,8 +3742,11 @@ const {
 error
 } =
 await supabaseClient
+
 .from("announcements")
+
 .delete()
+
 .eq(
 "id",
 id
@@ -2279,6 +3761,7 @@ error.message
 );
 
 return;
+
 }
 
 
@@ -2287,9 +3770,9 @@ await loadAnnouncements();
 }
 
 
-/* =========================
-TOTAL HOURS
-========================= */
+/* ==========================================
+   TOTAL HOURS
+========================================== */
 
 async function loadHours(){
 
@@ -2298,25 +3781,33 @@ data,
 error
 } =
 await supabaseClient
+
 .from("volunteer_hours")
+
 .select(
 "hours"
 );
 
 
 if(error){
+
 return;
+
 }
 
 
 const total =
 (data || []).reduce(
+
 (sum,item) =>
+
 sum +
 Number(
 item.hours || 0
 ),
+
 0
+
 );
 
 
@@ -2328,9 +3819,9 @@ total.toFixed(2);
 }
 
 
-/* =========================
-SECURITY
-========================= */
+/* ==========================================
+   SECURITY
+========================================== */
 
 function escapeHTML(
 value
@@ -2340,20 +3831,45 @@ if(
 value === null ||
 value === undefined
 ){
+
 return "";
+
 }
+
 
 return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+
+.replace(
+/&/g,
+"&amp;"
+)
+
+.replace(
+/</g,
+"&lt;"
+)
+
+.replace(
+/>/g,
+"&gt;"
+)
+
+.replace(
+/"/g,
+"&quot;"
+)
+
+.replace(
+/'/g,
+"&#039;"
+);
 
 }
 
 
-/* START */
+/* ==========================================
+   START
+========================================== */
 
 initAdmin();
 
