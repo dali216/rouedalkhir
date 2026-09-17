@@ -1,4 +1,3 @@
-```javascript
 // ========================================
 // SUPABASE
 // ========================================
@@ -47,47 +46,44 @@ function getRedirectUrl() {
 
 
 // ========================================
-// QR CODE USER
+// BASE64 → UINT8ARRAY
 // ========================================
 
-function generateUserQR(
-  userId,
-  elementId
-) {
+function urlBase64ToUint8Array(base64String) {
 
-  const element =
-    document.getElementById(
-      elementId
+  const padding =
+    "=".repeat(
+      (4 - base64String.length % 4) % 4
     );
 
-  if (
-    !element ||
-    !userId
+  const base64 =
+    (
+      base64String +
+      padding
+    )
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
+
+  const rawData =
+    window.atob(base64);
+
+  const outputArray =
+    new Uint8Array(
+      rawData.length
+    );
+
+  for (
+    let i = 0;
+    i < rawData.length;
+    ++i
   ) {
-    return;
+
+    outputArray[i] =
+      rawData.charCodeAt(i);
+
   }
 
-  const profileUrl =
-    new URL(
-      "profile.html?id=" +
-      encodeURIComponent(userId),
-      window.location.href
-    ).href;
-
-  element.innerHTML = "";
-
-  new QRCode(element, {
-
-    text: profileUrl,
-
-    width: 180,
-
-    height: 180,
-
-    correctLevel:
-      QRCode.CorrectLevel.H
-
-  });
+  return outputArray;
 
 }
 
@@ -103,15 +99,15 @@ async function getProfile() {
       user
     }
   } =
-    await supabaseClient.auth
-      .getUser();
+    await supabaseClient.auth.getUser();
 
   if (!user) {
     return null;
   }
 
   const {
-    data: profile
+    data: profile,
+    error
   } =
     await supabaseClient
       .from("profiles")
@@ -119,29 +115,31 @@ async function getProfile() {
       .eq("id", user.id)
       .maybeSingle();
 
+  if (error) {
+
+    console.error(
+      "PROFILE ERROR:",
+      error
+    );
+
+  }
+
   if (profile) {
 
     return {
-
       ...profile,
-
-      email:
-        user.email
-
+      email: user.email
     };
 
   }
 
   return {
 
-    id:
-      user.id,
+    id: user.id,
 
-    email:
-      user.email,
+    email: user.email,
 
-    role:
-      "volunteer"
+    role: "volunteer"
 
   };
 
@@ -161,8 +159,7 @@ async function requireAuth(
       user
     }
   } =
-    await supabaseClient.auth
-      .getUser();
+    await supabaseClient.auth.getUser();
 
   if (!user) {
 
@@ -179,7 +176,7 @@ async function requireAuth(
 
 
 // ========================================
-// ADMIN
+// ADMIN PROTECTION
 // ========================================
 
 async function requireAdmin() {
@@ -200,6 +197,64 @@ async function requireAdmin() {
   }
 
   return profile;
+
+}
+
+
+// ========================================
+// QR CODE USER
+// ========================================
+
+function generateUserQR(
+  userId,
+  elementId
+) {
+
+  const element =
+    document.getElementById(
+      elementId
+    );
+
+  if (
+    !element ||
+    !userId
+  ) {
+
+    return;
+
+  }
+
+  const profileUrl =
+    new URL(
+      "profile.html?id=" +
+      encodeURIComponent(userId),
+      window.location.href
+    ).href;
+
+  element.innerHTML = "";
+
+  if (
+    typeof QRCode === "undefined"
+  ) {
+
+    console.error(
+      "QRCode library not loaded."
+    );
+
+    return;
+
+  }
+
+  new QRCode(
+    element,
+    {
+      text: profileUrl,
+      width: 180,
+      height: 180,
+      correctLevel:
+        QRCode.CorrectLevel.H
+    }
+  );
 
 }
 
@@ -284,7 +339,6 @@ if (registerForm) {
         const redirectUrl =
           getRedirectUrl();
 
-
         const {
           data,
           error
@@ -344,12 +398,10 @@ if (registerForm) {
               "Cliquez sur le lien de confirmation.<br><br>" +
               "📁 Vérifiez aussi Spam.";
 
-
             const resend =
               document.getElementById(
                 "resendEmail"
               );
-
 
             if (resend) {
 
@@ -363,18 +415,19 @@ if (registerForm) {
             msg.innerHTML =
               "✅ Compte créé !";
 
+            setTimeout(
+              () => {
 
-            setTimeout(() => {
+                window.location.href =
+                  "dashboard.html";
 
-              window.location.href =
-                "dashboard.html";
-
-            }, 1000);
+              },
+              1000
+            );
 
           }
 
         }
-
 
       } catch (error) {
 
@@ -393,14 +446,13 @@ if (registerForm) {
 
 
 // ========================================
-// RESEND CONFIRMATION
+// RESEND CONFIRMATION EMAIL
 // ========================================
 
 const resendEmail =
   document.getElementById(
     "resendEmail"
   );
-
 
 if (resendEmail) {
 
@@ -413,14 +465,17 @@ if (resendEmail) {
           "msg"
         );
 
+      const emailInput =
+        document.getElementById(
+          "email"
+        );
 
       const email =
-        document
-          .getElementById("email")
-          .value
-          .trim()
-          .toLowerCase();
-
+        emailInput
+          ? emailInput.value
+              .trim()
+              .toLowerCase()
+          : "";
 
       if (!email) {
 
@@ -431,10 +486,8 @@ if (resendEmail) {
 
       }
 
-
       resendEmail.disabled =
         true;
-
 
       resendEmail.textContent =
         "⏳ Envoi...";
@@ -444,7 +497,6 @@ if (resendEmail) {
 
         const redirectUrl =
           getRedirectUrl();
-
 
         const {
           error
@@ -474,10 +526,8 @@ if (resendEmail) {
             "❌ " +
             error.message;
 
-
           resendEmail.disabled =
             false;
-
 
           resendEmail.textContent =
             "إعادة إرسال رابط التأكيد";
@@ -491,32 +541,33 @@ if (resendEmail) {
           "✅ رابط تأكيد جديد تم إرساله.<br>" +
           "تفقد Email و Spam.";
 
-
         resendEmail.textContent =
           "تم الإرسال ✓";
 
 
-        setTimeout(() => {
+        setTimeout(
+          () => {
 
-          resendEmail.disabled =
-            false;
+            resendEmail.disabled =
+              false;
 
-          resendEmail.textContent =
-            "إعادة إرسال رابط التأكيد";
+            resendEmail.textContent =
+              "إعادة إرسال رابط التأكيد";
 
-        }, 60000);
-
+          },
+          60000
+        );
 
       } catch (error) {
+
+        console.error(error);
 
         msg.innerHTML =
           "❌ " +
           error.message;
 
-
         resendEmail.disabled =
           false;
-
 
         resendEmail.textContent =
           "إعادة إرسال رابط التأكيد";
@@ -538,7 +589,6 @@ const loginForm =
     "login"
   );
 
-
 if (loginForm) {
 
   loginForm.addEventListener(
@@ -547,12 +597,10 @@ if (loginForm) {
 
       e.preventDefault();
 
-
       const msg =
         document.getElementById(
           "msg"
         );
-
 
       const email =
         document
@@ -560,7 +608,6 @@ if (loginForm) {
           .value
           .trim()
           .toLowerCase();
-
 
       const password =
         document
@@ -619,36 +666,449 @@ if (loginForm) {
         if (data.user) {
 
           const profile =
-            await get
+            await getProfile();
 
-if ("serviceWorker" in navigator) {
+          if (
+            profile &&
+            profile.role === "admin"
+          ) {
 
-  window.addEventListener("load", async () => {
+            window.location.href =
+              "admin.html";
 
-    try {
+          } else {
 
-      const registration =
-        await navigator.serviceWorker.register(
-          "./sw.js",
-          {
-            scope: "./"
+            window.location.href =
+              "dashboard.html";
+
           }
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+        msg.innerHTML =
+          "❌ " +
+          error.message;
+
+      }
+
+    }
+  );
+
+}
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+const logout =
+  document.getElementById(
+    "logout"
+  );
+
+if (logout) {
+
+  logout.addEventListener(
+    "click",
+    async function () {
+
+      try {
+
+        await supabaseClient.auth
+          .signOut();
+
+      } catch (error) {
+
+        console.error(
+          "LOGOUT ERROR:",
+          error
         );
 
-      console.log(
-        "✅ Service Worker actif:",
-        registration.scope
+      }
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+}
+
+
+// ========================================
+// SERVICE WORKER
+// ========================================
+
+async function registerServiceWorker() {
+
+  if (
+    !("serviceWorker" in navigator)
+  ) {
+
+    console.warn(
+      "Service Worker non supporté."
+    );
+
+    return null;
+
+  }
+
+  try {
+
+    const registration =
+      await navigator.serviceWorker.register(
+        "./sw.js",
+        {
+          scope: "./"
+        }
       );
 
-    } catch (error) {
+    console.log(
+      "✅ Service Worker actif:",
+      registration.scope
+    );
 
-      console.error(
-        "❌ Service Worker error:",
-        error
+    return registration;
+
+  } catch (error) {
+
+    console.error(
+      "❌ Service Worker error:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+// ========================================
+// PUSH NOTIFICATIONS
+// ========================================
+
+async function enablePushNotifications() {
+
+  const button =
+    document.getElementById(
+      "enablePush"
+    );
+
+  const status =
+    document.getElementById(
+      "pushStatus"
+    );
+
+
+  if (!button || !status) {
+
+    console.warn(
+      "Bouton enablePush ou pushStatus introuvable."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !("Notification" in window)
+  ) {
+
+    status.textContent =
+      "❌ Votre navigateur ne supporte pas les notifications.";
+
+    return;
+
+  }
+
+
+  if (
+    !("serviceWorker" in navigator)
+  ) {
+
+    status.textContent =
+      "❌ Service Worker non supporté.";
+
+    return;
+
+  }
+
+
+  if (
+    !("PushManager" in window)
+  ) {
+
+    status.textContent =
+      "❌ Les notifications Push ne sont pas supportées.";
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "⏳ Activation...";
+
+
+  try {
+
+    // ------------------------------
+    // AUTH USER
+    // ------------------------------
+
+    const {
+      data: {
+        user
+      }
+    } =
+      await supabaseClient.auth.getUser();
+
+
+    if (!user) {
+
+      throw new Error(
+        "Vous devez être connecté."
       );
 
     }
 
-  });
+
+    // ------------------------------
+    // SERVICE WORKER
+    // ------------------------------
+
+    const registration =
+      await registerServiceWorker();
+
+
+    if (!registration) {
+
+      throw new Error(
+        "Impossible d'activer le Service Worker."
+      );
+
+    }
+
+
+    // ------------------------------
+    // PERMISSION
+    // ------------------------------
+
+    const permission =
+      await Notification.requestPermission();
+
+
+    if (
+      permission !== "granted"
+    ) {
+
+      throw new Error(
+        "Permission de notification refusée."
+      );
+
+    }
+
+
+    // ------------------------------
+    // PUSH SUBSCRIPTION
+    // ------------------------------
+
+    let subscription =
+      await registration.pushManager.getSubscription();
+
+
+    if (!subscription) {
+
+      subscription =
+        await registration.pushManager.subscribe({
+
+          userVisibleOnly:
+            true,
+
+          applicationServerKey:
+            urlBase64ToUint8Array(
+              VAPID_PUBLIC_KEY
+            )
+
+        });
+
+    }
+
+
+    const subscriptionJSON =
+      subscription.toJSON();
+
+
+    const endpoint =
+      subscriptionJSON.endpoint;
+
+    const p256dh =
+      subscriptionJSON.keys?.p256dh;
+
+    const auth =
+      subscriptionJSON.keys?.auth;
+
+
+    if (
+      !endpoint ||
+      !p256dh ||
+      !auth
+    ) {
+
+      throw new Error(
+        "Impossible de récupérer les données Push."
+      );
+
+    }
+
+
+    // ------------------------------
+    // SAVE IN SUPABASE
+    // ------------------------------
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("push_subscriptions")
+        .upsert(
+          {
+
+            user_id:
+              user.id,
+
+            endpoint:
+              endpoint,
+
+            p256dh:
+              p256dh,
+
+            auth:
+              auth
+
+          },
+          {
+            onConflict:
+              "user_id,endpoint"
+          }
+        );
+
+
+    if (error) {
+
+      console.error(
+        "PUSH DATABASE ERROR:",
+        error
+      );
+
+      throw error;
+
+    }
+
+
+    // ------------------------------
+    // SUCCESS
+    // ------------------------------
+
+    status.innerHTML =
+      "✅ Notifications activées sur cet appareil.";
+
+    button.textContent =
+      "🔔 Notifications activées";
+
+    button.disabled =
+      true;
+
+
+    console.log(
+      "✅ Push subscription enregistrée."
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "PUSH ERROR:",
+      error
+    );
+
+
+    status.innerHTML =
+      "❌ " +
+      error.message;
+
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "🔔 Activer les notifications";
+
+  }
+
+}
+
+
+// ========================================
+// PUSH BUTTON
+// ========================================
+
+const enablePush =
+  document.getElementById(
+    "enablePush"
+  );
+
+if (enablePush) {
+
+  enablePush.addEventListener(
+    "click",
+    enablePushNotifications
+  );
+
+}
+
+
+// ========================================
+// AUTH EVENTS
+// ========================================
+
+supabaseClient.auth
+  .onAuthStateChange(
+    (event, session) => {
+
+      console.log(
+        "AUTH EVENT:",
+        event
+      );
+
+    }
+  );
+
+
+// ========================================
+// START SERVICE WORKER
+// ========================================
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      registerServiceWorker();
+
+    }
+  );
 
 }
