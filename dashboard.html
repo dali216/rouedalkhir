@@ -150,9 +150,20 @@
       cursor:pointer;
     }
 
-    .loading{
-      opacity:.6;
-      padding:20px;
+    .notification-box{
+      padding:25px;
+      border-radius:20px;
+      margin-top:25px;
+    }
+
+    #pushStatus{
+      opacity:.7;
+    }
+
+    #profileUrl{
+      display:block;
+      word-break:break-all;
+      opacity:.65;
     }
   </style>
 </head>
@@ -165,7 +176,9 @@
   <div class="dash-header">
 
     <div>
-      <span class="eyebrow">ROUED AL KHAIR</span>
+      <span class="eyebrow">
+        ROUED AL KHAIR
+      </span>
 
       <h1>
         Bonjour,
@@ -180,6 +193,7 @@
     <button
       id="logout"
       class="btn ghost logout-btn"
+      type="button"
     >
       Déconnexion
     </button>
@@ -192,22 +206,42 @@
 
     <div class="dash-card glass">
       <h3>⭐ Points</h3>
-      <div class="stat" id="points">0</div>
+      <div
+        class="stat"
+        id="points"
+      >
+        0
+      </div>
     </div>
 
     <div class="dash-card glass">
       <h3>⏱ Mes heures</h3>
-      <div class="stat" id="hours">0</div>
+      <div
+        class="stat"
+        id="hours"
+      >
+        0
+      </div>
     </div>
 
     <div class="dash-card glass">
       <h3>📅 Événements</h3>
-      <div class="stat" id="eventCount">0</div>
+      <div
+        class="stat"
+        id="eventCount"
+      >
+        0
+      </div>
     </div>
 
     <div class="dash-card glass">
       <h3>🏆 Certificats</h3>
-      <div class="stat" id="certificateCount">0</div>
+      <div
+        class="stat"
+        id="certificateCount"
+      >
+        0
+      </div>
     </div>
 
   </div>
@@ -224,7 +258,9 @@
       👤
       <strong>Mon profil</strong>
       <br>
-      <small>Voir mon profil public</small>
+      <small>
+        Voir mon profil public
+      </small>
     </a>
 
     <a
@@ -234,7 +270,9 @@
       📝
       <strong>Mon formulaire</strong>
       <br>
-      <small>Mes informations bénévoles</small>
+      <small>
+        Mes informations bénévoles
+      </small>
     </a>
 
     <a
@@ -244,7 +282,9 @@
       📄
       <strong>Mon CV</strong>
       <br>
-      <small>Gérer mon CV</small>
+      <small>
+        Gérer mon CV
+      </small>
     </a>
 
     <a
@@ -254,7 +294,9 @@
       📢
       <strong>Annonces</strong>
       <br>
-      <small>Actualités de l'association</small>
+      <small>
+        Actualités de l'association
+      </small>
     </a>
 
     <a
@@ -264,7 +306,9 @@
       💬
       <strong>Chat</strong>
       <br>
-      <small>Discuter avec les membres</small>
+      <small>
+        Discuter avec les membres
+      </small>
     </a>
 
     <a
@@ -274,7 +318,9 @@
       ⏱
       <strong>Mes heures</strong>
       <br>
-      <small>Suivre mes heures</small>
+      <small>
+        Suivre mes heures
+      </small>
     </a>
 
     <a
@@ -284,7 +330,9 @@
       🏆
       <strong>Certificats</strong>
       <br>
-      <small>Mes certificats</small>
+      <small>
+        Mes certificats
+      </small>
     </a>
 
     <a
@@ -294,7 +342,9 @@
       🔔
       <strong>Notifications</strong>
       <br>
-      <small>Mes notifications</small>
+      <small>
+        Mes notifications
+      </small>
     </a>
 
   </div>
@@ -304,7 +354,9 @@
   <section class="section">
 
     <div class="section-title">
+
       <div>
+
         <span class="eyebrow">
           PARTICIPATION
         </span>
@@ -312,16 +364,20 @@
         <h2>
           Événements
         </h2>
+
       </div>
+
     </div>
 
     <div
       id="eventsList"
       class="event-list"
     >
+
       <div class="glass empty">
         ⏳ Chargement des événements...
       </div>
+
     </div>
 
   </section>
@@ -333,6 +389,7 @@
     <div class="section-title">
 
       <div>
+
         <span class="eyebrow">
           ACTUALITÉS
         </span>
@@ -340,6 +397,7 @@
         <h2>
           Dernières annonces
         </h2>
+
       </div>
 
       <a
@@ -355,19 +413,23 @@
       id="announcementsList"
       class="event-list"
     >
+
       <div class="glass empty">
         ⏳ Chargement...
       </div>
+
     </div>
 
   </section>
 
 
-  <!-- QR -->
+  <!-- QR CODE -->
   <section class="section">
 
     <div class="section-title">
+
       <div>
+
         <span class="eyebrow">
           MON IDENTITÉ
         </span>
@@ -375,7 +437,9 @@
         <h2>
           Mon QR Code
         </h2>
+
       </div>
+
     </div>
 
     <div class="glass qr-box">
@@ -392,8 +456,42 @@
 
   </section>
 
+
+  <!-- NOTIFICATIONS -->
+  <section class="section">
+
+    <div class="glass notification-box">
+
+      <span class="eyebrow">
+        NOTIFICATIONS
+      </span>
+
+      <h3>
+        🔔 Notifications
+      </h3>
+
+      <p id="pushStatus">
+        Activez les notifications pour recevoir les nouvelles de l'association.
+      </p>
+
+      <button
+        id="enablePush"
+        class="btn"
+        type="button"
+      >
+        🔔 Activer les notifications
+      </button>
+
+    </div>
+
+  </section>
+
 </div>
 
+
+<!-- =====================================================
+     LIBRARIES
+===================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -404,98 +502,206 @@
 
 <script>
 
+/* =====================================================
+   VARIABLES
+===================================================== */
+
 let currentUser = null;
 let currentProfile = null;
 
 
-/* =========================
-   INIT
-========================= */
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
-async function initDashboard(){
+function escapeHTML(value){
 
-  currentUser =
-    await requireAuth();
-
-  if(!currentUser){
-    return;
+  if(
+    value === null ||
+    value === undefined
+  ){
+    return "";
   }
 
-
-  currentProfile =
-    await getProfile();
-
-
-  if(!currentProfile){
-    return;
-  }
-
-
-  /* NAME */
-
-  document.getElementById(
-    "userName"
-  ).textContent =
-    currentProfile.full_name ||
-    currentUser.email;
-
-
-  /* PROFILE LINK */
-
-  const profileUrl =
-    new URL(
-      "profile.html?id=" +
-      currentUser.id,
-      window.location.href
-    ).href;
-
-
-  document.getElementById(
-    "profileLink"
-  ).href =
-    profileUrl;
-
-
-  document.getElementById(
-    "profileUrl"
-  ).textContent =
-    profileUrl;
-
-
-  /* QR */
-
-  const qr =
-    document.getElementById(
-      "qrcode"
-    );
-
-  qr.innerHTML = "";
-
-  new QRCode(
-    qr,
-    {
-      text: profileUrl,
-      width:180,
-      height:180
-    }
-  );
-
-
-  /* LOAD DATA */
-
-  await Promise.all([
-    loadEvents(),
-    loadAnnouncements(),
-    loadHours(),
-    loadCertificates()
-  ]);
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
-/* =========================
+/* =====================================================
+   INIT
+===================================================== */
+
+async function initDashboard(){
+
+  try{
+
+    /* AUTH */
+
+    currentUser =
+      await requireAuth();
+
+
+    if(!currentUser){
+      return;
+    }
+
+
+    /* PROFILE */
+
+    currentProfile =
+      await getProfile();
+
+
+    if(!currentProfile){
+
+      console.error(
+        "Profile introuvable."
+      );
+
+      return;
+    }
+
+
+    /* NAME */
+
+    document.getElementById(
+      "userName"
+    ).textContent =
+      currentProfile.full_name ||
+      currentUser.email ||
+      "Bénévole";
+
+
+    /* PROFILE URL */
+
+    const profileUrl =
+      new URL(
+        "profile.html?id=" +
+        encodeURIComponent(
+          currentUser.id
+        ),
+        window.location.href
+      ).href;
+
+
+    document.getElementById(
+      "profileLink"
+    ).href =
+      profileUrl;
+
+
+    document.getElementById(
+      "profileUrl"
+    ).textContent =
+      profileUrl;
+
+
+    /* QR CODE */
+
+    const qr =
+      document.getElementById(
+        "qrcode"
+      );
+
+
+    qr.innerHTML = "";
+
+
+    if(
+      typeof QRCode !==
+      "undefined"
+    ){
+
+      new QRCode(
+        qr,
+        {
+          text:profileUrl,
+          width:180,
+          height:180
+        }
+      );
+
+    }
+    else{
+
+      qr.innerHTML = `
+        <div class="empty">
+          ❌ QR Code indisponible.
+        </div>
+      `;
+
+    }
+
+
+    /* LOAD ALL DATA */
+
+    await Promise.allSettled([
+
+      loadEvents(),
+
+      loadAnnouncements(),
+
+      loadHours(),
+
+      loadCertificates()
+
+    ]);
+
+
+    /* PUSH */
+
+    setupPushButton();
+
+
+    console.log(
+      "✅ Dashboard chargé."
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "DASHBOARD ERROR:",
+      error
+    );
+
+
+    const events =
+      document.getElementById(
+        "eventsList"
+      );
+
+
+    if(events){
+
+      events.innerHTML = `
+        <div class="glass empty">
+          ❌ Erreur de chargement du dashboard.
+          <br>
+          <small>
+            ${escapeHTML(
+              error.message
+            )}
+          </small>
+        </div>
+      `;
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
    EVENTS
-========================= */
+===================================================== */
 
 async function loadEvents(){
 
@@ -505,10 +711,12 @@ async function loadEvents(){
     );
 
 
-  const {
-    data: events,
-    error
-  } =
+  try{
+
+    const {
+      data:events,
+      error
+    } =
     await supabaseClient
       .from("events")
       .select(
@@ -522,47 +730,37 @@ async function loadEvents(){
       );
 
 
-  if(error){
+    if(error){
+      throw error;
+    }
 
-    console.error(
-      "EVENT ERROR:",
-      error
-    );
 
-    container.innerHTML =
-      `
-      <div class="glass empty">
-        ❌ Impossible de charger les événements.
-      </div>
+    if(
+      !events ||
+      events.length === 0
+    ){
+
+      container.innerHTML = `
+        <div class="glass empty">
+          📅 Aucun événement disponible pour le moment.
+        </div>
       `;
 
-    return;
-  }
+      document.getElementById(
+        "eventCount"
+      ).textContent =
+        "0";
+
+      return;
+    }
 
 
-  if(!events || events.length === 0){
+    /* USER REGISTRATIONS */
 
-    container.innerHTML =
-      `
-      <div class="glass empty">
-        📅 Aucun événement disponible pour le moment.
-      </div>
-      `;
-
-    document.getElementById(
-      "eventCount"
-    ).textContent = "0";
-
-    return;
-  }
-
-
-  /* registrations */
-
-  const {
-    data: registrations,
-    error: regError
-  } =
+    const {
+      data:registrations,
+      error:regError
+    } =
     await supabaseClient
       .from("event_participants")
       .select(
@@ -574,44 +772,45 @@ async function loadEvents(){
       );
 
 
-  if(regError){
+    if(regError){
 
-    console.error(
-      "REGISTRATION ERROR:",
-      regError
-    );
+      console.warn(
+        "Registration warning:",
+        regError
+      );
 
-  }
-
-
-  const registeredIds =
-    new Set(
-      (registrations || [])
-        .filter(
-          r =>
-            r.status !== "cancelled"
-        )
-        .map(
-          r =>
-            r.event_id
-        )
-    );
+    }
 
 
-  container.innerHTML = "";
+    const registeredIds =
+      new Set(
+        (registrations || [])
+          .filter(
+            r =>
+              r.status !==
+              "cancelled"
+          )
+          .map(
+            r =>
+              r.event_id
+          )
+      );
 
 
-  events.forEach(
-    event => {
-
-      const registered =
-        registeredIds.has(
-          event.id
-        );
+    container.innerHTML = "";
 
 
-      const date =
-        event.event_date
+    events.forEach(
+      event => {
+
+        const registered =
+          registeredIds.has(
+            event.id
+          );
+
+
+        const date =
+          event.event_date
           ? new Date(
               event.event_date
             ).toLocaleString(
@@ -624,104 +823,128 @@ async function loadEvents(){
           : "Date à confirmer";
 
 
-      const card =
-        document.createElement(
-          "div"
-        );
-
-      card.className =
-        "glass event-card";
+        const card =
+          document.createElement(
+            "div"
+          );
 
 
-      card.innerHTML =
-        `
-        <div class="event-info">
+        card.className =
+          "glass event-card";
 
-          <h3>
-            ${escapeHTML(event.title)}
-          </h3>
 
-          <p class="event-date">
-            📅 ${escapeHTML(date)}
-          </p>
+        card.innerHTML = `
 
-          ${
-            event.location
-              ?
+          <div class="event-info">
+
+            <h3>
+              ${escapeHTML(
+                event.title
+              )}
+            </h3>
+
+            <p class="event-date">
+              📅 ${escapeHTML(date)}
+            </p>
+
+            ${
+              event.location
+              ? `
+                <p>
+                  📍 ${escapeHTML(
+                    event.location
+                  )}
+                </p>
               `
-              <p>
-                📍 ${escapeHTML(event.location)}
-              </p>
-              `
-              :
-              ""
-          }
+              : ""
+            }
 
-          ${
-            event.description
-              ?
+            ${
+              event.description
+              ? `
+                <p>
+                  ${escapeHTML(
+                    event.description
+                  )}
+                </p>
               `
-              <p>
-                ${escapeHTML(event.description)}
-              </p>
-              `
-              :
-              ""
-          }
+              : ""
+            }
 
-        </div>
+          </div>
 
+          <div>
 
-        <div>
+            ${
+              registered
+              ? `
+                <button
+                  class="participate-btn registered"
+                  disabled
+                >
+                  ✓ Inscrit
+                </button>
+              `
+              : `
+                <button
+                  class="participate-btn"
+                  onclick="registerForEvent(
+                    '${event.id}',
+                    this
+                  )"
+                >
+                  Participer
+                </button>
+              `
+            }
 
-          ${
-            registered
-              ?
-              `
-              <button
-                class="participate-btn registered"
-                disabled
-              >
-                ✓ Inscrit
-              </button>
-              `
-              :
-              `
-              <button
-                class="participate-btn"
-                onclick="registerForEvent(
-                  '${event.id}',
-                  this
-                )"
-              >
-                Participer
-              </button>
-              `
-          }
+          </div>
 
-        </div>
         `;
 
 
-      container.appendChild(
-        card
-      );
+        container.appendChild(
+          card
+        );
 
-    }
-  );
+      }
+    );
 
 
-  document.getElementById(
-    "eventCount"
-  ).textContent =
-    events.length;
+    document.getElementById(
+      "eventCount"
+    ).textContent =
+      events.length;
+
+  }
+  catch(error){
+
+    console.error(
+      "EVENT ERROR:",
+      error
+    );
+
+
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ Impossible de charger les événements.
+        <br>
+        <small>
+          ${escapeHTML(
+            error.message
+          )}
+        </small>
+      </div>
+    `;
+
+  }
 
 }
 
 
-/* =========================
+/* =====================================================
    REGISTER EVENT
-========================= */
+===================================================== */
 
 async function registerForEvent(
   eventId,
@@ -740,21 +963,64 @@ async function registerForEvent(
     "⏳ Inscription...";
 
 
-  const {
-    error
-  } =
+  try{
+
+    const {
+      error
+    } =
     await supabaseClient
       .from(
         "event_participants"
       )
       .insert({
-        event_id:eventId,
-        user_id:currentUser.id,
-        status:"registered"
+
+        event_id:
+          eventId,
+
+        user_id:
+          currentUser.id,
+
+        status:
+          "registered"
+
       });
 
 
-  if(error){
+    if(error){
+
+      if(
+        error.code ===
+        "23505"
+      ){
+
+        button.textContent =
+          "✓ Déjà inscrit";
+
+        button.classList.add(
+          "registered"
+        );
+
+        return;
+
+      }
+
+
+      throw error;
+
+    }
+
+
+    button.textContent =
+      "✓ Inscrit";
+
+
+    button.classList.add(
+      "registered"
+    );
+
+
+  }
+  catch(error){
 
     console.error(
       "REGISTER ERROR:",
@@ -762,23 +1028,8 @@ async function registerForEvent(
     );
 
 
-    if(
-      error.code === "23505"
-    ){
-
-      button.textContent =
-        "✓ Déjà inscrit";
-
-      button.classList.add(
-        "registered"
-      );
-
-      return;
-    }
-
-
     alert(
-      "❌ Erreur lors de l'inscription : " +
+      "❌ Erreur lors de l'inscription :\n\n" +
       error.message
     );
 
@@ -789,23 +1040,14 @@ async function registerForEvent(
     button.textContent =
       "Participer";
 
-    return;
   }
-
-
-  button.textContent =
-    "✓ Inscrit";
-
-  button.classList.add(
-    "registered"
-  );
 
 }
 
 
-/* =========================
+/* =====================================================
    ANNOUNCEMENTS
-========================= */
+===================================================== */
 
 async function loadAnnouncements(){
 
@@ -815,10 +1057,12 @@ async function loadAnnouncements(){
     );
 
 
-  const {
-    data,
-    error
-  } =
+  try{
+
+    const {
+      data,
+      error
+    } =
     await supabaseClient
       .from("announcements")
       .select(
@@ -837,95 +1081,120 @@ async function loadAnnouncements(){
       .limit(3);
 
 
-  if(error){
-
-    console.error(
-      error
-    );
-
-    container.innerHTML =
-      `
-      <div class="glass empty">
-        ❌ Impossible de charger les annonces.
-      </div>
-      `;
-
-    return;
-  }
+    if(error){
+      throw error;
+    }
 
 
-  if(!data || data.length === 0){
+    if(
+      !data ||
+      data.length === 0
+    ){
 
-    container.innerHTML =
-      `
-      <div class="glass empty">
-        📢 Aucune annonce pour le moment.
-      </div>
-      `;
-
-    return;
-  }
-
-
-  container.innerHTML = "";
-
-
-  data.forEach(
-    item => {
-
-      const card =
-        document.createElement(
-          "div"
-        );
-
-      card.className =
-        "glass event-card";
-
-
-      card.innerHTML =
-        `
-        <div class="event-info">
-
-          <h3>
-            📢 ${escapeHTML(item.title)}
-          </h3>
-
-          <p>
-            ${escapeHTML(item.content)}
-          </p>
-
-          <small>
-            ${new Date(
-              item.created_at
-            ).toLocaleDateString(
-              "fr-FR"
-            )}
-          </small>
-
+      container.innerHTML = `
+        <div class="glass empty">
+          📢 Aucune annonce pour le moment.
         </div>
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    data.forEach(
+      item => {
+
+        const card =
+          document.createElement(
+            "div"
+          );
+
+
+        card.className =
+          "glass event-card";
+
+
+        card.innerHTML = `
+
+          <div class="event-info">
+
+            <h3>
+              📢 ${escapeHTML(
+                item.title
+              )}
+            </h3>
+
+            <p>
+              ${escapeHTML(
+                item.content
+              )}
+            </p>
+
+            <small>
+              ${
+                item.created_at
+                ? new Date(
+                    item.created_at
+                  ).toLocaleDateString(
+                    "fr-FR"
+                  )
+                : ""
+              }
+            </small>
+
+          </div>
+
         `;
 
 
-      container.appendChild(
-        card
-      );
+        container.appendChild(
+          card
+        );
 
-    }
-  );
+      }
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "ANNOUNCEMENT ERROR:",
+      error
+    );
+
+
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ Impossible de charger les annonces.
+        <br>
+        <small>
+          ${escapeHTML(
+            error.message
+          )}
+        </small>
+      </div>
+    `;
+
+  }
 
 }
 
 
-/* =========================
+/* =====================================================
    HOURS
-========================= */
+===================================================== */
 
 async function loadHours(){
 
-  const {
-    data,
-    error
-  } =
+  try{
+
+    const {
+      data,
+      error
+    } =
     await supabaseClient
       .from("volunteer_hours")
       .select("hours")
@@ -935,59 +1204,63 @@ async function loadHours(){
       );
 
 
-  if(error){
+    if(error){
+      throw error;
+    }
+
+
+    const total =
+      (data || []).reduce(
+        (
+          sum,
+          item
+        ) =>
+          sum +
+          Number(
+            item.hours || 0
+          ),
+        0
+      );
+
+
+    document.getElementById(
+      "hours"
+    ).textContent =
+      total.toFixed(2);
+
+
+    document.getElementById(
+      "points"
+    ).textContent =
+      Math.round(
+        total * 10
+      );
+
+  }
+  catch(error){
 
     console.error(
       "HOURS ERROR:",
       error
     );
 
-    return;
   }
-
-
-  const total =
-    (data || []).reduce(
-      (
-        sum,
-        item
-      ) =>
-        sum +
-        Number(
-          item.hours || 0
-        ),
-      0
-    );
-
-
-  document.getElementById(
-    "hours"
-  ).textContent =
-    total.toFixed(2);
-
-
-  /* simple points */
-
-  document.getElementById(
-    "points"
-  ).textContent =
-    Math.round(
-      total * 10
-    );
 
 }
 
 
-/* =========================
+/* =====================================================
    CERTIFICATES
-========================= */
+===================================================== */
 
 async function loadCertificates(){
 
-  const {
-    data,
-    error
-  } =
+  try{
+
+    const {
+      data,
+      error
+    } =
     await supabaseClient
       .from("certificates")
       .select("id")
@@ -997,91 +1270,178 @@ async function loadCertificates(){
       );
 
 
-  if(error){
+    if(error){
+      throw error;
+    }
+
+
+    document.getElementById(
+      "certificateCount"
+    ).textContent =
+      (data || []).length;
+
+  }
+  catch(error){
 
     console.error(
-      "CERTIFICATES ERROR:",
+      "CERTIFICATE ERROR:",
       error
     );
 
+  }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+.getElementById("logout")
+.addEventListener(
+"click",
+async function(){
+
+  try{
+
+    await supabaseClient
+      .auth
+      .signOut();
+
+  }
+  finally{
+
+    window.location.href =
+      "login.html";
+
+  }
+
+});
+
+
+/* =====================================================
+   PUSH NOTIFICATIONS
+===================================================== */
+
+function setupPushButton(){
+
+  const button =
+    document.getElementById(
+      "enablePush"
+    );
+
+
+  const status =
+    document.getElementById(
+      "pushStatus"
+    );
+
+
+  if(!button){
     return;
   }
 
 
-  document.getElementById(
-    "certificateCount"
-  ).textContent =
-    (data || []).length;
+  if(
+    !("Notification" in window)
+  ){
 
-}
+    button.disabled =
+      true;
 
+    status.textContent =
+      "Les notifications ne sont pas supportées par ce navigateur.";
 
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(
-  value
-){
-
-  if(value === null ||
-     value === undefined){
-
-    return "";
+    return;
 
   }
 
 
-  return String(value)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
+  if(
+    Notification.permission ===
+    "granted"
+  ){
+
+    status.textContent =
+      "✅ Les notifications sont déjà activées.";
+
+  }
+
+
+  button.addEventListener(
+    "click",
+    async function(){
+
+      try{
+
+        const permission =
+          await Notification.requestPermission();
+
+
+        if(
+          permission ===
+          "granted"
+        ){
+
+          status.textContent =
+            "✅ Notifications activées.";
+
+          new Notification(
+            "Roued Al Khair",
+            {
+              body:
+                "Les notifications sont maintenant activées."
+            }
+          );
+
+        }
+        else{
+
+          status.textContent =
+            "❌ Autorisation refusée.";
+
+        }
+
+      }
+      catch(error){
+
+        console.error(
+          "PUSH ERROR:",
+          error
+        );
+
+        status.textContent =
+          "❌ Impossible d'activer les notifications.";
+
+      }
+
+    }
+  );
 
 }
 
-  <div class="glass notification-box">
 
-  <span class="eyebrow">NOTIFICATIONS</span>
-
-  <h3>🔔 Notifications</h3>
-
-  <p id="pushStatus">
-    فعّل الإشعارات باش توصلك أخبار الجمعية حتى كي الموقع مسكّر.
-  </p>
-
-  <button
-    id="enablePush"
-    class="btn"
-    type="button"
-  >
-    🔔 Activer les notifications
-  </button>
-
-</div>
-
-
-/* =========================
+/* =====================================================
    START
-========================= */
+===================================================== */
 
-initDashboard();
+if(
+  document.readyState ===
+  "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initDashboard
+  );
+
+}
+else{
+
+  initDashboard();
+
+}
 
 </script>
 
