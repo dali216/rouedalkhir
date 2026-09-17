@@ -1,24 +1,764 @@
-<!doctype html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Administration — Roued Al Khair</title><link rel="stylesheet" href="style.css"></head><body>
-<header class="nav-wrap"><nav class="nav glass"><a class="brand" href="index.html"><span class="logo">RK</span><span>Roued <b>Al Khair</b></span></a>
-<div style="margin-left:auto;display:flex;gap:8px"><a class="btn small ghost" href="dashboard.html">Dashboard</a><button class="btn small" id="logout">Déconnexion</button></div></nav></header>
-<main class="dashboard"><div class="dash-head"><div><span class="eyebrow">Administration</span><h1>Gestion de <span>l'association.</span></h1><p>Événements, bénévoles et identité du site.</p></div></div>
-<div class="dash-grid"><div class="metric glass"><small>Bénévoles</small><strong id="usersCount">—</strong><span>comptes enregistrés</span></div><div class="metric glass"><small>Événements</small><strong id="eventsCount">—</strong><span>dans l'agenda</span></div><div class="metric glass"><small>Rôle</small><strong>ADMIN</strong><span>accès gestion</span></div><div class="metric glass"><small>Logo</small><strong>✓</strong><span>personnalisable</span></div></div>
-<div class="dash-main"><section class="glass panel"><div class="panel-title"><h2>Ajouter un événement</h2></div>
-<form id="eventForm"><label>Titre</label><input id="title" required placeholder="Ex. Journée solidaire"><label>Date et heure</label><input id="date" type="datetime-local" required><label>Lieu</label><input id="location" placeholder="Ex. Mégrine"><label>Description</label><input id="description" placeholder="Description courte"><button class="btn" style="margin-top:20px">Ajouter l'événement →</button></form><small id="eventMsg"></small></section>
-<aside class="glass panel"><h2>Logo du site</h2><p style="color:#64748b;font-size:12px;line-height:1.6">Pour changer le logo facilement, remplacez <b>RK</b> dans les éléments avec la classe <b>logo</b>, ou utilisez une URL d'image ci-dessous.</p>
-<label>URL du logo</label><input id="logoUrl" placeholder="https://.../logo.png"><button class="btn" id="saveLogo" style="margin-top:15px">Enregistrer le logo</button><small id="logoMsg"></small></aside></div>
-<section class="glass panel" style="margin-top:16px"><div class="panel-title"><h2>Événements existants</h2></div><div id="eventList">Chargement...</div></section>
-<section class="glass panel" style="margin-top:16px"><div class="panel-title"><h2>Rôles bénévoles</h2></div><p style="color:#64748b;font-size:12px">Les rôles sont gérés dans Supabase. Utilisez le SQL fourni avec ce projet pour attribuer <b>admin</b> ou <b>volunteer</b>. Le rôle admin protège cette page côté base de données.</p></section>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="app.js"></script>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Administration — Roued Al Khair</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      font-family: Arial, sans-serif;
+    }
+
+    .admin-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .admin-header h1 {
+      margin: 0;
+    }
+
+    .admin-header p {
+      margin: 6px 0 0;
+      color: #777;
+    }
+
+    .logout-btn {
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #111;
+      color: white;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    }
+
+    .stat span {
+      display: block;
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .stat strong {
+      font-size: 30px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    }
+
+    .section h2 {
+      margin-top: 0;
+    }
+
+    .announcement-form {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .add-btn {
+      border: 0;
+      padding: 13px 20px;
+      border-radius: 10px;
+      background: #111;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .announcement {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 12px;
+    }
+
+    .announcement h3 {
+      margin: 0 0 8px;
+    }
+
+    .announcement p {
+      color: #555;
+      white-space: pre-wrap;
+    }
+
+    .announcement small {
+      color: #888;
+    }
+
+    .delete-btn {
+      margin-top: 12px;
+      border: 0;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: #e53935;
+      color: white;
+      cursor: pointer;
+    }
+
+    .members {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 13px;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: #f7f7f7;
+    }
+
+    .role-admin {
+      font-weight: bold;
+    }
+
+    #message {
+      margin: 15px 0;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    @media (max-width: 800px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="admin-container">
+
+  <div class="admin-header">
+
+    <div>
+      <h1>⚙️ Administration</h1>
+      <p id="adminName">Chargement...</p>
+    </div>
+
+    <button id="logout" class="logout-btn">
+      Déconnexion
+    </button>
+
+  </div>
+
+
+  <div id="message"></div>
+
+
+  <!-- STATISTIQUES -->
+
+  <div class="stats">
+
+    <div class="stat">
+      <span>👥 Membres</span>
+      <strong id="membersCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>📢 Annonces</span>
+      <strong id="announcementsCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>📅 Événements</span>
+      <strong id="eventsCount">0</strong>
+    </div>
+
+    <div class="stat">
+      <span>⏱️ Heures bénévoles</span>
+      <strong id="hoursCount">0</strong>
+    </div>
+
+  </div>
+
+
+  <!-- MEMBRES -->
+
+  <div class="section">
+
+    <h2>👥 Membres</h2>
+
+    <div class="members">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+
+        <tbody id="membersList">
+          <tr>
+            <td colspan="4">
+              Chargement...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- ANNONCES -->
+
+  <div class="section">
+
+    <h2>📢 Gestion des annonces</h2>
+
+    <div class="announcement-form">
+
+      <input
+        type="text"
+        id="announcementTitle"
+        placeholder="Titre de l'annonce"
+      >
+
+      <select id="announcementCategory">
+
+        <option value="general">
+          Général
+        </option>
+
+        <option value="mission">
+          Mission
+        </option>
+
+        <option value="event">
+          Événement
+        </option>
+
+        <option value="urgent">
+          Urgent
+        </option>
+
+        <option value="formation">
+          Formation
+        </option>
+
+      </select>
+
+      <textarea
+        id="announcementContent"
+        placeholder="Contenu de l'annonce..."
+      ></textarea>
+
+      <button
+        class="add-btn"
+        id="addAnnouncement"
+      >
+        ➕ Publier l'annonce
+      </button>
+
+    </div>
+
+    <div id="announcementsList">
+      Chargement...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="app.js"></script>
+
+
 <script>
-(async()=>{const p=await requireAdmin();if(!p)return;
-const {data:profiles}=await supabaseClient.from('profiles').select('id,role'); document.getElementById('usersCount').textContent=profiles?.length||0;
-loadEvents();
-document.getElementById('eventForm').onsubmit=async e=>{e.preventDefault();const {error}=await supabaseClient.from('events').insert({title:title.value,description:description.value,location:location.value,event_date:date.value,created_by:p.id});eventMsg.textContent=error?'Erreur : '+error.message:'Événement ajouté !';if(!error){e.target.reset();loadEvents()}};
-document.getElementById('saveLogo').onclick=()=>{const u=logoUrl.value.trim();if(!u)return;localStorage.setItem('siteLogo',u);logoMsg.textContent='Logo enregistré sur ce navigateur.';};
-})(); async function loadEvents(){const {data}=await supabaseClient.from('events').select('*').order('event_date',{ascending:true});eventsCount.textContent=data?.length||0;eventList.innerHTML=data?.length?data.map(e=>`<div class="dash-event"><div class="date"><b>${new Date(e.event_date).getDate()}</b><small>${new Date(e.event_date).toLocaleDateString('fr-FR',{month:'short'}).toUpperCase()}</small></div><div><h3>${escapeHtml(e.title)}</h3><p>📍 ${escapeHtml(e.location||'—')}</p></div><button class="btn tiny ghost" onclick="deleteEvent('${e.id}')">Supprimer</button></div>`).join(''):'<p style="color:#64748b">Aucun événement.</p>'}
-async function deleteEvent(id){if(!confirm('Supprimer cet événement ?'))return;await supabaseClient.from('events').delete().eq('id',id);loadEvents()}
-function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-</script></body></html>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+  const admin =
+    await requireAdmin();
+
+  if (!admin) {
+    return;
+  }
+
+  document.getElementById("adminName").textContent =
+    "Connecté en tant que " +
+    (admin.full_name || admin.email);
+
+
+  await loadMembers();
+  await loadAnnouncements();
+  await loadStats();
+
+
+  /*
+   * MEMBRES
+   */
+
+  async function loadMembers() {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select("id, full_name, role, created_at")
+        .order("created_at", {
+          ascending: false
+        });
+
+    if (error) {
+
+      console.error(error);
+
+      document.getElementById("membersList").innerHTML =
+        `<tr>
+          <td colspan="4">
+            ❌ ${error.message}
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    const emails = {};
+
+    for (const profile of data || []) {
+
+      /*
+       * Supabase ne permet pas de récupérer
+       * auth.users directement côté navigateur.
+       */
+
+      emails[profile.id] = "—";
+    }
+
+
+    document.getElementById("membersCount").textContent =
+      (data || []).length;
+
+
+    if (!data || data.length === 0) {
+
+      document.getElementById("membersList").innerHTML =
+        `<tr>
+          <td colspan="4">
+            Aucun membre.
+          </td>
+        </tr>`;
+
+      return;
+    }
+
+
+    document.getElementById("membersList").innerHTML =
+      data.map(function (member) {
+
+        return `
+          <tr>
+
+            <td>
+              ${escapeHtml(member.full_name || "Sans nom")}
+            </td>
+
+            <td>
+              ${emails[member.id]}
+            </td>
+
+            <td class="${member.role === "admin" ? "role-admin" : ""}">
+              ${escapeHtml(member.role || "volunteer")}
+            </td>
+
+            <td>
+              ${formatDate(member.created_at)}
+            </td>
+
+          </tr>
+        `;
+
+      }).join("");
+  }
+
+
+  /*
+   * ANNONCES
+   */
+
+  async function loadAnnouncements() {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("announcements")
+        .select("*")
+        .order("created_at", {
+          ascending: false
+        });
+
+
+    if (error) {
+
+      console.error(error);
+
+      document.getElementById("announcementsList").innerHTML =
+        "❌ " + escapeHtml(error.message);
+
+      return;
+    }
+
+
+    document.getElementById("announcementsCount").textContent =
+      (data || []).length;
+
+
+    if (!data || data.length === 0) {
+
+      document.getElementById("announcementsList").innerHTML =
+        "<p>Aucune annonce.</p>";
+
+      return;
+    }
+
+
+    document.getElementById("announcementsList").innerHTML =
+      data.map(function (item) {
+
+        return `
+          <div class="announcement">
+
+            <h3>
+              ${escapeHtml(item.title)}
+            </h3>
+
+            <small>
+              ${escapeHtml(item.category)}
+              ·
+              ${formatDate(item.created_at)}
+            </small>
+
+            <p>
+              ${escapeHtml(item.content)}
+            </p>
+
+            <button
+              class="delete-btn"
+              onclick="deleteAnnouncement('${item.id}')"
+            >
+              🗑️ Supprimer
+            </button>
+
+          </div>
+        `;
+
+      }).join("");
+  }
+
+
+  /*
+   * AJOUT ANNONCE
+   */
+
+  document
+    .getElementById("addAnnouncement")
+    .addEventListener("click", async function () {
+
+      const title =
+        document
+          .getElementById("announcementTitle")
+          .value
+          .trim();
+
+      const category =
+        document
+          .getElementById("announcementCategory")
+          .value;
+
+      const content =
+        document
+          .getElementById("announcementContent")
+          .value
+          .trim();
+
+
+      if (!title || !content) {
+
+        showMessage(
+          "❌ Remplissez le titre et le contenu.",
+          true
+        );
+
+        return;
+      }
+
+
+      const {
+        data: {
+          user
+        }
+      } =
+        await supabaseClient.auth.getUser();
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("announcements")
+          .insert({
+
+            title: title,
+
+            content: content,
+
+            category: category,
+
+            is_published: true,
+
+            created_by: user.id
+
+          });
+
+
+      if (error) {
+
+        console.error(error);
+
+        showMessage(
+          "❌ " + error.message,
+          true
+        );
+
+        return;
+      }
+
+
+      document
+        .getElementById("announcementTitle")
+        .value = "";
+
+      document
+        .getElementById("announcementContent")
+        .value = "";
+
+
+      showMessage(
+        "✅ Annonce publiée."
+      );
+
+
+      await loadAnnouncements();
+      await loadStats();
+
+    });
+
+
+  /*
+   * STATS
+   */
+
+  async function loadStats() {
+
+    const events =
+      await supabaseClient
+        .from("events")
+        .select("id", {
+          count: "exact",
+          head: true
+        });
+
+
+    if (!events.error) {
+
+      document.getElementById("eventsCount").textContent =
+        events.count || 0;
+
+    }
+
+
+    const hours =
+      await supabaseClient
+        .from("volunteer_hours")
+        .select("hours");
+
+
+    if (!hours.error) {
+
+      let total = 0;
+
+      (hours.data || []).forEach(function (item) {
+
+        total += Number(item.hours) || 0;
+
+      });
+
+      document.getElementById("hoursCount").textContent =
+        total.toFixed(1);
+
+    }
+
+  }
+
+
+  function showMessage(text, error = false) {
+
+    const box =
+      document.getElementById("message");
+
+    box.style.display = "block";
+
+    box.textContent = text;
+
+    if (error) {
+      box.style.background = "#ffe5e5";
+    } else {
+      box.style.background = "#e5f8eb";
+    }
+
+    setTimeout(function () {
+      box.style.display = "none";
+    }, 4000);
+
+  }
+
+
+  function escapeHtml(value) {
+
+    return String(value || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+
+  }
+
+
+  function formatDate(date) {
+
+    if (!date) {
+      return "—";
+    }
+
+    return new Date(date).toLocaleDateString(
+      "fr-FR"
+    );
+
+  }
+
+
+  window.deleteAnnouncement =
+    async function (id) {
+
+      if (!confirm(
+        "Supprimer cette annonce ?"
+      )) {
+        return;
+      }
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("announcements")
+          .delete()
+          .eq("id", id);
+
+
+      if (error) {
+
+        alert(
+          "❌ " + error.message
+        );
+
+        return;
+      }
+
+
+      await loadAnnouncements();
+      await loadStats();
+
+    };
+
+
+});
+
+</script>
+
+</body>
+</html>
