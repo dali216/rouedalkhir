@@ -1,0 +1,466 @@
+```html
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Chat — Roued Al Khair</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      background: #f5f7f8;
+      font-family: Arial, sans-serif;
+    }
+
+    .chat-page {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 15px;
+    }
+
+    .chat-header {
+      padding: 22px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .chat-header h1 {
+      margin: 0;
+    }
+
+    .chat-header p {
+      margin: 6px 0 0;
+      opacity: .7;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .chat-box {
+      height: 60vh;
+      min-height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      border-radius: 20px;
+    }
+
+    .message {
+      display: flex;
+      margin-bottom: 14px;
+    }
+
+    .message.mine {
+      justify-content: flex-end;
+    }
+
+    .bubble {
+      max-width: 75%;
+      padding: 12px 15px;
+      border-radius: 17px;
+      background: white;
+      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+    }
+
+    .mine .bubble {
+      background: #111;
+      color: white;
+    }
+
+    .sender {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      opacity: .7;
+    }
+
+    .text {
+      font-size: 15px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .time {
+      font-size: 10px;
+      opacity: .55;
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .empty {
+      text-align: center;
+      opacity: .6;
+      padding: 60px 20px;
+    }
+
+    .chat-form {
+      margin-top: 15px;
+      padding: 15px;
+      display: flex;
+      gap: 10px;
+      border-radius: 20px;
+    }
+
+    .chat-form textarea {
+      flex: 1;
+      min-height: 50px;
+      max-height: 130px;
+      resize: vertical;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 13px;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .send-btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 0 22px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    @media(max-width:600px) {
+      .chat-page {
+        margin: 10px auto;
+      }
+
+      .chat-header {
+        align-items: flex-start;
+      }
+
+      .chat-box {
+        height: 62vh;
+      }
+
+      .bubble {
+        max-width: 85%;
+      }
+
+      .chat-form {
+        flex-direction: column;
+      }
+
+      .send-btn {
+        height: 48px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="chat-page">
+
+  <div class="glass chat-header">
+
+    <div>
+      <a class="back-btn" href="dashboard.html">
+        ← Retour
+      </a>
+
+      <h1>💬 Chat des membres</h1>
+
+      <p>
+        Espace de discussion pour les membres de Roued Al Khair.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div id="chatBox" class="glass chat-box">
+
+    <div id="empty" class="empty">
+      ⏳ Chargement des messages...
+    </div>
+
+  </div>
+
+
+  <form id="chatForm" class="glass chat-form">
+
+    <textarea
+      id="messageInput"
+      placeholder="Écrire un message..."
+      maxlength="1000"
+      required
+    ></textarea>
+
+    <button
+      id="sendBtn"
+      class="send-btn"
+      type="submit"
+    >
+      Envoyer →
+    </button>
+
+  </form>
+
+  <div id="status" class="status"></div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+  "https://iimzsfbkgugbqkipsdih.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_JFAxVtAkqUWJ1XSmhk7TZw_xPyT13dY";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+        storage: window.localStorage
+      }
+    }
+  );
+
+
+let currentUser = null;
+let messagesLoaded = false;
+
+
+/* =========================
+   AUTH
+========================= */
+
+async function checkAuth() {
+
+  const {
+    data: {
+      user
+    }
+  } =
+    await supabaseClient.auth.getUser();
+
+
+  if (!user) {
+
+    window.location.href =
+      "login.html";
+
+    return false;
+  }
+
+
+  currentUser = user;
+
+  return true;
+}
+
+
+/* =========================
+   LOAD MESSAGES
+========================= */
+
+async function loadMessages() {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("public_chat_messages")
+      .select(`
+        id,
+        user_id,
+        message,
+        created_at,
+        profiles (
+          full_name
+        )
+      `)
+      .order(
+        "created_at",
+        {
+          ascending: true
+        }
+      );
+
+
+  if (error) {
+
+    console.error(
+      "CHAT ERROR:",
+      error
+    );
+
+    document.getElementById(
+      "empty"
+    ).innerHTML =
+      "❌ Erreur de chargement du chat.";
+
+    return;
+  }
+
+
+  const chatBox =
+    document.getElementById(
+      "chatBox"
+    );
+
+
+  chatBox.innerHTML = "";
+
+
+  if (!data || data.length === 0) {
+
+    chatBox.innerHTML =
+      `<div class="empty">
+        💬 Aucun message pour le moment.<br>
+        Soyez le premier à écrire !
+      </div>`;
+
+    messagesLoaded = true;
+
+    return;
+  }
+
+
+  data.forEach(
+    addMessage
+  );
+
+
+  messagesLoaded = true;
+
+
+  scrollToBottom();
+}
+
+
+/* =========================
+   ADD MESSAGE
+========================= */
+
+function addMessage(msg) {
+
+  const chatBox =
+    document.getElementById(
+      "chatBox"
+    );
+
+
+  const wrapper =
+    document.createElement(
+      "div"
+    );
+
+
+  const isMine =
+    msg.user_id ===
+    currentUser.id;
+
+
+  wrapper.className =
+    "message " +
+    (isMine ? "mine" : "");
+
+
+  const bubble =
+    document.createElement(
+      "div"
+    );
+
+  bubble.className =
+    "bubble";
+
+
+  const sender =
+    document.createElement(
+      "div"
+    );
+
+  sender.className =
+    "sender";
+
+
+  if (isMine) {
+
+    sender.textContent =
+      "Vous";
+
+  } else {
+
+    sender.textContent =
+      msg.profiles?.full_name ||
+      "Membre";
+  }
+
+
+  const text =
+    document.createElement(
+      "div"
+    );
+
+  text.className =
+    "text";
+
+  text.textContent =
+    msg.message;
+
+
+  const time =
+    document.createElement(
+      "div"
+    );
+
+  time.className =
+    "time";
+
+
+  const date =
+    new Date(
+      msg.created_at
+    );
+
+
+  time.textContent =
+    date.toLocaleString(
+      "fr-FR",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+
+  bubble.appendChild(
+    sender
+  );
+
+  bubble.appendChild(
+    text
+  );
+```
