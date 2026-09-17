@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  >
+
+  <title>Mon formulaire — Roued Al Khair</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <style>
+
+    .form-page {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    .form-header {
+      margin-bottom: 25px;
+    }
+
+    .form-card {
+      padding: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 18px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(100,116,139,.25);
+      background: rgba(255,255,255,.7);
+      font: inherit;
+      outline: none;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #64748b;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    #msg {
+      font-size: 14px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    @media(max-width:700px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .form-card {
+        padding: 20px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================= -->
+<!-- NAVBAR -->
+<!-- ========================================= -->
+
+<header class="nav-wrap">
+
+  <nav class="nav glass">
+
+    <a
+      class="brand"
+      href="dashboard.html"
+    >
+
+      <span class="logo">
+        RK
+      </span>
+
+      <span>
+        Roued <b>Al Khair</b>
+      </span>
+
+    </a>
+
+
+    <button
+      class="btn small"
+      id="logout"
+    >
+      Déconnexion
+    </button>
+
+  </nav>
+
+</header>
+
+
+
+<!-- ========================================= -->
+<!-- PAGE -->
+<!-- ========================================= -->
+
+<main class="form-page">
+
+
+  <a
+    href="dashboard.html"
+    class="back-btn"
+  >
+    ← Retour à mon espace
+  </a>
+
+
+  <div class="form-header">
+
+    <span class="eyebrow">
+      ESPACE BÉNÉVOLE
+    </span>
+
+    <h1>
+      Mon formulaire
+    </h1>
+
+    <p>
+      Complétez vos informations afin que
+      l'association puisse mieux connaître
+      votre profil et vos compétences.
+    </p>
+
+  </div>
+
+
+
+  <!-- ======================================= -->
+  <!-- FORM -->
+  <!-- ======================================= -->
+
+  <form
+    id="volunteerForm"
+    class="glass form-card"
+  >
+
+
+    <div class="form-grid">
+
+
+      <!-- NOM -->
+
+      <div class="form-group">
+
+        <label>
+          Nom et prénom
+        </label>
+
+        <input
+          type="text"
+          id="full_name"
+          required
+          placeholder="Votre nom et prénom"
+        >
+
+      </div>
+
+
+
+      <!-- PHONE -->
+
+      <div class="form-group">
+
+        <label>
+          Téléphone
+        </label>
+
+        <input
+          type="tel"
+          id="phone"
+          placeholder="+216 XX XXX XXX"
+        >
+
+      </div>
+
+
+
+      <!-- DATE -->
+
+      <div class="form-group">
+
+        <label>
+          Date de naissance
+        </label>
+
+        <input
+          type="date"
+          id="birth_date"
+        >
+
+      </div>
+
+
+
+      <!-- PROFESSION -->
+
+      <div class="form-group">
+
+        <label>
+          Profession / Activité
+        </label>
+
+        <input
+          type="text"
+          id="profession"
+          placeholder="Ex: Étudiant, Chef, Designer..."
+        >
+
+      </div>
+
+
+
+      <!-- EDUCATION -->
+
+      <div class="form-group">
+
+        <label>
+          Études / Formation
+        </label>
+
+        <input
+          type="text"
+          id="education"
+          placeholder="Votre niveau ou formation"
+        >
+
+      </div>
+
+
+
+      <!-- ADDRESS -->
+
+      <div class="form-group">
+
+        <label>
+          Adresse
+        </label>
+
+        <input
+          type="text"
+          id="address"
+          placeholder="Votre adresse"
+        >
+
+      </div>
+
+
+
+      <!-- SKILLS -->
+
+      <div class="form-group full">
+
+        <label>
+          Compétences
+        </label>
+
+        <textarea
+          id="skills"
+          placeholder="Ex: cuisine, communication, informatique, photographie..."
+        ></textarea>
+
+      </div>
+
+
+
+      <!-- EXPERIENCE -->
+
+      <div class="form-group full">
+
+        <label>
+          Expérience associative
+        </label>
+
+        <textarea
+          id="experience"
+          placeholder="Parlez-nous de vos expériences..."
+        ></textarea>
+
+      </div>
+
+
+
+      <!-- AVAILABILITY -->
+
+      <div class="form-group">
+
+        <label>
+          Disponibilité
+        </label>
+
+        <select id="availability">
+
+          <option value="">
+            Sélectionner
+          </option>
+
+          <option value="weekdays">
+            Jours de semaine
+          </option>
+
+          <option value="weekend">
+            Week-end
+          </option>
+
+          <option value="evenings">
+            Soirs
+          </option>
+
+          <option value="flexible">
+            Flexible
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+      <!-- INTERESTS -->
+
+      <div class="form-group">
+
+        <label>
+          Centres d'intérêt
+        </label>
+
+        <input
+          type="text"
+          id="interests"
+          placeholder="Ex: enfants, environnement, aide sociale..."
+        >
+
+      </div>
+
+
+
+      <!-- MOTIVATION -->
+
+      <div class="form-group full">
+
+        <label>
+          Pourquoi souhaitez-vous être bénévole ?
+        </label>
+
+        <textarea
+          id="motivation"
+          placeholder="Votre motivation..."
+        ></textarea>
+
+      </div>
+
+
+
+      <!-- EMERGENCY -->
+
+      <div class="form-group full">
+
+        <label>
+          Contact en cas d'urgence
+        </label>
+
+        <input
+          type="text"
+          id="emergency_contact"
+          placeholder="Nom + numéro de téléphone"
+        >
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+      <button
+        type="submit"
+        class="btn"
+        id="saveBtn"
+      >
+        💾 Enregistrer mes informations
+      </button>
+
+      <span id="msg"></span>
+
+    </div>
+
+
+  </form>
+
+
+</main>
+
+
+
+<!-- ========================================= -->
+<!-- SUPABASE -->
+<!-- ========================================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="app.js"></script>
+
+
+
+<script>
+
+(async () => {
+
+
+  /* ===================================== */
+  /* AUTH */
+  /* ===================================== */
+
+  const user =
+    await requireAuth();
+
+  if (!user) return;
+
+
+
+  /* ===================================== */
+  /* GET PROFILE */
+  /* ===================================== */
+
+  const profile =
+    await getProfile();
+
+  if (profile) {
+
+    document.getElementById(
+      "full_name"
+    ).value =
+      profile.full_name || "";
+
+  }
+
+
+
+  /* ===================================== */
+  /* LOAD EXISTING FORM */
+  /* ===================================== */
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("volunteer_forms")
+      .select("*")
+      .eq(
+        "user_id",
+        user.id
+      )
+      .maybeSingle();
+
+
+  if (error) {
+
+    console.error(error);
+
+  }
+
+
+  if (data) {
+
+    document.getElementById("phone")
+      .value =
+      data.phone || "";
+
+    document.getElementById("birth_date")
+      .value =
+      data.birth_date || "";
+
+    document.getElementById("address")
+      .value =
+      data.address || "";
+
+    document.getElementById("profession")
+      .value =
+      data.profession || "";
+
+    document.getElementById("education")
+      .value =
+      data.education || "";
+
+    document.getElementById("skills")
+      .value =
+      data.skills || "";
+
+    document.getElementById("experience")
+      .value =
+      data.experience || "";
+
+    document.getElementById("availability")
+      .value =
+      data.availability || "";
+
+    document.getElementById("interests")
+      .value =
+      data.interests || "";
+
+    document.getElementById("motivation")
+      .value =
+      data.motivation || "";
+
+    document.getElementById("emergency_contact")
+      .value =
+      data.emergency_contact || "";
+
+  }
+
+
+
+  /* ===================================== */
+  /* SAVE */
+  /* ===================================== */
+
+  document.getElementById(
+    "volunteerForm"
+  ).addEventListener(
+    "submit",
+    async function(e) {
+
+      e.preventDefault();
+
+
+      const msg =
+        document.getElementById(
+          "msg"
+        );
+
+      const saveBtn =
+        document.getElementById(
+          "saveBtn"
+        );
+
+
+      saveBtn.disabled = true;
+
+      saveBtn.textContent =
+        "⏳ Enregistrement...";
+
+
+      const values = {
+
+        user_id: user.id,
+
+        phone:
+          document.getElementById(
+            "phone"
+          ).value.trim(),
+
+        birth_date:
+          document.getElementById(
+            "birth_date"
+          ).value || null,
+
+        address:
+          document.getElementById(
+            "address"
+          ).value.trim(),
+
+        profession:
+          document.getElementById(
+            "profession"
+          ).value.trim(),
+
+        education:
+          document.getElementById(
+            "education"
+          ).value.trim(),
+
+        skills:
+          document.getElementById(
+            "skills"
+          ).value.trim(),
+
+        experience:
+          document.getElementById(
+            "experience"
+          ).value.trim(),
+
+        availability:
+          document.getElementById(
+            "availability"
+          ).value,
+
+        interests:
+          document.getElementById(
+            "interests"
+          ).value.trim(),
+
+        motivation:
+          document.getElementById(
+            "motivation"
+          ).value.trim(),
+
+        emergency_contact:
+          document.getElementById(
+            "emergency_contact"
+          ).value.trim(),
+
+        updated_at:
+          new Date().toISOString()
+
+      };
+
+
+      const {
+        error
+      } =
+        await supabaseClient
+          .from("volunteer_forms")
+          .upsert(
+            values,
+            {
+              onConflict:
+                "user_id"
+            }
+          );
+
+
+      if (error) {
+
+        console.error(error);
+
+        msg.innerHTML =
+          "❌ " +
+          error.message;
+
+        msg.style.color =
+          "#ef4444";
+
+      } else {
+
+        msg.innerHTML =
+          "✅ Informations enregistrées avec succès.";
+
+        msg.style.color =
+          "#16a34a";
+
+      }
+
+
+      saveBtn.disabled = false;
+
+      saveBtn.textContent =
+        "💾 Enregistrer mes informations";
+
+    }
+  );
+
+
+})();
+
+</script>
+
+
+</body>
+
+</html>
