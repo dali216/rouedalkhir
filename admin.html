@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -9,6 +10,10 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+
+/* ==========================================
+   GENERAL
+========================================== */
 
 .admin-wrap{
   max-width:1250px;
@@ -229,9 +234,75 @@ th{
   font-size:13px;
 }
 
-.certificate-icon{
-  font-size:22px;
+
+/* ==========================================
+   SITE SETTINGS
+========================================== */
+
+.site-preview-wrap{
+  display:flex;
+  gap:25px;
+  flex-wrap:wrap;
+  margin-top:10px;
 }
+
+.site-preview-box{
+  min-width:150px;
+}
+
+.site-preview-box strong{
+  display:block;
+  margin-bottom:12px;
+}
+
+.site-logo-preview{
+  width:130px;
+  height:130px;
+  object-fit:contain;
+  border-radius:18px;
+  background:#f5f5f5;
+  padding:10px;
+  display:none;
+}
+
+.site-hero-preview{
+  width:280px;
+  height:160px;
+  object-fit:cover;
+  border-radius:18px;
+  background:#f5f5f5;
+  display:none;
+}
+
+.site-images-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:18px;
+}
+
+.site-image-card{
+  padding:15px;
+  border-radius:18px;
+}
+
+.site-image-card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:14px;
+  display:block;
+  margin-bottom:12px;
+}
+
+.site-image-card h3{
+  margin:0 0 10px;
+  font-size:16px;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media(max-width:600px){
 
@@ -239,16 +310,26 @@ th{
     padding:20px 12px 50px;
   }
 
+  .site-hero-preview{
+    width:100%;
+    max-width:280px;
+  }
+
 }
 
 </style>
+
 </head>
+
 
 <body>
 
 <div class="admin-wrap">
 
-<!-- ================= HEADER ================= -->
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <header class="admin-header">
 
@@ -278,248 +359,15 @@ Déconnexion
 </header>
 
 
-<!-- ================= STATS ================= -->
+<!-- ==========================================
+     STATS
+========================================== -->
 
 <section class="stats">
 
 <div class="glass stat-card">
 
 <small>
-
-  <!-- ================= SITE SETTINGS ================= -->
-
-<section class="section">
-
-<div class="section-title">
-
-<div>
-
-<span class="eyebrow">
-SITE
-</span>
-
-<h2>
-Paramètres du site
-</h2>
-
-</div>
-
-</div>
-
-<form id="siteSettingsForm" class="glass form-box">
-
-<div class="form-grid">
-
-<div>
-
-<label>
-🏷️ Nom du site
-</label>
-
-<input
-id="siteName"
-type="text"
-placeholder="Roued Al Khair"
->
-
-</div>
-
-<div>
-
-<label>
-🖼️ Logo du site
-</label>
-
-<input
-id="siteLogo"
-type="file"
-accept="image/png,image/jpeg,image/webp,image/svg+xml"
->
-
-<span class="file-info">
-PNG, JPG, WEBP ou SVG — maximum 5 MB
-</span>
-
-</div>
-
-<div>
-
-<label>
-🌅 Image principale
-</label>
-
-<input
-id="siteHero"
-type="file"
-accept="image/png,image/jpeg,image/webp"
->
-
-<span class="file-info">
-PNG, JPG ou WEBP — maximum 10 MB
-</span>
-
-</div>
-
-</div>
-
-<div style="margin-top:20px">
-
-<div style="display:flex;gap:20px;flex-wrap:wrap">
-
-<div>
-
-<strong>Logo actuel</strong>
-
-<br><br>
-
-<img
-id="currentLogoPreview"
-src=""
-alt="Logo"
-style="
-width:120px;
-height:120px;
-object-fit:contain;
-border-radius:15px;
-background:#f5f5f5;
-padding:10px;
-display:none;
-"
->
-
-</div>
-
-
-<div>
-
-<strong>Image principale actuelle</strong>
-
-<br><br>
-
-<img
-id="currentHeroPreview"
-src=""
-alt="Image principale"
-style="
-width:250px;
-height:140px;
-object-fit:cover;
-border-radius:15px;
-background:#f5f5f5;
-display:none;
-"
->
-
-</div>
-
-</div>
-
-</div>
-
-<br>
-
-<button
-id="siteSettingsSubmit"
-class="btn"
-type="submit"
->
-💾 Enregistrer les paramètres
-</button>
-
-<div
-id="siteSettingsMessage"
-class="message"
-></div>
-
-</form>
-
-
-<!-- GALLERY -->
-
-<div class="section-title">
-
-<div>
-
-<span class="eyebrow">
-GALERIE
-</span>
-
-<h2>
-Ajouter des images
-</h2>
-
-</div>
-
-</div>
-
-
-<form
-id="siteImageForm"
-class="glass form-box"
->
-
-<div class="form-grid">
-
-<div>
-
-<label>
-📝 Nom de l'image
-</label>
-
-<input
-id="siteImageTitle"
-type="text"
-placeholder="Nos activités"
->
-
-</div>
-
-<div>
-
-<label>
-🖼️ Image
-</label>
-
-<input
-id="siteImageFile"
-type="file"
-accept="image/png,image/jpeg,image/webp"
-required
->
-
-</div>
-
-</div>
-
-<br>
-
-<button
-class="btn"
-type="submit"
->
-➕ Ajouter l'image
-</button>
-
-<div
-id="siteImageMessage"
-class="message"
-></div>
-
-</form>
-
-
-<div id="siteImagesAdmin">
-
-<div class="glass empty">
-⏳ Chargement...
-</div>
-
-</div>
-
-</section>
-
-
-  
 👥 Membres
 </small>
 
@@ -583,7 +431,273 @@ class="stat-number"
 </section>
 
 
-<!-- ================= MEMBERS ================= -->
+
+<!-- ==========================================
+     SITE SETTINGS
+========================================== -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
+<span class="eyebrow">
+SITE
+</span>
+
+<h2>
+Paramètres du site
+</h2>
+
+</div>
+
+</div>
+
+
+<form
+id="siteSettingsForm"
+class="glass form-box"
+>
+
+
+<div class="form-grid">
+
+
+<!-- SITE NAME -->
+
+<div>
+
+<label>
+🏷️ Nom du site
+</label>
+
+<input
+id="siteName"
+type="text"
+placeholder="Roued Al Khair"
+>
+
+</div>
+
+
+<!-- LOGO -->
+
+<div>
+
+<label>
+🖼️ Logo du site</label>
+
+<input
+id="siteLogo"
+type="file"
+accept="image/png,image/jpeg,image/webp,image/svg+xml"
+>
+
+<span class="file-info">
+PNG, JPG, WEBP ou SVG — maximum 5 MB
+</span>
+
+</div>
+
+
+<!-- HERO -->
+
+<div>
+
+<label>
+🌅 Image principale
+</label>
+
+<input
+id="siteHero"
+type="file"
+accept="image/png,image/jpeg,image/webp"
+>
+
+<span class="file-info">
+PNG, JPG ou WEBP — maximum 10 MB
+</span>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<!-- PREVIEWS -->
+
+<div class="site-preview-wrap">
+
+
+<div class="site-preview-box">
+
+<strong>
+Logo actuel
+</strong>
+
+<img
+id="currentLogoPreview"
+class="site-logo-preview"
+src=""
+alt="Logo"
+>
+
+</div>
+
+
+<div class="site-preview-box">
+
+<strong>
+Image principale
+</strong>
+
+<img
+id="currentHeroPreview"
+class="site-hero-preview"
+src=""
+alt="Image principale"
+>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button
+id="siteSettingsSubmit"
+class="btn"
+type="submit"
+>
+
+💾 Enregistrer les paramètres
+
+</button>
+
+
+<div
+id="siteSettingsMessage"
+class="message"
+></div>
+
+
+</form>
+
+
+
+<!-- ==========================================
+     SITE GALLERY
+========================================== -->
+
+<div class="section-title">
+
+<div>
+
+<span class="eyebrow">
+GALERIE
+</span>
+
+<h2>
+Ajouter des images
+</h2>
+
+</div>
+
+</div>
+
+
+<form
+id="siteImageForm"
+class="glass form-box"
+>
+
+
+<div class="form-grid">
+
+
+<div>
+
+<label>
+📝 Nom de l'image
+</label>
+
+<input
+id="siteImageTitle"
+type="text"
+placeholder="Nos activités"
+>
+
+</div>
+
+
+<div>
+
+<label>
+🖼️ Image
+</label>
+
+<input
+id="siteImageFile"
+type="file"
+accept="image/png,image/jpeg,image/webp"
+required
+>
+
+<span class="file-info">
+PNG, JPG ou WEBP — maximum 10 MB
+</span>
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<button
+class="btn"
+type="submit"
+>
+
+➕ Ajouter l'image
+
+</button>
+
+
+<div
+id="siteImageMessage"
+class="message"
+></div>
+
+
+</form>
+
+
+<div id="siteImagesAdmin">
+
+<div class="glass empty">
+⏳ Chargement...
+</div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- ==========================================
+     MEMBERS
+========================================== -->
 
 <section class="section">
 
@@ -665,7 +779,10 @@ Chargement...
 </section>
 
 
-<!-- ================= CREATE EVENT ================= -->
+
+<!-- ==========================================
+     CREATE EVENT
+========================================== -->
 
 <section class="section">
 
@@ -692,6 +809,7 @@ class="glass form-box"
 >
 
 <div class="form-grid">
+
 
 <div>
 
@@ -750,28 +868,38 @@ placeholder="Description..."
 
 </div>
 
+
 </div>
 
+
 <br>
+
 
 <button
 class="btn"
 type="submit"
 >
+
 + Créer l'événement
+
 </button>
+
 
 <div
 id="eventMessage"
 class="message"
 ></div>
 
+
 </form>
 
 </section>
 
 
-<!-- ================= EVENTS ================= -->
+
+<!-- ==========================================
+     EVENTS
+========================================== -->
 
 <section class="section">
 
@@ -803,7 +931,10 @@ PARTICIPANTS
 </section>
 
 
-<!-- ================= HOURS ================= -->
+
+<!-- ==========================================
+     HOURS
+========================================== -->
 
 <section class="section">
 
@@ -902,21 +1033,28 @@ placeholder="Ex: Préparation et distribution des repas"
 
 </div>
 
+
 </div>
 
+
 <br>
+
 
 <button
 class="btn"
 type="submit"
 >
+
 + Ajouter les heures
+
 </button>
+
 
 <div
 id="hoursMessage"
 class="message"
 ></div>
+
 
 </form>
 
@@ -932,7 +1070,10 @@ class="message"
 </section>
 
 
-<!-- ================= CERTIFICATES ================= -->
+
+<!-- ==========================================
+     CERTIFICATES
+========================================== -->
 
 <section class="section">
 
@@ -1030,17 +1171,21 @@ PDF uniquement — maximum 10 MB
 
 </div>
 
+
 </div>
 
 
 <br>
+
 
 <button
 id="certificateSubmit"
 class="btn"
 type="submit"
 >
+
 🏆 Ajouter le certificat
+
 </button>
 
 
@@ -1048,6 +1193,7 @@ type="submit"
 id="certificateMessage"
 class="message"
 ></div>
+
 
 </form>
 
@@ -1063,7 +1209,10 @@ class="message"
 </section>
 
 
-<!-- ================= ANNOUNCEMENTS ================= -->
+
+<!-- ==========================================
+     ANNOUNCEMENTS
+========================================== -->
 
 <section class="section">
 
@@ -1156,21 +1305,28 @@ placeholder="Votre annonce..."
 
 </div>
 
+
 </div>
 
+
 <br>
+
 
 <button
 class="btn"
 type="submit"
 >
+
 + Publier l'annonce
+
 </button>
+
 
 <div
 id="announcementMessage"
 class="message"
 ></div>
+
 
 </form>
 
@@ -1179,10 +1335,14 @@ class="message"
 
 </section>
 
+
 </div>
 
 
-<!-- ================= SCRIPTS ================= -->
+
+<!-- ==========================================
+     SCRIPTS
+========================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -1228,9 +1388,875 @@ loadHours(),
 
 loadHoursAdmin(),
 
-loadCertificatesAdmin()
+loadCertificatesAdmin(),
+
+loadSiteSettings(),
+
+loadSiteImages()
 
 ]);
+
+}
+
+
+/* ==========================================
+   SITE SETTINGS
+========================================== */
+
+async function loadSiteSettings(){
+
+const {
+data,
+error
+} =
+await supabaseClient
+
+.from("site_settings")
+
+.select("*")
+
+.eq("id",1)
+
+.maybeSingle();
+
+
+if(error){
+
+console.error(
+"Site settings:",
+error
+);
+
+return;
+
+}
+
+
+if(!data){
+
+return;
+
+}
+
+
+const siteName =
+document.getElementById(
+"siteName"
+);
+
+
+if(siteName){
+
+siteName.value =
+data.site_name ||
+"Roued Al Khair";
+
+}
+
+
+const logoPreview =
+document.getElementById(
+"currentLogoPreview"
+);
+
+
+if(
+logoPreview &&
+data.logo_url
+){
+
+logoPreview.src =
+data.logo_url;
+
+logoPreview.style.display =
+"block";
+
+}
+
+
+const heroPreview =
+document.getElementById(
+"currentHeroPreview"
+);
+
+
+if(
+heroPreview &&
+data.hero_image_url
+){
+
+heroPreview.src =
+data.hero_image_url;
+
+heroPreview.style.display =
+"block";
+
+}
+
+}
+
+
+/* ==========================================
+   UPLOAD SITE ASSET
+========================================== */
+
+async function uploadSiteAsset(
+file,
+folder,
+maxSize
+){
+
+if(!file){
+
+return null;
+
+}
+
+
+if(file.size > maxSize){
+
+throw new Error(
+"Fichier trop volumineux."
+);
+
+}
+
+
+const safeName =
+file.name
+
+.replace(
+/[^a-zA-Z0-9._-]/g,
+"_"
+);
+
+
+const path =
+folder +
+"/" +
+Date.now() +
+"_" +
+safeName;
+
+
+const {
+error
+} =
+await supabaseClient
+
+.storage
+
+.from("site-assets")
+
+.upload(
+path,
+file,
+{
+upsert:false
+}
+);
+
+
+if(error){
+
+throw error;
+
+}
+
+
+const {
+data
+} =
+supabaseClient
+
+.storage
+
+.from("site-assets")
+
+.getPublicUrl(path);
+
+
+return {
+
+path:path,
+
+url:data.publicUrl
+
+};
+
+}
+
+
+/* ==========================================
+   SAVE SITE SETTINGS
+========================================== */
+
+document.getElementById(
+"siteSettingsForm"
+).addEventListener(
+"submit",
+async function(e){
+
+e.preventDefault();
+
+
+const message =
+document.getElementById(
+"siteSettingsMessage"
+);
+
+
+const submit =
+document.getElementById(
+"siteSettingsSubmit"
+);
+
+
+const siteName =
+document.getElementById(
+"siteName"
+).value.trim();
+
+
+const logoFile =
+document.getElementById(
+"siteLogo"
+).files[0];
+
+
+const heroFile =
+document.getElementById(
+"siteHero"
+).files[0];
+
+
+submit.disabled =
+true;
+
+submit.textContent =
+"⏳ Enregistrement...";
+
+message.innerHTML =
+"";
+
+
+try{
+
+let logoPath = null;
+
+let logoUrl = null;
+
+let heroPath = null;
+
+let heroUrl = null;
+
+
+/* LOGO */
+
+if(logoFile){
+
+const allowed = [
+
+"image/png",
+
+"image/jpeg",
+
+"image/webp",
+
+"image/svg+xml"
+
+];
+
+
+if(
+!allowed.includes(
+logoFile.type
+)
+){
+
+throw new Error(
+"Format du logo non valide."
+);
+
+}
+
+
+const result =
+await uploadSiteAsset(
+logoFile,
+"logo",
+5 * 1024 * 1024
+);
+
+
+logoPath =
+result.path;
+
+logoUrl =
+result.url;
+
+}
+
+
+/* HERO */
+
+if(heroFile){
+
+const allowed = [
+
+"image/png",
+
+"image/jpeg",
+
+"image/webp"
+
+];
+
+
+if(
+!allowed.includes(
+heroFile.type
+)
+){
+
+throw new Error(
+"Format de l'image principale non valide."
+);
+
+}
+
+
+const result =
+await uploadSiteAsset(
+heroFile,
+"hero",
+10 * 1024 * 1024
+);
+
+
+heroPath =
+result.path;
+
+heroUrl =
+result.url;
+
+}
+
+
+/* DATABASE */
+
+const updateData = {
+
+site_name:
+siteName ||
+"Roued Al Khair",
+
+updated_at:
+new Date().toISOString()
+
+};
+
+
+if(logoPath){
+
+updateData.logo_path =
+logoPath;
+
+updateData.logo_url =
+logoUrl;
+
+}
+
+
+if(heroPath){
+
+updateData.hero_image_path =
+heroPath;
+
+updateData.hero_image_url =
+heroUrl;
+
+}
+
+
+const {
+error
+} =
+await supabaseClient
+
+.from("site_settings")
+
+.update(
+updateData
+)
+
+.eq(
+"id",
+1
+);
+
+
+if(error){
+
+throw error;
+
+}
+
+
+message.innerHTML =
+"✅ <strong>Paramètres enregistrés !</strong>";
+
+
+if(logoUrl){
+
+const preview =
+document.getElementById(
+"currentLogoPreview"
+);
+
+preview.src =
+logoUrl;
+
+preview.style.display =
+"block";
+
+}
+
+
+if(heroUrl){
+
+const preview =
+document.getElementById(
+"currentHeroPreview"
+);
+
+preview.src =
+heroUrl;
+
+preview.style.display =
+"block";
+
+}
+
+
+document.getElementById(
+"siteLogo"
+).value =
+"";
+
+
+document.getElementById(
+"siteHero"
+).value =
+"";
+
+
+}
+catch(error){
+
+console.error(error);
+
+message.innerHTML =
+"❌ " +
+escapeHTML(
+error.message
+);
+
+}
+finally{
+
+submit.disabled =
+false;
+
+submit.textContent =
+"💾 Enregistrer les paramètres";
+
+}
+
+});
+
+
+/* ==========================================
+   SITE IMAGES
+========================================== */
+
+async function loadSiteImages(){
+
+const container =
+document.getElementById(
+"siteImagesAdmin"
+);
+
+
+const {
+data,
+error
+} =
+await supabaseClient
+
+.from("site_images")
+
+.select("*")
+
+.order(
+"display_order",
+{
+ascending:true
+}
+)
+
+.order(
+"created_at",
+{
+ascending:false
+}
+);
+
+
+if(error){
+
+console.error(error);
+
+container.innerHTML = `
+
+<div class="glass empty">
+
+❌ Erreur de chargement des images.
+
+<br>
+
+<small>
+
+${escapeHTML(
+error.message
+)}
+
+</small>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+if(!data || !data.length){
+
+container.innerHTML = `
+
+<div class="glass empty">
+
+🖼️ Aucune image ajoutée.
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+container.innerHTML = `
+
+<div class="site-images-grid">
+
+${
+data.map(
+image => `
+
+<div class="glass site-image-card">
+
+<img
+src="${escapeHTML(
+image.image_url
+)}"
+alt="${escapeHTML(
+image.title || "Image"
+)}"
+>
+
+<h3>
+
+${escapeHTML(
+image.title ||
+"Sans titre"
+)}
+
+</h3>
+
+<button
+class="mini-btn danger"
+onclick="deleteSiteImage(
+'${image.id}',
+'${escapeHTML(
+image.image_path
+)}'
+)"
+>
+
+🗑 Supprimer
+
+</button>
+
+</div>
+
+`
+).join("")
+}
+
+</div>
+
+`;
+
+}
+
+
+/* ==========================================
+   ADD SITE IMAGE
+========================================== */
+
+document.getElementById(
+"siteImageForm"
+).addEventListener(
+"submit",
+async function(e){
+
+e.preventDefault();
+
+
+const message =
+document.getElementById(
+"siteImageMessage"
+);
+
+
+const file =
+document.getElementById(
+"siteImageFile"
+).files[0];
+
+
+const title =
+document.getElementById(
+"siteImageTitle"
+).value.trim();
+
+
+if(!file){
+
+message.innerHTML =
+"❌ Choisissez une image.";
+
+return;
+
+}
+
+
+if(
+file.size >
+10 * 1024 * 1024
+){
+
+message.innerHTML =
+"❌ Maximum 10 MB.";
+
+return;
+
+}
+
+
+const allowed = [
+
+"image/png",
+
+"image/jpeg",
+
+"image/webp"
+
+];
+
+
+if(
+!allowed.includes(
+file.type
+)
+){
+
+message.innerHTML =
+"❌ Format non valide.";
+
+return;
+
+}
+
+
+message.textContent =
+"⏳ Upload de l'image...";
+
+
+try{
+
+const result =
+await uploadSiteAsset(
+file,
+"gallery",
+10 * 1024 * 1024
+);
+
+
+const {
+error
+} =
+await supabaseClient
+
+.from("site_images")
+
+.insert({
+
+title:
+title || null,
+
+image_path:
+result.path,
+
+image_url:
+result.url,
+
+display_order:0,
+
+is_active:true
+
+});
+
+
+if(error){
+
+await supabaseClient
+
+.storage
+
+.from("site-assets")
+
+.remove([
+result.path
+]);
+
+throw error;
+
+}
+
+
+message.innerHTML =
+"✅ Image ajoutée !";
+
+
+this.reset();
+
+
+await loadSiteImages();
+
+}
+catch(error){
+
+console.error(error);
+
+message.innerHTML =
+"❌ " +
+escapeHTML(
+error.message
+);
+
+}
+
+});
+
+
+/* ==========================================
+   DELETE SITE IMAGE
+========================================== */
+
+async function deleteSiteImage(
+id,
+path
+){
+
+if(
+!confirm(
+"Supprimer cette image ?"
+)
+){
+
+return;
+
+}
+
+
+try{
+
+if(path){
+
+const {
+error:storageError
+} =
+await supabaseClient
+
+.storage
+
+.from("site-assets")
+
+.remove([
+path
+]);
+
+if(storageError){
+
+console.error(
+storageError
+);
+
+}
+
+}
+
+
+const {
+error
+} =
+await supabaseClient
+
+.from("site_images")
+
+.delete()
+
+.eq(
+"id",
+id
+);
+
+
+if(error){
+
+throw error;
+
+}
+
+
+await loadSiteImages();
+
+}
+catch(error){
+
+console.error(error);
+
+alert(
+"❌ " +
+error.message
+);
+
+}
 
 }
 
@@ -1349,7 +2375,6 @@ tbody.innerHTML = "";
 members.forEach(
 member => {
 
-
 const tr =
 document.createElement(
 "tr"
@@ -1411,7 +2436,6 @@ role === "admin"
 
 <td>
 
-
 <button
 class="mini-btn"
 onclick="changeRole(
@@ -1439,7 +2463,6 @@ onclick="openProfile(
 Profil
 
 </button>
-
 
 </td>
 
@@ -1717,7 +2740,6 @@ for(
 const event of events
 ){
 
-
 const card =
 document.createElement(
 "div"
@@ -1752,7 +2774,6 @@ card.innerHTML = `
 
 <div class="event-admin-head">
 
-
 <div>
 
 <h3>
@@ -1762,7 +2783,6 @@ event.title
 )}
 
 </h3>
-
 
 <div class="event-meta">
 
@@ -1780,6 +2800,7 @@ event.location
 :
 
 ""
+
 }
 
 </div>
@@ -1805,13 +2826,13 @@ event.description
 :
 
 ""
+
 }
 
 </div>
 
 
 <div class="event-actions">
-
 
 <span
 class="participant-count"
@@ -1833,7 +2854,6 @@ onclick="deleteEvent(
 Supprimer
 
 </button>
-
 
 </div>
 
@@ -2042,7 +3062,6 @@ Statut
 participants.forEach(
 p => {
 
-
 const profile =
 profileMap.get(
 p.user_id
@@ -2103,7 +3122,6 @@ this.value,
 )"
 >
 
-
 <option
 value="registered"
 ${
@@ -2158,7 +3176,6 @@ p.status === "cancelled"
 Annulé
 
 </option>
-
 
 </select>
 
@@ -2305,7 +3322,6 @@ Choisir un bénévole
 allMembers.forEach(
 member => {
 
-
 const option =
 document.createElement(
 "option"
@@ -2382,7 +3398,6 @@ Aucun événement
 
 (data || []).forEach(
 event => {
-
 
 const option =
 document.createElement(
@@ -2746,7 +3761,6 @@ Date
 data.forEach(
 item => {
 
-
 html += `
 
 <tr>
@@ -2815,6 +3829,7 @@ h
 ${escapeHTML(
 
 item.description ||
+
 "-"
 
 )}
@@ -2900,7 +3915,6 @@ Choisir un bénévole
 
 allMembers.forEach(
 member => {
-
 
 const option =
 document.createElement(
@@ -3099,7 +4113,6 @@ Action
 data.forEach(
 certificate => {
 
-
 const name =
 profileMap.get(
 certificate.user_id
@@ -3172,6 +4185,7 @@ certificate.description
 :
 
 ""
+
 }
 
 </td>
@@ -3217,6 +4231,7 @@ Pas de PDF
 </span>
 
 `
+
 }
 
 </td>
@@ -3347,9 +4362,6 @@ return;
 
 try{
 
-
-/* DELETE PDF */
-
 if(filePath){
 
 const {
@@ -3376,8 +4388,6 @@ storageError
 
 }
 
-
-/* DELETE DATABASE */
 
 const {
 error
@@ -3552,9 +4562,6 @@ message.innerHTML =
 
 try{
 
-
-/* SAFE FILE NAME */
-
 const safeName =
 file.name
 
@@ -3564,8 +4571,6 @@ file.name
 );
 
 
-/* PATH */
-
 const filePath =
 userId +
 "/" +
@@ -3573,8 +4578,6 @@ Date.now() +
 "_" +
 safeName;
 
-
-/* UPLOAD */
 
 const {
 error:uploadError
@@ -3610,8 +4613,6 @@ throw uploadError;
 }
 
 
-/* DATABASE */
-
 const {
 error:insertError
 } =
@@ -3639,9 +4640,6 @@ filePath
 
 if(insertError){
 
-
-/* DELETE PDF */
-
 await supabaseClient
 
 .storage
@@ -3651,11 +4649,6 @@ await supabaseClient
 .remove([
 filePath
 ]);
-
-
-console.error(
-insertError
-);
 
 throw insertError;
 
@@ -3778,7 +4771,6 @@ container.innerHTML = "";
 data.forEach(
 item => {
 
-
 const card =
 document.createElement(
 "div"
@@ -3792,7 +4784,6 @@ card.className =
 card.innerHTML = `
 
 <div class="event-admin-head">
-
 
 <div>
 
