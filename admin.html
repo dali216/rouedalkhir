@@ -1,529 +1,468 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Administration — Roued Al Khair</title>
+<title>Administration — Roued Al Khair</title>
 
-  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
 
-    body {
-      margin: 0;
-      background: #f4f6f9;
-      font-family: Arial, sans-serif;
-      color: #111;
-    }
+body{
+  margin:0;
+  background:#f4f6f9;
+  font-family:Arial,sans-serif;
+  color:#111;
+}
 
-    .admin-container {
-      width: min(1200px, 94%);
-      margin: auto;
-      padding: 30px 0 60px;
-    }
+.admin-container{
+  width:min(1200px,94%);
+  margin:auto;
+  padding:30px 0 60px;
+}
 
-    .header {
-      background: white;
-      padding: 25px;
-      border-radius: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      box-shadow: 0 8px 30px rgba(0,0,0,.06);
-      margin-bottom: 25px;
-    }
+.header{
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  box-shadow:0 8px 30px rgba(0,0,0,.06);
+  margin-bottom:25px;
+}
 
-    .header h1 {
-      margin: 0;
-      font-size: 30px;
-    }
+.header h1{margin:0;font-size:30px}
+.header p{margin:7px 0 0;color:#777}
 
-    .header p {
-      margin: 7px 0 0;
-      color: #777;
-    }
+.logout{
+  background:#111;
+  color:white;
+  border:0;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    .logout {
-      background: #111;
-      color: white;
-      border: 0;
-      padding: 12px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.stat{
+  background:#fff;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 8px 25px rgba(0,0,0,.05);
+}
 
-    .stat {
-      background: white;
-      padding: 22px;
-      border-radius: 18px;
-      box-shadow: 0 8px 25px rgba(0,0,0,.05);
-    }
+.stat-icon{font-size:25px}
+.stat-label{color:#777;font-size:14px;margin-top:8px}
+.stat-number{display:block;font-size:30px;margin-top:5px}
 
-    .stat-icon {
-      font-size: 25px;
-    }
+.section{
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  margin-bottom:25px;
+  box-shadow:0 8px 30px rgba(0,0,0,.05);
+}
 
-    .stat-label {
-      color: #777;
-      font-size: 14px;
-      margin-top: 8px;
-    }
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
 
-    .stat-number {
-      display: block;
-      font-size: 30px;
-      margin-top: 5px;
-    }
+.section h2{margin:0}
 
-    .section {
-      background: white;
-      padding: 25px;
-      border-radius: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.05);
-    }
+input,textarea,select{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:15px;
+  outline:none;
+  background:#fff;
+}
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+textarea{
+  min-height:120px;
+  resize:vertical;
+}
 
-    .section h2 {
-      margin: 0;
-    }
+.form{
+  display:grid;
+  gap:12px;
+  margin-bottom:25px;
+}
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
-      outline: none;
-      background: white;
-    }
+.btn{
+  border:0;
+  background:#111;
+  color:#fff;
+  padding:13px 18px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    input:focus,
-    textarea:focus,
-    select:focus {
-      border-color: #111;
-    }
+.btn-danger{
+  background:#e53935;
+}
 
-    textarea {
-      min-height: 130px;
-      resize: vertical;
-    }
+.btn-edit{
+  background:#555;
+}
 
-    .search {
-      max-width: 320px;
-    }
+.table-container{
+  overflow-x:auto;
+}
 
-    .form {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
 
-    .btn {
-      border: 0;
-      background: #111;
-      color: white;
-      padding: 13px 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+th,td{
+  padding:14px 10px;
+  text-align:left;
+  border-bottom:1px solid #eee;
+}
 
-    .btn-danger {
-      background: #e53935;
-    }
+th{
+  color:#777;
+  background:#fafafa;
+  font-size:13px;
+}
 
-    .btn-small {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 0;
-      background: #111;
-      color: white;
-      cursor: pointer;
-    }
+.announcement,
+.event-card{
+  border:1px solid #eee;
+  padding:18px;
+  border-radius:15px;
+  margin-bottom:12px;
+}
 
-    .table-container {
-      overflow-x: auto;
-    }
+.announcement h3,
+.event-card h3{
+  margin:0 0 8px;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 650px;
-    }
+.announcement p,
+.event-card p{
+  color:#555;
+  white-space:pre-wrap;
+  line-height:1.6;
+}
 
-    th,
-    td {
-      padding: 14px 10px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
+small{color:#888}
 
-    th {
-      font-size: 13px;
-      color: #777;
-      background: #fafafa;
-    }
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
 
-    .announcement {
-      border: 1px solid #eee;
-      padding: 18px;
-      border-radius: 15px;
-      margin-bottom: 12px;
-    }
+#message{
+  display:none;
+  padding:13px 16px;
+  border-radius:12px;
+  margin-bottom:20px;
+}
 
-    .announcement h3 {
-      margin: 0 0 8px;
-    }
+.empty{
+  padding:25px;
+  text-align:center;
+  color:#888;
+}
 
-    .announcement small {
-      color: #888;
-    }
+@media(max-width:900px){
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
 
-    .announcement p {
-      white-space: pre-wrap;
-      color: #555;
-      line-height: 1.6;
-    }
+@media(max-width:550px){
+  .stats{
+    grid-template-columns:1fr;
+  }
 
-    .event-card {
-      border: 1px solid #eee;
-      border-radius: 15px;
-      padding: 18px;
-      margin-bottom: 12px;
-    }
+  .section{
+    padding:18px;
+  }
 
-    .event-card h3 {
-      margin: 0 0 8px;
-    }
-
-    .event-card p {
-      color: #666;
-    }
-
-    .empty {
-      padding: 25px;
-      text-align: center;
-      color: #888;
-    }
-
-    #message {
-      display: none;
-      padding: 13px 16px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-    }
-
-    .danger-text {
-      color: #d32f2f;
-    }
-
-    .admin-role {
-      font-weight: bold;
-    }
-
-    @media (max-width: 900px) {
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 550px) {
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .header h1 {
-        font-size: 24px;
-      }
-
-      .section {
-        padding: 18px;
-      }
-    }
-  </style>
+  .header h1{
+    font-size:24px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="admin-container">
 
-  <!-- HEADER -->
+<!-- HEADER -->
 
-  <div class="header">
+<div class="header">
+
+  <div>
+    <h1>⚙️ Administration</h1>
+    <p id="adminName">Chargement...</p>
+  </div>
+
+  <button id="logout" class="logout">
+    Déconnexion
+  </button>
+
+</div>
+
+<div id="message"></div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+  <div class="stat">
+    <div class="stat-icon">👥</div>
+    <div class="stat-label">Membres</div>
+    <strong id="membersCount" class="stat-number">0</strong>
+  </div>
+
+  <div class="stat">
+    <div class="stat-icon">📢</div>
+    <div class="stat-label">Annonces</div>
+    <strong id="announcementsCount" class="stat-number">0</strong>
+  </div>
+
+  <div class="stat">
+    <div class="stat-icon">📅</div>
+    <div class="stat-label">Événements</div>
+    <strong id="eventsCount" class="stat-number">0</strong>
+  </div>
+
+  <div class="stat">
+    <div class="stat-icon">⏱️</div>
+    <div class="stat-label">Heures</div>
+    <strong id="hoursCount" class="stat-number">0</strong>
+  </div>
+
+</div>
+
+
+<!-- MEMBERS -->
+
+<div class="section">
+
+  <div class="section-header">
 
     <div>
-      <h1>⚙️ Administration</h1>
-      <p id="adminName">Chargement...</p>
+      <h2>👥 Membres</h2>
+      <p style="color:#777">
+        Gestion des bénévoles.
+      </p>
     </div>
 
-    <button
-      id="logout"
-      class="logout"
+    <input
+      id="memberSearch"
+      type="text"
+      placeholder="🔎 Rechercher un membre..."
+      style="max-width:320px"
     >
-      Déconnexion
-    </button>
 
   </div>
 
-
-  <div id="message"></div>
-
-
-  <!-- STATS -->
-
-  <div class="stats">
-
-    <div class="stat">
-      <div class="stat-icon">👥</div>
-      <div class="stat-label">Membres</div>
-      <strong
-        class="stat-number"
-        id="membersCount"
-      >
-        0
-      </strong>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">📢</div>
-      <div class="stat-label">Annonces</div>
-      <strong
-        class="stat-number"
-        id="announcementsCount"
-      >
-        0
-      </strong>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">📅</div>
-      <div class="stat-label">Événements</div>
-      <strong
-        class="stat-number"
-        id="eventsCount"
-      >
-        0
-      </strong>
-    </div>
-
-    <div class="stat">
-      <div class="stat-icon">⏱️</div>
-      <div class="stat-label">Heures bénévoles</div>
-      <strong
-        class="stat-number"
-        id="hoursCount"
-      >
-        0
-      </strong>
-    </div>
-
-  </div>
-
-
-  <!-- MEMBERS -->
-
-  <div class="section">
-
-    <div class="section-header">
-
-      <div>
-        <h2>👥 Gestion des membres</h2>
-
-        <p style="color:#777;">
-          Gérer les bénévoles de l'association.
-        </p>
-      </div>
-
-      <input
-        id="memberSearch"
-        class="search"
-        type="text"
-        placeholder="🔎 Rechercher..."
-      >
-
-    </div>
-
-
-    <div class="table-container">
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Nom</th>
-            <th>Rôle</th>
-            <th>Inscription</th>
-            <th>Profil</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="membersList">
-
-          <tr>
-            <td colspan="4">
-              ⏳ Chargement...
-            </td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-  <!-- ANNOUNCEMENTS -->
-
-  <div class="section">
-
-    <div class="section-header">
-
-      <div>
-        <h2>📢 Gestion des annonces</h2>
-
-        <p style="color:#777;">
-          Publier des informations pour les bénévoles.
-        </p>
-      </div>
-
-    </div>
-
-
-    <div class="form">
-
-      <input
-        id="announcementTitle"
-        type="text"
-        placeholder="Titre de l'annonce"
-      >
-
-      <select id="announcementCategory">
-
-        <option value="general">
-          Général
-        </option>
-
-        <option value="mission">
-          Mission
-        </option>
-
-        <option value="event">
-          Événement
-        </option>
-
-        <option value="urgent">
-          Urgent
-        </option>
-
-        <option value="formation">
-          Formation
-        </option>
-
-      </select>
-
-      <textarea
-        id="announcementContent"
-        placeholder="Écrire l'annonce..."
-      ></textarea>
-
-      <button
-        id="addAnnouncement"
-        class="btn"
-      >
-        ➕ Publier
-      </button>
-
-    </div>
-
-
-    <div id="announcementsList">
-      ⏳ Chargement...
-    </div>
-
-  </div>
-
-
-  <!-- EVENTS -->
-
-  <div class="section">
-
-    <div class="section-header">
-
-      <div>
-        <h2>📅 Événements</h2>
-
-        <p style="color:#777;">
-          Aperçu des événements enregistrés.
-        </p>
-      </div>
-
-    </div>
-
-
-    <div id="eventsList">
-      ⏳ Chargement...
-    </div>
-
-  </div>
-
-
-  <!-- HOURS -->
-
-  <div class="section">
-
-    <div class="section-header">
-
-      <div>
-        <h2>⏱️ Heures bénévoles</h2>
-
-        <p style="color:#777;">
-          Total des heures enregistrées.
-        </p>
-      </div>
-
-    </div>
-
-    <div id="hoursList">
-      ⏳ Chargement...
-    </div>
+  <div class="table-container">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Rôle</th>
+          <th>Inscription</th>
+          <th>Profil</th>
+        </tr>
+      </thead>
+
+      <tbody id="membersList">
+        <tr>
+          <td colspan="4">⏳ Chargement...</td>
+        </tr>
+      </tbody>
+
+    </table>
 
   </div>
 
 </div>
 
 
-<!-- SUPABASE -->
+<!-- EVENTS -->
+
+<div class="section">
+
+  <div class="section-header">
+
+    <div>
+      <h2>📅 Gestion des événements</h2>
+      <p style="color:#777">
+        Créer et gérer les activités de l'association.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="form">
+
+    <input
+      id="eventTitle"
+      type="text"
+      placeholder="Titre de l'événement"
+    >
+
+    <textarea
+      id="eventDescription"
+      placeholder="Description de l'événement..."
+    ></textarea>
+
+    <input
+      id="eventLocation"
+      type="text"
+      placeholder="📍 Lieu"
+    >
+
+    <input
+      id="eventDate"
+      type="datetime-local"
+    >
+
+    <button
+      id="addEvent"
+      class="btn"
+    >
+      ➕ Créer l'événement
+    </button>
+
+  </div>
+
+
+  <div id="eventsList">
+    ⏳ Chargement...
+  </div>
+
+</div>
+
+
+<!-- ANNOUNCEMENTS -->
+
+<div class="section">
+
+  <div class="section-header">
+
+    <div>
+      <h2>📢 Annonces</h2>
+      <p style="color:#777">
+        Publier des informations aux bénévoles.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="form">
+
+    <input
+      id="announcementTitle"
+      type="text"
+      placeholder="Titre de l'annonce"
+    >
+
+    <select id="announcementCategory">
+
+      <option value="general">
+        Général
+      </option>
+
+      <option value="mission">
+        Mission
+      </option>
+
+      <option value="event">
+        Événement
+      </option>
+
+      <option value="urgent">
+        Urgent
+      </option>
+
+      <option value="formation">
+        Formation
+      </option>
+
+    </select>
+
+    <textarea
+      id="announcementContent"
+      placeholder="Contenu..."
+    ></textarea>
+
+    <button
+      id="addAnnouncement"
+      class="btn"
+    >
+      ➕ Publier
+    </button>
+
+  </div>
+
+  <div id="announcementsList">
+    ⏳ Chargement...
+  </div>
+
+</div>
+
+
+<!-- HOURS -->
+
+<div class="section">
+
+  <div class="section-header">
+
+    <div>
+      <h2>⏱️ Heures bénévoles</h2>
+      <p style="color:#777">
+        Total des heures enregistrées.
+      </p>
+    </div>
+
+  </div>
+
+  <div id="hoursList">
+    ⏳ Chargement...
+  </div>
+
+</div>
+
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="app.js"></script>
 
 
@@ -531,19 +470,19 @@
 
 document.addEventListener(
   "DOMContentLoaded",
-  async function () {
+  async function(){
 
     const admin =
       await requireAdmin();
 
-    if (!admin) {
+    if(!admin){
       return;
     }
 
 
-    document
-      .getElementById("adminName")
-      .textContent =
+    document.getElementById(
+      "adminName"
+    ).textContent =
       "Connecté en tant que " +
       (
         admin.full_name ||
@@ -556,21 +495,16 @@ document.addEventListener(
 
 
     await loadMembers();
-
-    await loadAnnouncements();
-
     await loadEvents();
-
+    await loadAnnouncements();
     await loadHours();
 
 
-    /*
-    ========================================
-    MEMBERS
-    ========================================
-    */
+    /* =========================
+       MEMBERS
+    ========================= */
 
-    async function loadMembers() {
+    async function loadMembers(){
 
       const {
         data,
@@ -579,23 +513,19 @@ document.addEventListener(
         await supabaseClient
           .from("profiles")
           .select(
-            "id, full_name, role, created_at"
+            "id,full_name,role,created_at"
           )
           .order(
             "created_at",
-            {
-              ascending: false
-            }
+            {ascending:false}
           );
 
 
-      if (error) {
+      if(error){
 
-        console.error(error);
-
-        document
-          .getElementById("membersList")
-          .innerHTML =
+        document.getElementById(
+          "membersList"
+        ).innerHTML =
           `<tr>
             <td colspan="4">
               ❌ ${escapeHtml(error.message)}
@@ -610,9 +540,9 @@ document.addEventListener(
         data || [];
 
 
-      document
-        .getElementById("membersCount")
-        .textContent =
+      document.getElementById(
+        "membersCount"
+      ).textContent =
         window.allMembers.length;
 
 
@@ -622,23 +552,20 @@ document.addEventListener(
     }
 
 
-    function renderMembers(
-      members
-    ) {
+    function renderMembers(members){
 
       const list =
-        document
-          .getElementById(
-            "membersList"
-          );
+        document.getElementById(
+          "membersList"
+        );
 
 
-      if (!members.length) {
+      if(!members.length){
 
         list.innerHTML =
           `<tr>
             <td colspan="4">
-              Aucun membre trouvé.
+              Aucun membre.
             </td>
           </tr>`;
 
@@ -648,7 +575,7 @@ document.addEventListener(
 
       list.innerHTML =
         members.map(
-          function (member) {
+          function(member){
 
             const role =
               member.role ||
@@ -717,14 +644,8 @@ document.addEventListener(
                 <td>
 
                   <a
-                    href="
-                      profile.html?id=${member.id}
-                    "
+                    href="profile.html?id=${member.id}"
                     target="_blank"
-                    style="
-                      text-decoration:none;
-                      font-weight:bold;
-                    "
                   >
                     👤 Voir
                   </a>
@@ -740,34 +661,23 @@ document.addEventListener(
 
 
     window.changeMemberRole =
-      async function (
-        id,
-        newRole
-      ) {
-
-        if (
-          newRole !== "admin" &&
-          newRole !== "volunteer"
-        ) {
-          return;
-        }
-
+      async function(id,newRole){
 
         const member =
           window.allMembers.find(
-            function (m) {
+            function(m){
               return m.id === id;
             }
           );
 
 
-        if (!member) {
+        if(!member){
           return;
         }
 
 
-        const confirmed =
-          confirm(
+        if(
+          !confirm(
             "Changer le rôle de " +
             (
               member.full_name ||
@@ -776,10 +686,8 @@ document.addEventListener(
             " en " +
             newRole +
             " ?"
-          );
-
-
-        if (!confirmed) {
+          )
+        ){
 
           renderMembers(
             window.allMembers
@@ -795,15 +703,12 @@ document.addEventListener(
           await supabaseClient
             .from("profiles")
             .update({
-              role: newRole
+              role:newRole
             })
-            .eq(
-              "id",
-              id
-            );
+            .eq("id",id);
 
 
-        if (error) {
+        if(error){
 
           alert(
             "❌ " +
@@ -824,65 +729,357 @@ document.addEventListener(
           window.allMembers
         );
 
-
         showMessage(
           "✅ Rôle modifié."
         );
+
       };
 
 
-    /*
-    ========================================
-    SEARCH
-    ========================================
-    */
+    document.getElementById(
+      "memberSearch"
+    ).addEventListener(
+      "input",
+      function(){
 
-    document
-      .getElementById(
-        "memberSearch"
-      )
-      .addEventListener(
-        "input",
-        function () {
-
-          const value =
-            this.value
-              .trim()
-              .toLowerCase();
+        const search =
+          this.value
+            .trim()
+            .toLowerCase();
 
 
-          const filtered =
-            window.allMembers.filter(
-              function (member) {
+        const filtered =
+          window.allMembers.filter(
+            function(member){
 
-                return (
-                  (
-                    member.full_name ||
-                    ""
-                  )
-                  .toLowerCase()
-                  .includes(value)
-                );
+              return (
+                member.full_name ||
+                ""
+              )
+              .toLowerCase()
+              .includes(search);
 
-              }
-            );
-
-
-          renderMembers(
-            filtered
+            }
           );
 
+
+        renderMembers(filtered);
+
+      }
+    );
+
+
+    /* =========================
+       EVENTS
+    ========================= */
+
+    async function loadEvents(){
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient
+          .from("events")
+          .select(
+            "id,title,description,location,event_date,created_by,created_at"
+          )
+          .order(
+            "event_date",
+            {ascending:true}
+          );
+
+
+      if(error){
+
+        document.getElementById(
+          "eventsList"
+        ).innerHTML =
+          "❌ " +
+          escapeHtml(
+            error.message
+          );
+
+        return;
+      }
+
+
+      document.getElementById(
+        "eventsCount"
+      ).textContent =
+        (data || []).length;
+
+
+      if(!data || !data.length){
+
+        document.getElementById(
+          "eventsList"
+        ).innerHTML =
+          `<div class="empty">
+            Aucun événement.
+          </div>`;
+
+        return;
+      }
+
+
+      document.getElementById(
+        "eventsList"
+      ).innerHTML =
+        data.map(
+          function(event){
+
+            return `
+              <div class="event-card">
+
+                <h3>
+                  📅
+                  ${escapeHtml(
+                    event.title
+                  )}
+                </h3>
+
+                <p>
+                  ${
+                    event.description
+                    ? escapeHtml(
+                        event.description
+                      )
+                    : "Aucune description."
+                  }
+                </p>
+
+                <small>
+                  📍
+                  ${
+                    event.location
+                    ? escapeHtml(
+                        event.location
+                      )
+                    : "Lieu non précisé"
+                  }
+                </small>
+
+                <br>
+
+                <small>
+                  🕐
+                  ${
+                    event.event_date
+                    ? formatDateTime(
+                        event.event_date
+                      )
+                    : "Date non précisée"
+                  }
+                </small>
+
+                <div class="actions">
+
+                  <button
+                    class="btn btn-danger"
+                    onclick="
+                      deleteEvent(
+                        '${event.id}'
+                      )
+                    "
+                  >
+                    🗑️ Supprimer
+                  </button>
+
+                </div>
+
+              </div>
+            `;
+
+          }
+        ).join("");
+    }
+
+
+    document.getElementById(
+      "addEvent"
+    ).addEventListener(
+      "click",
+      async function(){
+
+        const title =
+          document.getElementById(
+            "eventTitle"
+          ).value.trim();
+
+
+        const description =
+          document.getElementById(
+            "eventDescription"
+          ).value.trim();
+
+
+        const location =
+          document.getElementById(
+            "eventLocation"
+          ).value.trim();
+
+
+        const eventDate =
+          document.getElementById(
+            "eventDate"
+          ).value;
+
+
+        if(!title){
+
+          showMessage(
+            "❌ Entrez le titre de l'événement.",
+            true
+          );
+
+          return;
         }
-      );
 
 
-    /*
-    ========================================
-    ANNOUNCEMENTS
-    ========================================
-    */
+        if(!eventDate){
 
-    async function loadAnnouncements() {
+          showMessage(
+            "❌ Choisissez une date.",
+            true
+          );
+
+          return;
+        }
+
+
+        const {
+          data:{
+            user
+          }
+        } =
+          await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(!user){
+
+          return;
+        }
+
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("events")
+            .insert({
+
+              title:title,
+
+              description:
+                description || null,
+
+              location:
+                location || null,
+
+              event_date:
+                new Date(
+                  eventDate
+                ).toISOString(),
+
+              created_by:
+                user.id
+
+            });
+
+
+        if(error){
+
+          showMessage(
+            "❌ " +
+            error.message,
+            true
+          );
+
+          return;
+        }
+
+
+        document.getElementById(
+          "eventTitle"
+        ).value = "";
+
+
+        document.getElementById(
+          "eventDescription"
+        ).value = "";
+
+
+        document.getElementById(
+          "eventLocation"
+        ).value = "";
+
+
+        document.getElementById(
+          "eventDate"
+        ).value = "";
+
+
+        showMessage(
+          "✅ Événement créé."
+        );
+
+
+        await loadEvents();
+
+      }
+    );
+
+
+    window.deleteEvent =
+      async function(id){
+
+        if(
+          !confirm(
+            "Supprimer cet événement ?"
+          )
+        ){
+          return;
+        }
+
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("events")
+            .delete()
+            .eq("id",id);
+
+
+        if(error){
+
+          alert(
+            "❌ " +
+            error.message
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          "✅ Événement supprimé."
+        );
+
+
+        await loadEvents();
+
+      };
+
+
+    /* =========================
+       ANNOUNCEMENTS
+    ========================= */
+
+    async function loadAnnouncements(){
 
       const {
         data,
@@ -893,19 +1090,15 @@ document.addEventListener(
           .select("*")
           .order(
             "created_at",
-            {
-              ascending: false
-            }
+            {ascending:false}
           );
 
 
-      if (error) {
+      if(error){
 
-        document
-          .getElementById(
-            "announcementsList"
-          )
-          .innerHTML =
+        document.getElementById(
+          "announcementsList"
+        ).innerHTML =
           "❌ " +
           escapeHtml(
             error.message
@@ -915,21 +1108,17 @@ document.addEventListener(
       }
 
 
-      document
-        .getElementById(
-          "announcementsCount"
-        )
-        .textContent =
+      document.getElementById(
+        "announcementsCount"
+      ).textContent =
         (data || []).length;
 
 
-      if (!data || !data.length) {
+      if(!data || !data.length){
 
-        document
-          .getElementById(
-            "announcementsList"
-          )
-          .innerHTML =
+        document.getElementById(
+          "announcementsList"
+        ).innerHTML =
           `<div class="empty">
             Aucune annonce.
           </div>`;
@@ -938,13 +1127,11 @@ document.addEventListener(
       }
 
 
-      document
-        .getElementById(
-          "announcementsList"
-        )
-        .innerHTML =
+      document.getElementById(
+        "announcementsList"
+      ).innerHTML =
         data.map(
-          function (item) {
+          function(item){
 
             return `
               <div class="announcement">
@@ -990,131 +1177,112 @@ document.addEventListener(
     }
 
 
-    document
-      .getElementById(
-        "addAnnouncement"
-      )
-      .addEventListener(
-        "click",
-        async function () {
+    document.getElementById(
+      "addAnnouncement"
+    ).addEventListener(
+      "click",
+      async function(){
 
-          const title =
-            document
-              .getElementById(
-                "announcementTitle"
-              )
-              .value
-              .trim();
+        const title =
+          document.getElementById(
+            "announcementTitle"
+          ).value.trim();
 
 
-          const category =
-            document
-              .getElementById(
-                "announcementCategory"
-              )
-              .value;
+        const category =
+          document.getElementById(
+            "announcementCategory"
+          ).value;
 
 
-          const content =
-            document
-              .getElementById(
-                "announcementContent"
-              )
-              .value
-              .trim();
+        const content =
+          document.getElementById(
+            "announcementContent"
+          ).value.trim();
 
 
-          if (!title || !content) {
-
-            showMessage(
-              "❌ Remplissez le titre et le contenu.",
-              true
-            );
-
-            return;
-          }
-
-
-          const {
-            data: {
-              user
-            }
-          } =
-            await supabaseClient
-              .auth
-              .getUser();
-
-
-          const {
-            error
-          } =
-            await supabaseClient
-              .from("announcements")
-              .insert({
-
-                title:
-                  title,
-
-                content:
-                  content,
-
-                category:
-                  category,
-
-                is_published:
-                  true,
-
-                created_by:
-                  user.id
-
-              });
-
-
-          if (error) {
-
-            showMessage(
-              "❌ " +
-              error.message,
-              true
-            );
-
-            return;
-          }
-
-
-          document
-            .getElementById(
-              "announcementTitle"
-            )
-            .value = "";
-
-
-          document
-            .getElementById(
-              "announcementContent"
-            )
-            .value = "";
-
+        if(!title || !content){
 
           showMessage(
-            "✅ Annonce publiée."
+            "❌ Remplissez le titre et le contenu.",
+            true
           );
 
-
-          await loadAnnouncements();
-
+          return;
         }
-      );
+
+
+        const {
+          data:{
+            user
+          }
+        } =
+          await supabaseClient
+            .auth
+            .getUser();
+
+
+        const {
+          error
+        } =
+          await supabaseClient
+            .from("announcements")
+            .insert({
+
+              title:title,
+
+              content:content,
+
+              category:category,
+
+              is_published:true,
+
+              created_by:user.id
+
+            });
+
+
+        if(error){
+
+          showMessage(
+            "❌ " +
+            error.message,
+            true
+          );
+
+          return;
+        }
+
+
+        document.getElementById(
+          "announcementTitle"
+        ).value = "";
+
+
+        document.getElementById(
+          "announcementContent"
+        ).value = "";
+
+
+        showMessage(
+          "✅ Annonce publiée."
+        );
+
+
+        await loadAnnouncements();
+
+      }
+    );
 
 
     window.deleteAnnouncement =
-      async function (id) {
+      async function(id){
 
-        if (
+        if(
           !confirm(
             "Supprimer cette annonce ?"
           )
-        ) {
+        ){
           return;
         }
 
@@ -1125,13 +1293,10 @@ document.addEventListener(
           await supabaseClient
             .from("announcements")
             .delete()
-            .eq(
-              "id",
-              id
-            );
+            .eq("id",id);
 
 
-        if (error) {
+        if(error){
 
           alert(
             "❌ " +
@@ -1148,128 +1313,15 @@ document.addEventListener(
 
 
         await loadAnnouncements();
+
       };
 
 
-    /*
-    ========================================
-    EVENTS
-    ========================================
-    */
+    /* =========================
+       HOURS
+    ========================= */
 
-    async function loadEvents() {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("events")
-          .select("*")
-          .order(
-            "created_at",
-            {
-              ascending: false
-            }
-          );
-
-
-      if (error) {
-
-        document
-          .getElementById(
-            "eventsList"
-          )
-          .innerHTML =
-          "❌ " +
-          escapeHtml(
-            error.message
-          );
-
-        return;
-      }
-
-
-      document
-        .getElementById(
-          "eventsCount"
-        )
-        .textContent =
-        (data || []).length;
-
-
-      if (!data || !data.length) {
-
-        document
-          .getElementById(
-            "eventsList"
-          )
-          .innerHTML =
-          `<div class="empty">
-            Aucun événement.
-          </div>`;
-
-        return;
-      }
-
-
-      document
-        .getElementById(
-          "eventsList"
-        )
-        .innerHTML =
-        data.map(
-          function (event) {
-
-            return `
-              <div class="event-card">
-
-                <h3>
-                  📅
-                  ${escapeHtml(
-                    event.title ||
-                    "Événement"
-                  )}
-                </h3>
-
-                <p>
-                  ${
-                    event.description
-                    ? escapeHtml(
-                        event.description
-                      )
-                    : "Aucune description."
-                  }
-                </p>
-
-                ${
-                  event.event_date
-                  ? `
-                    <small>
-                      🕐
-                      ${formatDate(
-                        event.event_date
-                      )}
-                    </small>
-                  `
-                  : ""
-                }
-
-              </div>
-            `;
-
-          }
-        ).join("");
-    }
-
-
-    /*
-    ========================================
-    HOURS
-    ========================================
-    */
-
-    async function loadHours() {
+    async function loadHours(){
 
       const {
         data,
@@ -1278,23 +1330,19 @@ document.addEventListener(
         await supabaseClient
           .from("volunteer_hours")
           .select(
-            "hours, description, created_at"
+            "hours,description,created_at"
           )
           .order(
             "created_at",
-            {
-              ascending: false
-            }
+            {ascending:false}
           );
 
 
-      if (error) {
+      if(error){
 
-        document
-          .getElementById(
-            "hoursList"
-          )
-          .innerHTML =
+        document.getElementById(
+          "hoursList"
+        ).innerHTML =
           "❌ " +
           escapeHtml(
             error.message
@@ -1308,7 +1356,7 @@ document.addEventListener(
 
 
       (data || []).forEach(
-        function (item) {
+        function(item){
 
           total +=
             Number(
@@ -1319,60 +1367,39 @@ document.addEventListener(
       );
 
 
-      document
-        .getElementById(
-          "hoursCount"
-        )
-        .textContent =
+      document.getElementById(
+        "hoursCount"
+      ).textContent =
         total.toFixed(1);
 
 
-      if (!data || !data.length) {
-
-        document
-          .getElementById(
-            "hoursList"
-          )
-          .innerHTML =
-          `<div class="empty">
-            Aucune heure enregistrée.
-          </div>`;
-
-        return;
-      }
-
-
-      document
-        .getElementById(
-          "hoursList"
-        )
-        .innerHTML =
+      document.getElementById(
+        "hoursList"
+      ).innerHTML =
         `
           <div style="
-            font-size:30px;
+            font-size:38px;
             font-weight:bold;
-            margin-bottom:15px;
           ">
             ${total.toFixed(1)} h
           </div>
 
-          <p style="color:#777;">
-            Total des heures bénévoles enregistrées.
+          <p style="color:#777">
+            Total des heures bénévoles.
           </p>
         `;
+
     }
 
 
-    /*
-    ========================================
-    HELPERS
-    ========================================
-    */
+    /* =========================
+       HELPERS
+    ========================= */
 
     function showMessage(
       text,
-      error = false
-    ) {
+      error=false
+    ){
 
       const box =
         document.getElementById(
@@ -1393,7 +1420,7 @@ document.addEventListener(
 
 
       setTimeout(
-        function () {
+        function(){
 
           box.style.display =
             "none";
@@ -1401,53 +1428,70 @@ document.addEventListener(
         },
         4000
       );
+
     }
 
 
-    function escapeHtml(
-      value
-    ) {
+    function escapeHtml(value){
 
       return String(
         value || ""
       )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+      .replace(
+        /&/g,
+        "&amp;"
+      )
+      .replace(
+        /</g,
+        "&lt;"
+      )
+      .replace(
+        />/g,
+        "&gt;"
+      )
+      .replace(
+        /"/g,
+        "&quot;"
+      )
+      .replace(
+        /'/g,
+        "&#039;"
+      );
+
     }
 
 
-    function formatDate(
-      date
-    ) {
+    function formatDate(date){
 
-      if (!date) {
+      if(!date){
         return "—";
       }
-
 
       return new Date(
         date
       ).toLocaleDateString(
         "fr-FR"
       );
+
+    }
+
+
+    function formatDateTime(date){
+
+      if(!date){
+        return "—";
+      }
+
+      return new Date(
+        date
+      ).toLocaleString(
+        "fr-FR",
+        {
+          dateStyle:"medium",
+          timeStyle:"short"
+        }
+      );
+
     }
 
   }
