@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1"
+>
+
+<title>Mes heures — Roued Al Khair</title>
+
+<link
+  rel="stylesheet"
+  href="style.css"
+>
+
+<style>
+
+.hours-wrap{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px 60px;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+}
+
+.top h1{
+  margin:5px 0;
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+  gap:18px;
+  margin-bottom:30px;
+}
+
+.card{
+  padding:25px;
+  border-radius:20px;
+}
+
+.number{
+  font-size:38px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.hours-list{
+  display:grid;
+  gap:15px;
+}
+
+.hour-card{
+  padding:22px;
+  border-radius:20px;
+}
+
+.hour-head{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+.hour-value{
+  font-size:25px;
+  font-weight:800;
+}
+
+.hour-info h3{
+  margin:0 0 8px;
+}
+
+.hour-info p{
+  margin:5px 0;
+  opacity:.7;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  opacity:.65;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="hours-wrap">
+
+
+  <div class="top">
+
+    <div>
+
+      <span class="eyebrow">
+        BÉNÉVOLAT
+      </span>
+
+      <h1>
+        Mes heures
+      </h1>
+
+      <p>
+        Suivez votre participation
+        au sein de Roued Al Khair.
+      </p>
+
+    </div>
+
+
+    <a
+      href="dashboard.html"
+      class="btn ghost"
+    >
+      ← Dashboard
+    </a>
+
+  </div>
+
+
+
+  <!-- SUMMARY -->
+
+  <div class="summary">
+
+
+    <div class="glass card">
+
+      <small>
+        ⏱ Total des heures
+      </small>
+
+      <div
+        class="number"
+        id="totalHours"
+      >
+        0
+      </div>
+
+      <small>
+        heures de bénévolat
+      </small>
+
+    </div>
+
+
+    <div class="glass card">
+
+      <small>
+        📋 Activités
+      </small>
+
+      <div
+        class="number"
+        id="activityCount"
+      >
+        0
+      </div>
+
+      <small>
+        activités enregistrées
+      </small>
+
+    </div>
+
+
+    <div class="glass card">
+
+      <small>
+        ⭐ Points
+      </small>
+
+      <div
+        class="number"
+        id="points"
+      >
+        0
+      </div>
+
+      <small>
+        points bénévolat
+      </small>
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- LIST -->
+
+  <div class="section">
+
+    <span class="eyebrow">
+      HISTORIQUE
+    </span>
+
+    <h2>
+      Mes activités
+    </h2>
+
+
+    <div
+      id="hoursList"
+      class="hours-list"
+    >
+
+      <div class="glass empty">
+        ⏳ Chargement...
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="app.js"></script>
+
+
+<script>
+
+let user = null;
+
+
+/* =========================
+   INIT
+========================= */
+
+async function init(){
+
+  user =
+    await requireAuth();
+
+  if(!user){
+    return;
+  }
+
+
+  await loadHours();
+
+}
+
+
+/* =========================
+   LOAD HOURS
+========================= */
+
+async function loadHours(){
+
+  const container =
+    document.getElementById(
+      "hoursList"
+    );
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("volunteer_hours")
+      .select(
+        "id,hours,description,event_id,created_at"
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        ❌ Impossible de charger vos heures.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  const list =
+    data || [];
+
+
+  /* TOTAL */
+
+  const total =
+    list.reduce(
+      (
+        sum,
+        item
+      ) =>
+        sum +
+        Number(
+          item.hours || 0
+        ),
+      0
+    );
+
+
+  document.getElementById(
+    "totalHours"
+  ).textContent =
+    total.toFixed(2);
+
+
+  document.getElementById(
+    "activityCount"
+  ).textContent =
+    list.length;
+
+
+  document.getElementById(
+    "points"
+  ).textContent =
+    Math.round(
+      total * 10
+    );
+
+
+  if(!list.length){
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        ⏱️ Aucune heure enregistrée pour le moment.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  list.forEach(
+    item => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "glass hour-card";
+
+
+      const date =
+        item.created_at
+          ?
+          new Date(
+            item.created_at
+          ).toLocaleDateString(
+            "fr-FR",
+            {
+              dateStyle:"medium"
+            }
+          )
+          :
+          "";
+
+
+      card.innerHTML =
+        `
+        <div class="hour-head">
+
+          <div class="hour-info">
+
+            <h3>
+              ${
+                item.description
+                  ?
+                  escapeHTML(
+                    item.description
+                  )
+                  :
+                  "Activité bénévole"
+              }
+            </h3>
+
+            <p>
+              📅 ${escapeHTML(date)}
+            </p>
+
+            ${
+              item.event_id
+                ?
+                `
+                <p>
+                  📌 Activité liée à un événement
+                </p>
+                `
+                :
+                ""
+            }
+
+          </div>
+
+
+          <div class="hour-value">
+
+            ${Number(
+              item.hours || 0
+            ).toFixed(2)}
+
+            h
+
+          </div>
+
+        </div>
+        `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(
+  value
+){
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+    return "";
+  }
+
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+init();
+
+</script>
+
+</body>
+
+</html>
