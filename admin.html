@@ -285,6 +285,241 @@ Déconnexion
 <div class="glass stat-card">
 
 <small>
+
+  <!-- ================= SITE SETTINGS ================= -->
+
+<section class="section">
+
+<div class="section-title">
+
+<div>
+
+<span class="eyebrow">
+SITE
+</span>
+
+<h2>
+Paramètres du site
+</h2>
+
+</div>
+
+</div>
+
+<form id="siteSettingsForm" class="glass form-box">
+
+<div class="form-grid">
+
+<div>
+
+<label>
+🏷️ Nom du site
+</label>
+
+<input
+id="siteName"
+type="text"
+placeholder="Roued Al Khair"
+>
+
+</div>
+
+<div>
+
+<label>
+🖼️ Logo du site
+</label>
+
+<input
+id="siteLogo"
+type="file"
+accept="image/png,image/jpeg,image/webp,image/svg+xml"
+>
+
+<span class="file-info">
+PNG, JPG, WEBP ou SVG — maximum 5 MB
+</span>
+
+</div>
+
+<div>
+
+<label>
+🌅 Image principale
+</label>
+
+<input
+id="siteHero"
+type="file"
+accept="image/png,image/jpeg,image/webp"
+>
+
+<span class="file-info">
+PNG, JPG ou WEBP — maximum 10 MB
+</span>
+
+</div>
+
+</div>
+
+<div style="margin-top:20px">
+
+<div style="display:flex;gap:20px;flex-wrap:wrap">
+
+<div>
+
+<strong>Logo actuel</strong>
+
+<br><br>
+
+<img
+id="currentLogoPreview"
+src=""
+alt="Logo"
+style="
+width:120px;
+height:120px;
+object-fit:contain;
+border-radius:15px;
+background:#f5f5f5;
+padding:10px;
+display:none;
+"
+>
+
+</div>
+
+
+<div>
+
+<strong>Image principale actuelle</strong>
+
+<br><br>
+
+<img
+id="currentHeroPreview"
+src=""
+alt="Image principale"
+style="
+width:250px;
+height:140px;
+object-fit:cover;
+border-radius:15px;
+background:#f5f5f5;
+display:none;
+"
+>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<button
+id="siteSettingsSubmit"
+class="btn"
+type="submit"
+>
+💾 Enregistrer les paramètres
+</button>
+
+<div
+id="siteSettingsMessage"
+class="message"
+></div>
+
+</form>
+
+
+<!-- GALLERY -->
+
+<div class="section-title">
+
+<div>
+
+<span class="eyebrow">
+GALERIE
+</span>
+
+<h2>
+Ajouter des images
+</h2>
+
+</div>
+
+</div>
+
+
+<form
+id="siteImageForm"
+class="glass form-box"
+>
+
+<div class="form-grid">
+
+<div>
+
+<label>
+📝 Nom de l'image
+</label>
+
+<input
+id="siteImageTitle"
+type="text"
+placeholder="Nos activités"
+>
+
+</div>
+
+<div>
+
+<label>
+🖼️ Image
+</label>
+
+<input
+id="siteImageFile"
+type="file"
+accept="image/png,image/jpeg,image/webp"
+required
+>
+
+</div>
+
+</div>
+
+<br>
+
+<button
+class="btn"
+type="submit"
+>
+➕ Ajouter l'image
+</button>
+
+<div
+id="siteImageMessage"
+class="message"
+></div>
+
+</form>
+
+
+<div id="siteImagesAdmin">
+
+<div class="glass empty">
+⏳ Chargement...
+</div>
+
+</div>
+
+</section>
+
+
+  
 👥 Membres
 </small>
 
