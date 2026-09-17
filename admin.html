@@ -11,9 +11,9 @@
 
 <style>
 
-/* ==========================================
-   GENERAL
-========================================== */
+/* =====================================================
+   ADMIN
+===================================================== */
 
 .admin-wrap{
   max-width:1250px;
@@ -234,10 +234,9 @@ th{
   font-size:13px;
 }
 
-
-/* ==========================================
+/* =====================================================
    SITE SETTINGS
-========================================== */
+===================================================== */
 
 .site-preview-wrap{
   display:flex;
@@ -299,10 +298,9 @@ th{
   font-size:16px;
 }
 
-
-/* ==========================================
+/* =====================================================
    MOBILE
-========================================== */
+===================================================== */
 
 @media(max-width:600px){
 
@@ -321,15 +319,13 @@ th{
 
 </head>
 
-
 <body>
 
 <div class="admin-wrap">
 
-
-<!-- ==========================================
+<!-- =====================================================
      HEADER
-========================================== -->
+===================================================== -->
 
 <header class="admin-header">
 
@@ -359,17 +355,15 @@ Déconnexion
 </header>
 
 
-<!-- ==========================================
+<!-- =====================================================
      STATS
-========================================== -->
+===================================================== -->
 
 <section class="stats">
 
 <div class="glass stat-card">
 
-<small>
-👥 Membres
-</small>
+<small>👥 Membres</small>
 
 <div
 id="membersCount"
@@ -380,12 +374,9 @@ class="stat-number"
 
 </div>
 
-
 <div class="glass stat-card">
 
-<small>
-📅 Événements
-</small>
+<small>📅 Événements</small>
 
 <div
 id="eventsCount"
@@ -396,12 +387,9 @@ class="stat-number"
 
 </div>
 
-
 <div class="glass stat-card">
 
-<small>
-📢 Annonces
-</small>
+<small>📢 Annonces</small>
 
 <div
 id="announcementsCount"
@@ -412,12 +400,9 @@ class="stat-number"
 
 </div>
 
-
 <div class="glass stat-card">
 
-<small>
-⏱ Heures bénévoles
-</small>
+<small>⏱ Heures bénévoles</small>
 
 <div
 id="hoursCount"
@@ -431,10 +416,9 @@ class="stat-number"
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      SITE SETTINGS
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -460,11 +444,7 @@ id="siteSettingsForm"
 class="glass form-box"
 >
 
-
 <div class="form-grid">
-
-
-<!-- SITE NAME -->
 
 <div>
 
@@ -480,13 +460,11 @@ placeholder="Roued Al Khair"
 
 </div>
 
-
-<!-- LOGO -->
-
 <div>
 
 <label>
-🖼️ Logo du site</label>
+🖼️ Logo du site
+</label>
 
 <input
 id="siteLogo"
@@ -499,9 +477,6 @@ PNG, JPG, WEBP ou SVG — maximum 5 MB
 </span>
 
 </div>
-
-
-<!-- HERO -->
 
 <div>
 
@@ -521,17 +496,11 @@ PNG, JPG ou WEBP — maximum 10 MB
 
 </div>
 
-
 </div>
-
 
 <br>
 
-
-<!-- PREVIEWS -->
-
 <div class="site-preview-wrap">
-
 
 <div class="site-preview-box">
 
@@ -542,12 +511,10 @@ Logo actuel
 <img
 id="currentLogoPreview"
 class="site-logo-preview"
-src=""
 alt="Logo"
 >
 
 </div>
-
 
 <div class="site-preview-box">
 
@@ -558,43 +525,34 @@ Image principale
 <img
 id="currentHeroPreview"
 class="site-hero-preview"
-src=""
 alt="Image principale"
 >
 
 </div>
 
-
 </div>
 
-
 <br>
-
 
 <button
 id="siteSettingsSubmit"
 class="btn"
 type="submit"
 >
-
 💾 Enregistrer les paramètres
-
 </button>
-
 
 <div
 id="siteSettingsMessage"
 class="message"
 ></div>
 
-
 </form>
 
 
-
-<!-- ==========================================
-     SITE GALLERY
-========================================== -->
+<!-- =====================================================
+     GALLERY
+===================================================== -->
 
 <div class="section-title">
 
@@ -618,9 +576,7 @@ id="siteImageForm"
 class="glass form-box"
 >
 
-
 <div class="form-grid">
-
 
 <div>
 
@@ -635,7 +591,6 @@ placeholder="Nos activités"
 >
 
 </div>
-
 
 <div>
 
@@ -656,28 +611,21 @@ PNG, JPG ou WEBP — maximum 10 MB
 
 </div>
 
-
 </div>
 
-
 <br>
-
 
 <button
 class="btn"
 type="submit"
 >
-
 ➕ Ajouter l'image
-
 </button>
-
 
 <div
 id="siteImageMessage"
 class="message"
 ></div>
-
 
 </form>
 
@@ -690,14 +638,12 @@ class="message"
 
 </div>
 
-
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      MEMBERS
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -740,21 +686,10 @@ placeholder="Nom du membre..."
 
 <tr>
 
-<th>
-Nom
-</th>
-
-<th>
-ID
-</th>
-
-<th>
-Rôle
-</th>
-
-<th>
-Actions
-</th>
+<th>Nom</th>
+<th>ID</th>
+<th>Rôle</th>
+<th>Actions</th>
 
 </tr>
 
@@ -765,7 +700,7 @@ Actions
 <tr>
 
 <td colspan="4">
-Chargement...
+⏳ Chargement...
 </td>
 
 </tr>
@@ -779,10 +714,9 @@ Chargement...
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      CREATE EVENT
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -810,12 +744,9 @@ class="glass form-box"
 
 <div class="form-grid">
 
-
 <div>
 
-<label>
-Titre
-</label>
+<label>Titre</label>
 
 <input
 id="eventTitle"
@@ -825,12 +756,9 @@ placeholder="Distribution alimentaire"
 
 </div>
 
-
 <div>
 
-<label>
-Lieu
-</label>
+<label>Lieu</label>
 
 <input
 id="eventLocation"
@@ -839,12 +767,9 @@ placeholder="Tunis"
 
 </div>
 
-
 <div>
 
-<label>
-Date et heure
-</label>
+<label>Date et heure</label>
 
 <input
 id="eventDate"
@@ -854,12 +779,9 @@ required
 
 </div>
 
-
 <div class="full">
 
-<label>
-Description
-</label>
+<label>Description</label>
 
 <textarea
 id="eventDescription"
@@ -868,38 +790,30 @@ placeholder="Description..."
 
 </div>
 
-
 </div>
 
-
 <br>
-
 
 <button
 class="btn"
 type="submit"
 >
-
 + Créer l'événement
-
 </button>
-
 
 <div
 id="eventMessage"
 class="message"
 ></div>
 
-
 </form>
 
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      EVENTS
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -931,10 +845,9 @@ PARTICIPANTS
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      HOURS
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -962,12 +875,9 @@ class="glass form-box"
 
 <div class="form-grid">
 
-
 <div>
 
-<label>
-Bénévole
-</label>
+<label>Bénévole</label>
 
 <select
 id="hoursUser"
@@ -982,16 +892,11 @@ Choisir un bénévole
 
 </div>
 
-
 <div>
 
-<label>
-Événement
-</label>
+<label>Événement</label>
 
-<select
-id="hoursEvent"
->
+<select id="hoursEvent">
 
 <option value="">
 Aucun événement
@@ -1001,12 +906,9 @@ Aucun événement
 
 </div>
 
-
 <div>
 
-<label>
-Nombre d'heures
-</label>
+<label>Nombre d'heures</label>
 
 <input
 id="hoursAmount"
@@ -1019,12 +921,9 @@ placeholder="Ex: 4"
 
 </div>
 
-
 <div class="full">
 
-<label>
-Description
-</label>
+<label>Description</label>
 
 <textarea
 id="hoursDescription"
@@ -1033,28 +932,21 @@ placeholder="Ex: Préparation et distribution des repas"
 
 </div>
 
-
 </div>
 
-
 <br>
-
 
 <button
 class="btn"
 type="submit"
 >
-
 + Ajouter les heures
-
 </button>
-
 
 <div
 id="hoursMessage"
 class="message"
 ></div>
-
 
 </form>
 
@@ -1070,10 +962,9 @@ class="message"
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      CERTIFICATES
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -1101,12 +992,9 @@ class="glass form-box"
 
 <div class="form-grid">
 
-
 <div>
 
-<label>
-👤 Bénévole
-</label>
+<label>👤 Bénévole</label>
 
 <select
 id="certificateUser"
@@ -1121,12 +1009,9 @@ Choisir un bénévole
 
 </div>
 
-
 <div>
 
-<label>
-🏆 Titre du certificat
-</label>
+<label>🏆 Titre du certificat</label>
 
 <input
 id="certificateTitle"
@@ -1137,12 +1022,9 @@ placeholder="Certificat de participation"
 
 </div>
 
-
 <div class="full">
 
-<label>
-📝 Description / Motif
-</label>
+<label>📝 Description / Motif</label>
 
 <textarea
 id="certificateDescription"
@@ -1151,12 +1033,9 @@ placeholder="Participation aux activités de l'association..."
 
 </div>
 
-
 <div class="full">
 
-<label>
-📄 Fichier PDF
-</label>
+<label>📄 Fichier PDF</label>
 
 <input
 id="certificateFile"
@@ -1171,29 +1050,22 @@ PDF uniquement — maximum 10 MB
 
 </div>
 
-
 </div>
 
-
 <br>
-
 
 <button
 id="certificateSubmit"
 class="btn"
 type="submit"
 >
-
 🏆 Ajouter le certificat
-
 </button>
-
 
 <div
 id="certificateMessage"
 class="message"
 ></div>
-
 
 </form>
 
@@ -1209,10 +1081,9 @@ class="message"
 </section>
 
 
-
-<!-- ==========================================
+<!-- =====================================================
      ANNOUNCEMENTS
-========================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -1240,12 +1111,9 @@ class="glass form-box"
 
 <div class="form-grid">
 
-
 <div>
 
-<label>
-Titre
-</label>
+<label>Titre</label>
 
 <input
 id="announcementTitle"
@@ -1255,16 +1123,11 @@ placeholder="Titre de l'annonce"
 
 </div>
 
-
 <div>
 
-<label>
-Catégorie
-</label>
+<label>Catégorie</label>
 
-<select
-id="announcementCategory"
->
+<select id="announcementCategory">
 
 <option value="general">
 Général
@@ -1290,12 +1153,9 @@ Formation
 
 </div>
 
-
 <div class="full">
 
-<label>
-Contenu
-</label>
+<label>Contenu</label>
 
 <textarea
 id="announcementContent"
@@ -1305,28 +1165,21 @@ placeholder="Votre annonce..."
 
 </div>
 
-
 </div>
 
-
 <br>
-
 
 <button
 class="btn"
 type="submit"
 >
-
 + Publier l'annonce
-
 </button>
-
 
 <div
 id="announcementMessage"
 class="message"
 ></div>
-
 
 </form>
 
@@ -1339,3763 +1192,3245 @@ class="message"
 </div>
 
 
-
-<!-- ==========================================
-     SCRIPTS
-========================================== -->
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="app.js"></script>
 
 <script>
 
+/* =====================================================
+   SUPABASE CLIENT
+   IMPORTANT :
+   admin.html est maintenant autonome
+===================================================== */
 
-/* ==========================================
+const SUPABASE_URL =
+"https://iimzsfbkgugbqkipsdih.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_JFAxVtAkqUWJ1XSmhk7TZw_xPyT13dY";
+
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY,
+  {
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:true,
+      storage:window.localStorage
+    }
+  }
+);
+
+
+/* =====================================================
    VARIABLES
-========================================== */
+===================================================== */
 
 let adminProfile = null;
-
 let allMembers = [];
 
 
-/* ==========================================
-   INIT
-========================================== */
+/* =====================================================
+   SECURITY
+===================================================== */
 
-async function initAdmin(){
+function escapeHTML(value){
 
-adminProfile =
-await requireAdmin();
+  if(
+    value === null ||
+    value === undefined
+  ){
+    return "";
+  }
 
-if(!adminProfile){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
 
-return;
+
+/* =====================================================
+   GET PROFILE
+===================================================== */
+
+async function getProfile(){
+
+  const {
+    data:{
+      user
+    },
+    error:userError
+  } =
+  await supabaseClient.auth.getUser();
+
+  if(userError){
+    console.error(userError);
+    return null;
+  }
+
+  if(!user){
+    return null;
+  }
+
+
+  const {
+    data:profile,
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id",user.id)
+    .maybeSingle();
+
+
+  if(error){
+
+    console.error(
+      "PROFILE ERROR:",
+      error
+    );
+
+    return null;
+  }
+
+
+  if(profile){
+
+    return {
+      ...profile,
+      email:user.email
+    };
+
+  }
+
+
+  return {
+    id:user.id,
+    email:user.email,
+    role:"volunteer"
+  };
 
 }
 
 
-await Promise.all([
+/* =====================================================
+   ADMIN CHECK
+===================================================== */
 
-loadMembers(),
+async function requireAdmin(){
 
-loadEvents(),
+  const profile =
+    await getProfile();
 
-loadAnnouncements(),
 
-loadHours(),
+  if(!profile){
 
-loadHoursAdmin(),
+    alert(
+      "Vous devez être connecté."
+    );
 
-loadCertificatesAdmin(),
+    window.location.href =
+      "login.html";
 
-loadSiteSettings(),
+    return null;
+  }
 
-loadSiteImages()
 
-]);
+  if(profile.role !== "admin"){
+
+    alert(
+      "Accès réservé aux administrateurs."
+    );
+
+    window.location.href =
+      "dashboard.html";
+
+    return null;
+  }
+
+
+  return profile;
 
 }
 
 
-/* ==========================================
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+.getElementById("logout")
+.addEventListener(
+"click",
+async function(){
+
+  await supabaseClient.auth.signOut();
+
+  window.location.href =
+    "login.html";
+
+});
+
+
+/* =====================================================
    SITE SETTINGS
-========================================== */
+===================================================== */
 
 async function loadSiteSettings(){
 
-const {
-data,
-error
-} =
-await supabaseClient
-
-.from("site_settings")
-
-.select("*")
-
-.eq("id",1)
-
-.maybeSingle();
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("site_settings")
+    .select("*")
+    .eq("id",1)
+    .maybeSingle();
 
 
-if(error){
+  if(error){
 
-console.error(
-"Site settings:",
-error
-);
+    console.error(
+      "SITE SETTINGS ERROR:",
+      error
+    );
 
-return;
-
-}
-
-
-if(!data){
-
-return;
-
-}
+    return;
+  }
 
 
-const siteName =
-document.getElementById(
-"siteName"
-);
+  if(!data){
+    return;
+  }
 
 
-if(siteName){
-
-siteName.value =
-data.site_name ||
-"Roued Al Khair";
-
-}
+  document.getElementById(
+    "siteName"
+  ).value =
+    data.site_name ||
+    "Roued Al Khair";
 
 
-const logoPreview =
-document.getElementById(
-"currentLogoPreview"
-);
+  if(data.logo_url){
+
+    const img =
+      document.getElementById(
+        "currentLogoPreview"
+      );
+
+    img.src =
+      data.logo_url;
+
+    img.style.display =
+      "block";
+
+  }
 
 
-if(
-logoPreview &&
-data.logo_url
-){
+  if(data.hero_image_url){
 
-logoPreview.src =
-data.logo_url;
+    const img =
+      document.getElementById(
+        "currentHeroPreview"
+      );
 
-logoPreview.style.display =
-"block";
+    img.src =
+      data.hero_image_url;
 
-}
+    img.style.display =
+      "block";
 
-
-const heroPreview =
-document.getElementById(
-"currentHeroPreview"
-);
-
-
-if(
-heroPreview &&
-data.hero_image_url
-){
-
-heroPreview.src =
-data.hero_image_url;
-
-heroPreview.style.display =
-"block";
-
-}
+  }
 
 }
 
 
-/* ==========================================
-   UPLOAD SITE ASSET
-========================================== */
+/* =====================================================
+   UPLOAD SITE FILE
+===================================================== */
 
 async function uploadSiteAsset(
-file,
-folder,
-maxSize
+  file,
+  folder,
+  maxSize
 ){
 
-if(!file){
-
-return null;
-
-}
+  if(!file){
+    return null;
+  }
 
 
-if(file.size > maxSize){
+  if(file.size > maxSize){
 
-throw new Error(
-"Fichier trop volumineux."
-);
+    throw new Error(
+      "Fichier trop volumineux."
+    );
 
-}
-
-
-const safeName =
-file.name
-
-.replace(
-/[^a-zA-Z0-9._-]/g,
-"_"
-);
+  }
 
 
-const path =
-folder +
-"/" +
-Date.now() +
-"_" +
-safeName;
+  const safeName =
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      "_"
+    );
 
 
-const {
-error
-} =
-await supabaseClient
-
-.storage
-
-.from("site-assets")
-
-.upload(
-path,
-file,
-{
-upsert:false
-}
-);
+  const path =
+    folder +
+    "/" +
+    Date.now() +
+    "_" +
+    safeName;
 
 
-if(error){
-
-throw error;
-
-}
-
-
-const {
-data
-} =
-supabaseClient
-
-.storage
-
-.from("site-assets")
-
-.getPublicUrl(path);
+  const {
+    error
+  } =
+  await supabaseClient
+    .storage
+    .from("site-assets")
+    .upload(
+      path,
+      file,
+      {
+        upsert:false
+      }
+    );
 
 
-return {
+  if(error){
+    throw error;
+  }
 
-path:path,
 
-url:data.publicUrl
+  const {
+    data
+  } =
+  supabaseClient
+    .storage
+    .from("site-assets")
+    .getPublicUrl(path);
 
-};
+
+  return {
+    path:path,
+    url:data.publicUrl
+  };
 
 }
 
 
-/* ==========================================
+/* =====================================================
    SAVE SITE SETTINGS
-========================================== */
+===================================================== */
 
-document.getElementById(
-"siteSettingsForm"
-).addEventListener(
+document
+.getElementById("siteSettingsForm")
+.addEventListener(
 "submit",
 async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
 
-const message =
-document.getElementById(
-"siteSettingsMessage"
-);
+  const message =
+    document.getElementById(
+      "siteSettingsMessage"
+    );
 
 
-const submit =
-document.getElementById(
-"siteSettingsSubmit"
-);
+  const submit =
+    document.getElementById(
+      "siteSettingsSubmit"
+    );
 
 
-const siteName =
-document.getElementById(
-"siteName"
-).value.trim();
+  const siteName =
+    document.getElementById(
+      "siteName"
+    ).value.trim();
 
 
-const logoFile =
-document.getElementById(
-"siteLogo"
-).files[0];
+  const logoFile =
+    document.getElementById(
+      "siteLogo"
+    ).files[0];
 
 
-const heroFile =
-document.getElementById(
-"siteHero"
-).files[0];
+  const heroFile =
+    document.getElementById(
+      "siteHero"
+    ).files[0];
 
 
-submit.disabled =
-true;
+  submit.disabled = true;
 
-submit.textContent =
-"⏳ Enregistrement...";
+  submit.textContent =
+    "⏳ Enregistrement...";
 
-message.innerHTML =
-"";
+  message.innerHTML = "";
 
 
-try{
+  try{
 
-let logoPath = null;
+    let logo = null;
+    let hero = null;
 
-let logoUrl = null;
 
-let heroPath = null;
+    /* LOGO */
 
-let heroUrl = null;
+    if(logoFile){
 
+      const allowed = [
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "image/svg+xml"
+      ];
 
-/* LOGO */
 
-if(logoFile){
+      if(!allowed.includes(
+        logoFile.type
+      )){
 
-const allowed = [
+        throw new Error(
+          "Format du logo non valide."
+        );
 
-"image/png",
+      }
 
-"image/jpeg",
 
-"image/webp",
+      logo =
+        await uploadSiteAsset(
+          logoFile,
+          "logo",
+          5 * 1024 * 1024
+        );
 
-"image/svg+xml"
+    }
 
-];
 
+    /* HERO */
 
-if(
-!allowed.includes(
-logoFile.type
-)
-){
+    if(heroFile){
 
-throw new Error(
-"Format du logo non valide."
-);
+      const allowed = [
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+      ];
 
-}
 
+      if(!allowed.includes(
+        heroFile.type
+      )){
 
-const result =
-await uploadSiteAsset(
-logoFile,
-"logo",
-5 * 1024 * 1024
-);
+        throw new Error(
+          "Format de l'image principale non valide."
+        );
 
+      }
 
-logoPath =
-result.path;
 
-logoUrl =
-result.url;
+      hero =
+        await uploadSiteAsset(
+          heroFile,
+          "hero",
+          10 * 1024 * 1024
+        );
 
-}
+    }
 
 
-/* HERO */
+    const updateData = {
 
-if(heroFile){
+      site_name:
+        siteName ||
+        "Roued Al Khair",
 
-const allowed = [
+      updated_at:
+        new Date().toISOString()
 
-"image/png",
+    };
 
-"image/jpeg",
 
-"image/webp"
+    if(logo){
 
-];
+      updateData.logo_path =
+        logo.path;
 
+      updateData.logo_url =
+        logo.url;
 
-if(
-!allowed.includes(
-heroFile.type
-)
-){
+    }
 
-throw new Error(
-"Format de l'image principale non valide."
-);
 
-}
+    if(hero){
 
+      updateData.hero_image_path =
+        hero.path;
 
-const result =
-await uploadSiteAsset(
-heroFile,
-"hero",
-10 * 1024 * 1024
-);
+      updateData.hero_image_url =
+        hero.url;
 
+    }
 
-heroPath =
-result.path;
 
-heroUrl =
-result.url;
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("site_settings")
+      .update(updateData)
+      .eq("id",1);
 
-}
 
+    if(error){
+      throw error;
+    }
 
-/* DATABASE */
 
-const updateData = {
+    message.innerHTML =
+      "✅ <strong>Paramètres enregistrés !</strong>";
 
-site_name:
-siteName ||
-"Roued Al Khair",
 
-updated_at:
-new Date().toISOString()
+    if(logo){
 
-};
+      const img =
+        document.getElementById(
+          "currentLogoPreview"
+        );
 
+      img.src =
+        logo.url;
 
-if(logoPath){
+      img.style.display =
+        "block";
 
-updateData.logo_path =
-logoPath;
+    }
 
-updateData.logo_url =
-logoUrl;
 
-}
+    if(hero){
 
+      const img =
+        document.getElementById(
+          "currentHeroPreview"
+        );
 
-if(heroPath){
+      img.src =
+        hero.url;
 
-updateData.hero_image_path =
-heroPath;
+      img.style.display =
+        "block";
 
-updateData.hero_image_url =
-heroUrl;
+    }
 
-}
 
+    document.getElementById(
+      "siteLogo"
+    ).value = "";
 
-const {
-error
-} =
-await supabaseClient
 
-.from("site_settings")
+    document.getElementById(
+      "siteHero"
+    ).value = "";
 
-.update(
-updateData
-)
 
-.eq(
-"id",
-1
-);
+  }
+  catch(error){
 
+    console.error(error);
 
-if(error){
+    message.innerHTML =
+      "❌ " +
+      escapeHTML(
+        error.message
+      );
 
-throw error;
+  }
+  finally{
 
-}
+    submit.disabled = false;
 
+    submit.textContent =
+      "💾 Enregistrer les paramètres";
 
-message.innerHTML =
-"✅ <strong>Paramètres enregistrés !</strong>";
-
-
-if(logoUrl){
-
-const preview =
-document.getElementById(
-"currentLogoPreview"
-);
-
-preview.src =
-logoUrl;
-
-preview.style.display =
-"block";
-
-}
-
-
-if(heroUrl){
-
-const preview =
-document.getElementById(
-"currentHeroPreview"
-);
-
-preview.src =
-heroUrl;
-
-preview.style.display =
-"block";
-
-}
-
-
-document.getElementById(
-"siteLogo"
-).value =
-"";
-
-
-document.getElementById(
-"siteHero"
-).value =
-"";
-
-
-}
-catch(error){
-
-console.error(error);
-
-message.innerHTML =
-"❌ " +
-escapeHTML(
-error.message
-);
-
-}
-finally{
-
-submit.disabled =
-false;
-
-submit.textContent =
-"💾 Enregistrer les paramètres";
-
-}
+  }
 
 });
 
 
-/* ==========================================
-   SITE IMAGES
-========================================== */
+/* =====================================================
+   SITE GALLERY
+===================================================== */
 
 async function loadSiteImages(){
 
-const container =
-document.getElementById(
-"siteImagesAdmin"
-);
+  const container =
+    document.getElementById(
+      "siteImagesAdmin"
+    );
 
 
-const {
-data,
-error
-} =
-await supabaseClient
-
-.from("site_images")
-
-.select("*")
-
-.order(
-"display_order",
-{
-ascending:true
-}
-)
-
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("site_images")
+    .select("*")
+    .order(
+      "display_order",
+      {
+        ascending:true
+      }
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
 
 
-if(error){
+  if(error){
 
-console.error(error);
+    console.error(error);
 
-container.innerHTML = `
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ Erreur de chargement des images.
+        <br>
+        <small>${escapeHTML(error.message)}</small>
+      </div>
+    `;
 
-<div class="glass empty">
-
-❌ Erreur de chargement des images.
-
-<br>
-
-<small>
-
-${escapeHTML(
-error.message
-)}
-
-</small>
-
-</div>
-
-`;
-
-return;
-
-}
+    return;
+  }
 
 
-if(!data || !data.length){
+  if(!data || !data.length){
 
-container.innerHTML = `
+    container.innerHTML = `
+      <div class="glass empty">
+        🖼️ Aucune image ajoutée.
+      </div>
+    `;
 
-<div class="glass empty">
-
-🖼️ Aucune image ajoutée.
-
-</div>
-
-`;
-
-return;
-
-}
+    return;
+  }
 
 
-container.innerHTML = `
+  container.innerHTML = `
 
-<div class="site-images-grid">
+    <div class="site-images-grid">
 
-${
-data.map(
-image => `
+      ${
+        data.map(image => `
 
-<div class="glass site-image-card">
+          <div class="glass site-image-card">
 
-<img
-src="${escapeHTML(
-image.image_url
-)}"
-alt="${escapeHTML(
-image.title || "Image"
-)}"
->
+            <img
+              src="${escapeHTML(image.image_url)}"
+              alt="${escapeHTML(image.title || "Image")}"
+            >
 
-<h3>
+            <h3>
+              ${escapeHTML(
+                image.title || "Sans titre"
+              )}
+            </h3>
 
-${escapeHTML(
-image.title ||
-"Sans titre"
-)}
+            <button
+              class="mini-btn danger"
+              onclick="deleteSiteImage(
+                '${image.id}',
+                '${String(image.image_path || "")
+                  .replace(/\\/g,"\\\\")
+                  .replace(/'/g,"\\'")}'
+              )"
+            >
+              🗑 Supprimer
+            </button>
 
-</h3>
+          </div>
 
-<button
-class="mini-btn danger"
-onclick="deleteSiteImage(
-'${image.id}',
-'${escapeHTML(
-image.image_path
-)}'
-)"
->
+        `).join("")
+      }
 
-🗑 Supprimer
+    </div>
 
-</button>
-
-</div>
-
-`
-).join("")
-}
-
-</div>
-
-`;
+  `;
 
 }
 
 
-/* ==========================================
+/* =====================================================
    ADD SITE IMAGE
-========================================== */
+===================================================== */
 
-document.getElementById(
-"siteImageForm"
-).addEventListener(
+document
+.getElementById("siteImageForm")
+.addEventListener(
 "submit",
 async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
 
-const message =
-document.getElementById(
-"siteImageMessage"
-);
+  const message =
+    document.getElementById(
+      "siteImageMessage"
+    );
 
 
-const file =
-document.getElementById(
-"siteImageFile"
-).files[0];
+  const file =
+    document.getElementById(
+      "siteImageFile"
+    ).files[0];
 
 
-const title =
-document.getElementById(
-"siteImageTitle"
-).value.trim();
+  const title =
+    document.getElementById(
+      "siteImageTitle"
+    ).value.trim();
 
 
-if(!file){
+  if(!file){
 
-message.innerHTML =
-"❌ Choisissez une image.";
+    message.innerHTML =
+      "❌ Choisissez une image.";
 
-return;
-
-}
-
-
-if(
-file.size >
-10 * 1024 * 1024
-){
-
-message.innerHTML =
-"❌ Maximum 10 MB.";
-
-return;
-
-}
+    return;
+  }
 
 
-const allowed = [
+  if(
+    file.size >
+    10 * 1024 * 1024
+  ){
 
-"image/png",
+    message.innerHTML =
+      "❌ Maximum 10 MB.";
 
-"image/jpeg",
-
-"image/webp"
-
-];
-
-
-if(
-!allowed.includes(
-file.type
-)
-){
-
-message.innerHTML =
-"❌ Format non valide.";
-
-return;
-
-}
+    return;
+  }
 
 
-message.textContent =
-"⏳ Upload de l'image...";
+  const allowed = [
+    "image/png",
+    "image/jpeg",
+    "image/webp"
+  ];
 
 
-try{
+  if(!allowed.includes(file.type)){
 
-const result =
-await uploadSiteAsset(
-file,
-"gallery",
-10 * 1024 * 1024
-);
+    message.innerHTML =
+      "❌ Format non valide.";
 
-
-const {
-error
-} =
-await supabaseClient
-
-.from("site_images")
-
-.insert({
-
-title:
-title || null,
-
-image_path:
-result.path,
-
-image_url:
-result.url,
-
-display_order:0,
-
-is_active:true
-
-});
+    return;
+  }
 
 
-if(error){
-
-await supabaseClient
-
-.storage
-
-.from("site-assets")
-
-.remove([
-result.path
-]);
-
-throw error;
-
-}
+  message.textContent =
+    "⏳ Upload de l'image...";
 
 
-message.innerHTML =
-"✅ Image ajoutée !";
+  try{
+
+    const result =
+      await uploadSiteAsset(
+        file,
+        "gallery",
+        10 * 1024 * 1024
+      );
 
 
-this.reset();
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("site_images")
+      .insert({
+
+        title:
+          title || null,
+
+        image_path:
+          result.path,
+
+        image_url:
+          result.url,
+
+        display_order:
+          0,
+
+        is_active:
+          true
+
+      });
 
 
-await loadSiteImages();
+    if(error){
 
-}
-catch(error){
+      await supabaseClient
+        .storage
+        .from("site-assets")
+        .remove([
+          result.path
+        ]);
 
-console.error(error);
+      throw error;
+    }
 
-message.innerHTML =
-"❌ " +
-escapeHTML(
-error.message
-);
 
-}
+    message.innerHTML =
+      "✅ Image ajoutée !";
+
+
+    this.reset();
+
+
+    await loadSiteImages();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    message.innerHTML =
+      "❌ " +
+      escapeHTML(
+        error.message
+      );
+
+  }
 
 });
 
 
-/* ==========================================
+/* =====================================================
    DELETE SITE IMAGE
-========================================== */
+===================================================== */
 
 async function deleteSiteImage(
-id,
-path
+  id,
+  path
 ){
 
-if(
-!confirm(
-"Supprimer cette image ?"
-)
-){
-
-return;
-
-}
+  if(
+    !confirm(
+      "Supprimer cette image ?"
+    )
+  ){
+    return;
+  }
 
 
-try{
+  try{
 
-if(path){
+    if(path){
 
-const {
-error:storageError
-} =
-await supabaseClient
+      await supabaseClient
+        .storage
+        .from("site-assets")
+        .remove([
+          path
+        ]);
 
-.storage
-
-.from("site-assets")
-
-.remove([
-path
-]);
-
-if(storageError){
-
-console.error(
-storageError
-);
-
-}
-
-}
+    }
 
 
-const {
-error
-} =
-await supabaseClient
-
-.from("site_images")
-
-.delete()
-
-.eq(
-"id",
-id
-);
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("site_images")
+      .delete()
+      .eq("id",id);
 
 
-if(error){
+    if(error){
+      throw error;
+    }
 
-throw error;
+
+    await loadSiteImages();
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+  }
 
 }
 
 
-await loadSiteImages();
-
-}
-catch(error){
-
-console.error(error);
-
-alert(
-"❌ " +
-error.message
-);
-
-}
-
-}
-
-
-/* ==========================================
+/* =====================================================
    MEMBERS
-========================================== */
+===================================================== */
 
 async function loadMembers(){
 
-const tbody =
-document.getElementById(
-"membersTable"
-);
+  const tbody =
+    document.getElementById(
+      "membersTable"
+    );
 
 
-const {
-data,
-error
-} =
-await supabaseClient
-
-.from("profiles")
-
-.select(
-"id,full_name,role,created_at"
-)
-
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select(
+      "id,full_name,role,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
 
 
-if(error){
+  if(error){
 
-console.error(error);
+    console.error(error);
 
-tbody.innerHTML = `
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4">
+          ❌ ${escapeHTML(error.message)}
+        </td>
+      </tr>
+    `;
 
-<tr>
-
-<td colspan="4">
-
-❌ Erreur de chargement.
-
-</td>
-
-</tr>
-
-`;
-
-return;
-
-}
+    return;
+  }
 
 
-allMembers =
-data || [];
+  allMembers =
+    data || [];
 
 
-document.getElementById(
-"membersCount"
-).textContent =
-allMembers.length;
+  document.getElementById(
+    "membersCount"
+  ).textContent =
+    allMembers.length;
 
 
-renderMembers(
-allMembers
-);
+  renderMembers(
+    allMembers
+  );
 
 
-populateHourUsers();
+  populateHourUsers();
 
-populateCertificateUsers();
+  populateCertificateUsers();
 
 }
 
 
 function renderMembers(
-members
+  members
 ){
 
-const tbody =
-document.getElementById(
-"membersTable"
-);
+  const tbody =
+    document.getElementById(
+      "membersTable"
+    );
 
 
-if(!members.length){
+  if(!members.length){
 
-tbody.innerHTML = `
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="4">
+          Aucun membre.
+        </td>
+      </tr>
+    `;
 
-<tr>
-
-<td colspan="4">
-
-Aucun membre.
-
-</td>
-
-</tr>
-
-`;
-
-return;
-
-}
+    return;
+  }
 
 
-tbody.innerHTML = "";
+  tbody.innerHTML = "";
 
 
-members.forEach(
-member => {
+  members.forEach(
+    member => {
 
-const tr =
-document.createElement(
-"tr"
-);
-
-
-const role =
-member.role ||
-"volunteer";
+      const tr =
+        document.createElement(
+          "tr"
+        );
 
 
-tr.innerHTML = `
-
-<td>
-
-<strong>
-
-${escapeHTML(
-member.full_name ||
-"Sans nom"
-)}
-
-</strong>
-
-</td>
+      const role =
+        member.role ||
+        "volunteer";
 
 
-<td>
+      tr.innerHTML = `
 
-<small>
+        <td>
+          <strong>
+            ${escapeHTML(
+              member.full_name ||
+              "Sans nom"
+            )}
+          </strong>
+        </td>
 
-${escapeHTML(
-member.id
-)}
+        <td>
+          <small>
+            ${escapeHTML(member.id)}
+          </small>
+        </td>
 
-</small>
+        <td>
 
-</td>
+          <span
+            class="role ${
+              role === "admin"
+              ? "admin"
+              : "volunteer"
+            }"
+          >
+            ${
+              role === "admin"
+              ? "Admin"
+              : "Bénévole"
+            }
+          </span>
 
+        </td>
 
-<td>
+        <td>
 
-<span class="role ${
-role === "admin"
-? "admin"
-: "volunteer"
-}">
+          <button
+            class="mini-btn"
+            onclick="changeRole(
+              '${member.id}',
+              '${role}'
+            )"
+          >
+            ${
+              role === "admin"
+              ? "→ Bénévole"
+              : "→ Admin"
+            }
+          </button>
 
-${
-role === "admin"
-? "Admin"
-: "Bénévole"
-}
+          <button
+            class="mini-btn"
+            onclick="openProfile(
+              '${member.id}'
+            )"
+          >
+            Profil
+          </button>
 
-</span>
+        </td>
 
-</td>
-
-
-<td>
-
-<button
-class="mini-btn"
-onclick="changeRole(
-'${member.id}',
-'${role}'
-)"
->
-
-${
-role === "admin"
-? "→ Bénévole"
-: "→ Admin"
-}
-
-</button>
-
-
-<button
-class="mini-btn"
-onclick="openProfile(
-'${member.id}'
-)"
->
-
-Profil
-
-</button>
-
-</td>
-
-`;
+      `;
 
 
-tbody.appendChild(
-tr
-);
+      tbody.appendChild(tr);
 
-});
+    }
+  );
 
 }
 
 
 async function changeRole(
-userId,
-currentRole
+  userId,
+  currentRole
 ){
 
-const newRole =
-currentRole === "admin"
-? "volunteer"
-: "admin";
+  const newRole =
+    currentRole === "admin"
+    ? "volunteer"
+    : "admin";
 
 
-const {
-error
-} =
-await supabaseClient
-
-.from("profiles")
-
-.update({
-role:newRole
-})
-
-.eq(
-"id",
-userId
-);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("profiles")
+    .update({
+      role:newRole
+    })
+    .eq("id",userId);
 
 
-if(error){
+  if(error){
 
-alert(
-"❌ " +
-error.message
-);
+    alert(
+      "❌ " +
+      error.message
+    );
 
-return;
+    return;
+  }
+
+
+  await loadMembers();
 
 }
 
 
-await loadMembers();
+function openProfile(id){
 
-}
-
-
-function openProfile(
-id
-){
-
-window.open(
-"profile.html?id=" +
-encodeURIComponent(id),
-"_blank"
-);
+  window.open(
+    "profile.html?id=" +
+    encodeURIComponent(id),
+    "_blank"
+  );
 
 }
 
 
 /* SEARCH */
 
-document.getElementById(
-"memberSearch"
-).addEventListener(
+document
+.getElementById("memberSearch")
+.addEventListener(
 "input",
 function(){
 
-const value =
-this.value
-.toLowerCase()
-.trim();
+  const value =
+    this.value
+      .toLowerCase()
+      .trim();
 
 
-renderMembers(
+  renderMembers(
 
-allMembers.filter(
-m =>
-(m.full_name || "")
-.toLowerCase()
-.includes(value)
-)
+    allMembers.filter(
+      m =>
+        (m.full_name || "")
+          .toLowerCase()
+          .includes(value)
+    )
 
-);
+  );
 
-}
-);
+});
 
 
-/* ==========================================
+/* =====================================================
    CREATE EVENT
-========================================== */
+===================================================== */
 
-document.getElementById(
-"eventForm"
-).addEventListener(
+document
+.getElementById("eventForm")
+.addEventListener(
 "submit",
 async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
 
-const message =
-document.getElementById(
-"eventMessage"
-);
+  const message =
+    document.getElementById(
+      "eventMessage"
+    );
 
 
-message.textContent =
-"⏳ Création...";
+  message.textContent =
+    "⏳ Création...";
 
 
-const title =
-document.getElementById(
-"eventTitle"
-).value.trim();
+  const title =
+    document.getElementById(
+      "eventTitle"
+    ).value.trim();
 
 
-const location =
-document.getElementById(
-"eventLocation"
-).value.trim();
+  const location =
+    document.getElementById(
+      "eventLocation"
+    ).value.trim();
 
 
-const eventDate =
-document.getElementById(
-"eventDate"
-).value;
+  const eventDate =
+    document.getElementById(
+      "eventDate"
+    ).value;
 
 
-const description =
-document.getElementById(
-"eventDescription"
-).value.trim();
+  const description =
+    document.getElementById(
+      "eventDescription"
+    ).value.trim();
 
 
-const {
-error
-} =
-await supabaseClient
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("events")
+    .insert({
 
-.from("events")
+      title:title,
 
-.insert({
+      description:
+        description,
 
-title:title,
+      location:
+        location,
 
-description:description,
+      event_date:
+        eventDate,
 
-location:location,
+      created_by:
+        adminProfile.id
 
-event_date:eventDate,
+    });
 
-created_by:adminProfile.id
+
+  if(error){
+
+    message.innerHTML =
+      "❌ " +
+      escapeHTML(
+        error.message
+      );
+
+    return;
+  }
+
+
+  message.innerHTML =
+    "✅ Événement créé !";
+
+
+  this.reset();
+
+
+  await loadEvents();
 
 });
 
 
-if(error){
-
-message.innerHTML =
-"❌ " +
-escapeHTML(
-error.message
-);
-
-return;
-
-}
-
-
-message.innerHTML =
-"✅ Événement créé !";
-
-
-this.reset();
-
-
-await loadEvents();
-
-await populateHourEvents();
-
-});
-
-
-/* ==========================================
+/* =====================================================
    EVENTS
-========================================== */
+===================================================== */
 
 async function loadEvents(){
 
-const container =
-document.getElementById(
-"eventsAdmin"
-);
+  const container =
+    document.getElementById(
+      "eventsAdmin"
+    );
 
 
-const {
-data:events,
-error
-} =
-await supabaseClient
+  const {
+    data:events,
+    error
+  } =
+  await supabaseClient
+    .from("events")
+    .select(
+      "id,title,description,location,event_date,created_at"
+    )
+    .order(
+      "event_date",
+      {
+        ascending:true
+      }
+    );
 
-.from("events")
 
-.select(
-"id,title,description,location,event_date,created_at"
-)
+  if(error){
 
-.order(
-"event_date",
-{
-ascending:true
-}
-);
+    console.error(error);
 
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ ${escapeHTML(error.message)}
+      </div>
+    `;
 
-if(error){
+    return;
+  }
 
-container.innerHTML = `
 
-<div class="glass empty">
+  document.getElementById(
+    "eventsCount"
+  ).textContent =
+    (events || []).length;
 
-❌ Erreur.
 
-</div>
+  if(!events || !events.length){
 
-`;
+    container.innerHTML = `
+      <div class="glass empty">
+        📅 Aucun événement.
+      </div>
+    `;
 
-return;
+    return;
+  }
 
-}
 
+  container.innerHTML = "";
 
-document.getElementById(
-"eventsCount"
-).textContent =
-(events || []).length;
 
+  for(
+    const event of events
+  ){
 
-if(!events.length){
+    const card =
+      document.createElement(
+        "div"
+      );
 
-container.innerHTML = `
 
-<div class="glass empty">
+    card.className =
+      "glass event-admin-card";
 
-📅 Aucun événement.
 
-</div>
+    const date =
+      event.event_date
+      ? new Date(
+          event.event_date
+        ).toLocaleString(
+          "fr-FR",
+          {
+            dateStyle:"medium",
+            timeStyle:"short"
+          }
+        )
+      : "Date à confirmer";
 
-`;
 
-return;
+    card.innerHTML = `
 
-}
+      <div class="event-admin-head">
 
+        <div>
 
-container.innerHTML = "";
+          <h3>
+            ${escapeHTML(event.title)}
+          </h3>
 
+          <div class="event-meta">
 
-for(
-const event of events
-){
+            📅 ${escapeHTML(date)}
 
-const card =
-document.createElement(
-"div"
-);
-
-
-card.className =
-"glass event-admin-card";
-
-
-const date =
-event.event_date
-
-?
-
-new Date(
-event.event_date
-).toLocaleString(
-"fr-FR",
-{
-dateStyle:"medium",
-timeStyle:"short"
-}
-)
-
-:
-
-"Date à confirmer";
-
-
-card.innerHTML = `
-
-<div class="event-admin-head">
-
-<div>
-
-<h3>
-
-${escapeHTML(
-event.title
-)}
-
-</h3>
-
-<div class="event-meta">
-
-📅 ${escapeHTML(date)}
-
-${
-event.location
-?
-
-" · 📍 " +
-escapeHTML(
-event.location
-)
-
-:
-
-""
-
-}
-
-</div>
-
-
-${
-event.description
-
-?
-
-`
-
-<p>
-
-${escapeHTML(
-event.description
-)}
-
-</p>
-
-`
-
-:
-
-""
-
-}
-
-</div>
-
-
-<div class="event-actions">
-
-<span
-class="participant-count"
-id="count-${event.id}"
->
-
-⏳
-
-</span>
-
-
-<button
-class="mini-btn danger"
-onclick="deleteEvent(
-'${event.id}'
-)"
->
-
-Supprimer
-
-</button>
-
-</div>
-
-</div>
-
-
-<div
-id="participants-${event.id}"
-style="margin-top:20px"
->
-
-<div class="empty">
-
-⏳ Chargement...
-
-</div>
-
-</div>
-
-`;
-
-
-container.appendChild(
-card
-);
-
-
-await loadParticipants(
-event.id
-);
+            ${
+              event.location
+              ? " · 📍 " +
+                escapeHTML(
+                  event.location
+                )
+              : ""
+            }
+
+          </div>
+
+          ${
+            event.description
+            ? `
+              <p>
+                ${escapeHTML(
+                  event.description
+                )}
+              </p>
+            `
+            : ""
+          }
+
+        </div>
+
+        <div class="event-actions">
+
+          <span
+            class="participant-count"
+            id="count-${event.id}"
+          >
+            ⏳
+          </span>
+
+          <button
+            class="mini-btn danger"
+            onclick="deleteEvent(
+              '${event.id}'
+            )"
+          >
+            Supprimer
+          </button>
+
+        </div>
+
+      </div>
+
+      <div
+        id="participants-${event.id}"
+        style="margin-top:20px"
+      >
+        <div class="empty">
+          ⏳ Chargement...
+        </div>
+      </div>
+
+    `;
+
+
+    container.appendChild(card);
+
+
+    await loadParticipants(
+      event.id
+    );
+
+  }
+
+
+  await populateHourEvents();
 
 }
 
 
-await populateHourEvents();
-
-}
-
-
-/* ==========================================
+/* =====================================================
    PARTICIPANTS
-========================================== */
+===================================================== */
 
 async function loadParticipants(
-eventId
+  eventId
 ){
 
-const container =
-document.getElementById(
-"participants-" +
-eventId
-);
+  const container =
+    document.getElementById(
+      "participants-" +
+      eventId
+    );
+
+
+  const count =
+    document.getElementById(
+      "count-" +
+      eventId
+    );
 
 
-const count =
-document.getElementById(
-"count-" +
-eventId
-);
+  const {
+    data:list,
+    error
+  } =
+  await supabaseClient
+    .from("event_participants")
+    .select(
+      "id,user_id,status,created_at"
+    )
+    .eq(
+      "event_id",
+      eventId
+    )
+    .order(
+      "created_at",
+      {
+        ascending:true
+      }
+    );
 
 
-const {
-data:list,
-error
-} =
-await supabaseClient
+  if(error){
 
-.from("event_participants")
+    container.innerHTML = `
+      <div class="empty">
+        ❌ ${escapeHTML(error.message)}
+      </div>
+    `;
 
-.select(
-"id,user_id,status,created_at"
-)
+    return;
+  }
 
-.eq(
-"event_id",
-eventId
-)
 
-.order(
-"created_at",
-{
-ascending:true
-}
-);
+  const participants =
+    list || [];
 
 
-if(error){
+  const present =
+    participants.filter(
+      p =>
+        p.status === "present"
+    ).length;
 
-container.innerHTML = `
 
-<div class="empty">
+  count.textContent =
+    `👥 ${participants.length} · ✅ ${present}`;
 
-❌ Erreur.
 
-</div>
+  if(!participants.length){
 
-`;
+    container.innerHTML = `
+      <div class="empty">
+        Aucun participant.
+      </div>
+    `;
 
-return;
+    return;
+  }
 
-}
 
+  const ids =
+    participants.map(
+      p => p.user_id
+    );
 
-const participants =
-list || [];
 
+  const {
+    data:profiles
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select(
+      "id,full_name"
+    )
+    .in(
+      "id",
+      ids
+    );
 
-const present =
-participants.filter(
-p =>
-p.status === "present"
-).length;
 
+  const profileMap =
+    new Map(
+      (profiles || [])
+        .map(
+          p => [
+            p.id,
+            p
+          ]
+        )
+    );
 
-count.textContent =
-`👥 ${participants.length} · ✅ ${present}`;
 
+  let html = `
 
-if(!participants.length){
+    <div class="table-wrap">
 
-container.innerHTML = `
+      <table>
 
-<div class="empty">
+        <thead>
 
-Aucun participant.
+          <tr>
 
-</div>
+            <th>Bénévole</th>
+            <th>Inscription</th>
+            <th>Statut</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+  `;
 
-`;
 
-return;
+  participants.forEach(
+    p => {
 
-}
+      const profile =
+        profileMap.get(
+          p.user_id
+        );
 
 
-const ids =
-participants.map(
-p =>
-p.user_id
-);
+      const name =
+        profile?.full_name ||
+        "Bénévole";
 
 
-const {
-data:profiles
-} =
-await supabaseClient
+      const date =
+        p.created_at
+        ? new Date(
+            p.created_at
+          ).toLocaleDateString(
+            "fr-FR"
+          )
+        : "-";
 
-.from("profiles")
 
-.select(
-"id,full_name"
-)
+      html += `
 
-.in(
-"id",
-ids
-);
+        <tr>
 
+          <td>
+            <strong>
+              ${escapeHTML(name)}
+            </strong>
+          </td>
 
-const profileMap =
-new Map(
+          <td>
+            ${date}
+          </td>
 
-(profiles || [])
-.map(
-p =>
-[
-p.id,
-p
-]
-)
+          <td>
 
-);
+            <select
+              class="status-select"
+              onchange="changeParticipantStatus(
+                '${p.id}',
+                this.value,
+                '${eventId}'
+              )"
+            >
 
+              <option
+                value="registered"
+                ${
+                  p.status === "registered"
+                  ? "selected"
+                  : ""
+                }
+              >
+                Inscrit
+              </option>
 
-let html = `
+              <option
+                value="present"
+                ${
+                  p.status === "present"
+                  ? "selected"
+                  : ""
+                }
+              >
+                Présent
+              </option>
 
-<div class="table-wrap">
+              <option
+                value="absent"
+                ${
+                  p.status === "absent"
+                  ? "selected"
+                  : ""
+                }
+              >
+                Absent
+              </option>
 
-<table>
+              <option
+                value="cancelled"
+                ${
+                  p.status === "cancelled"
+                  ? "selected"
+                  : ""
+                }
+              >
+                Annulé
+              </option>
 
-<thead>
+            </select>
 
-<tr>
+          </td>
 
-<th>
-Bénévole
-</th>
+        </tr>
 
-<th>
-Inscription
-</th>
+      `;
 
-<th>
-Statut
-</th>
+    }
+  );
 
-</tr>
 
-</thead>
+  html += `
 
-<tbody>
+        </tbody>
 
-`;
+      </table>
 
+    </div>
 
-participants.forEach(
-p => {
+  `;
 
-const profile =
-profileMap.get(
-p.user_id
-);
 
-
-const name =
-profile?.full_name ||
-"Bénévole";
-
-
-const date =
-p.created_at
-
-?
-
-new Date(
-p.created_at
-).toLocaleDateString(
-"fr-FR"
-)
-
-:
-
-"-";
-
-
-html += `
-
-<tr>
-
-<td>
-
-<strong>
-
-${escapeHTML(name)}
-
-</strong>
-
-</td>
-
-
-<td>
-
-${date}
-
-</td>
-
-
-<td>
-
-<select
-class="status-select"
-onchange="changeParticipantStatus(
-'${p.id}',
-this.value,
-'${eventId}'
-)"
->
-
-<option
-value="registered"
-${
-p.status === "registered"
-? "selected"
-: ""
-}
->
-
-Inscrit
-
-</option>
-
-
-<option
-value="present"
-${
-p.status === "present"
-? "selected"
-: ""
-}
->
-
-Présent
-
-</option>
-
-
-<option
-value="absent"
-${
-p.status === "absent"
-? "selected"
-: ""
-}
->
-
-Absent
-
-</option>
-
-
-<option
-value="cancelled"
-${
-p.status === "cancelled"
-? "selected"
-: ""
-}
->
-
-Annulé
-
-</option>
-
-</select>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-
-html += `
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-
-container.innerHTML =
-html;
+  container.innerHTML =
+    html;
 
 }
 
 
 async function changeParticipantStatus(
-id,
-status,
-eventId
+  id,
+  status,
+  eventId
 ){
 
-const {
-error
-} =
-await supabaseClient
-
-.from("event_participants")
-
-.update({
-status:status
-})
-
-.eq(
-"id",
-id
-);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("event_participants")
+    .update({
+      status:status
+    })
+    .eq(
+      "id",
+      id
+    );
 
 
-if(error){
+  if(error){
 
-alert(
-"❌ " +
-error.message
-);
+    alert(
+      "❌ " +
+      error.message
+    );
 
-return;
+    return;
+  }
 
-}
 
-
-await loadParticipants(
-eventId
-);
+  await loadParticipants(
+    eventId
+  );
 
 }
 
-
-/* DELETE EVENT */
 
 async function deleteEvent(
-id
+  id
 ){
 
-if(
-!confirm(
-"Supprimer cet événement ?"
-)
-){
-
-return;
-
-}
+  if(
+    !confirm(
+      "Supprimer cet événement ?"
+    )
+  ){
+    return;
+  }
 
 
-const {
-error
-} =
-await supabaseClient
-
-.from("events")
-
-.delete()
-
-.eq(
-"id",
-id
-);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("events")
+    .delete()
+    .eq(
+      "id",
+      id
+    );
 
 
-if(error){
+  if(error){
 
-alert(
-"❌ " +
-error.message
-);
+    alert(
+      "❌ " +
+      error.message
+    );
 
-return;
+    return;
+  }
 
-}
 
-
-await loadEvents();
+  await loadEvents();
 
 }
 
 
-/* ==========================================
+/* =====================================================
    HOURS USERS
-========================================== */
+===================================================== */
 
 function populateHourUsers(){
 
-const select =
-document.getElementById(
-"hoursUser"
-);
+  const select =
+    document.getElementById(
+      "hoursUser"
+    );
 
 
-select.innerHTML = `
+  select.innerHTML = `
 
-<option value="">
+    <option value="">
+      Choisir un bénévole
+    </option>
 
-Choisir un bénévole
-
-</option>
-
-`;
+  `;
 
 
-allMembers.forEach(
-member => {
+  allMembers.forEach(
+    member => {
 
-const option =
-document.createElement(
-"option"
-);
-
-
-option.value =
-member.id;
+      const option =
+        document.createElement(
+          "option"
+        );
 
 
-option.textContent =
-member.full_name ||
-"Bénévole";
+      option.value =
+        member.id;
 
 
-select.appendChild(
-option
-);
+      option.textContent =
+        member.full_name ||
+        "Bénévole";
 
-});
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
 
 }
 
 
-/* ==========================================
+/* =====================================================
    HOURS EVENTS
-========================================== */
+===================================================== */
 
 async function populateHourEvents(){
 
-const select =
-document.getElementById(
-"hoursEvent"
-);
+  const select =
+    document.getElementById(
+      "hoursEvent"
+    );
 
 
-const {
-data,
-error
-} =
-await supabaseClient
-
-.from("events")
-
-.select(
-"id,title,event_date"
-)
-
-.order(
-"event_date",
-{
-ascending:false
-}
-);
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("events")
+    .select(
+      "id,title,event_date"
+    )
+    .order(
+      "event_date",
+      {
+        ascending:false
+      }
+    );
 
 
-if(error){
-
-return;
-
-}
+  if(error){
+    return;
+  }
 
 
-select.innerHTML = `
+  select.innerHTML = `
 
-<option value="">
+    <option value="">
+      Aucun événement
+    </option>
 
-Aucun événement
-
-</option>
-
-`;
+  `;
 
 
-(data || []).forEach(
-event => {
+  (data || []).forEach(
+    event => {
 
-const option =
-document.createElement(
-"option"
-);
-
-
-option.value =
-event.id;
+      const option =
+        document.createElement(
+          "option"
+        );
 
 
-option.textContent =
-event.title;
+      option.value =
+        event.id;
 
 
-select.appendChild(
-option
-);
+      option.textContent =
+        event.title;
 
-});
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
 
 }
 
 
-/* ==========================================
+/* =====================================================
    ADD HOURS
-========================================== */
+===================================================== */
 
-document.getElementById(
-"hoursForm"
-).addEventListener(
+document
+.getElementById("hoursForm")
+.addEventListener(
 "submit",
 async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
 
-const message =
-document.getElementById(
-"hoursMessage"
-);
+  const message =
+    document.getElementById(
+      "hoursMessage"
+    );
 
 
-const userId =
-document.getElementById(
-"hoursUser"
-).value;
+  const userId =
+    document.getElementById(
+      "hoursUser"
+    ).value;
 
 
-const eventId =
-document.getElementById(
-"hoursEvent"
-).value;
+  const eventId =
+    document.getElementById(
+      "hoursEvent"
+    ).value;
 
 
-const amount =
-Number(
-document.getElementById(
-"hoursAmount"
-).value
-);
+  const amount =
+    Number(
+      document.getElementById(
+        "hoursAmount"
+      ).value
+    );
 
 
-const description =
-document.getElementById(
-"hoursDescription"
-).value.trim();
+  const description =
+    document.getElementById(
+      "hoursDescription"
+    ).value.trim();
 
 
-if(!userId){
+  if(!userId){
 
-message.innerHTML =
-"❌ Choisissez un bénévole.";
+    message.innerHTML =
+      "❌ Choisissez un bénévole.";
 
-return;
-
-}
-
-
-if(!amount || amount <= 0){
-
-message.innerHTML =
-"❌ Entrez un nombre d'heures valide.";
-
-return;
-
-}
+    return;
+  }
 
 
-message.textContent =
-"⏳ Enregistrement...";
+  if(!amount || amount <= 0){
+
+    message.innerHTML =
+      "❌ Entrez un nombre d'heures valide.";
+
+    return;
+  }
 
 
-const {
-error
-} =
-await supabaseClient
-
-.from("volunteer_hours")
-
-.insert({
-
-user_id:userId,
-
-event_id:
-eventId || null,
-
-hours:amount,
-
-description:
-description || null
-
-});
+  message.textContent =
+    "⏳ Enregistrement...";
 
 
-if(error){
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("volunteer_hours")
+    .insert({
 
-console.error(error);
+      user_id:
+        userId,
 
-message.innerHTML =
-"❌ " +
-escapeHTML(
-error.message
-);
+      event_id:
+        eventId || null,
 
-return;
+      hours:
+        amount,
 
-}
+      description:
+        description || null
 
-
-message.innerHTML =
-"✅ Heures ajoutées avec succès !";
+    });
 
 
-this.reset();
+  if(error){
+
+    message.innerHTML =
+      "❌ " +
+      escapeHTML(
+        error.message
+      );
+
+    return;
+  }
 
 
-await loadHours();
+  message.innerHTML =
+    "✅ Heures ajoutées avec succès !";
 
-await loadHoursAdmin();
+
+  this.reset();
+
+
+  await loadHours();
+
+  await loadHoursAdmin();
 
 });
 
 
-/* ==========================================
+/* =====================================================
    HOURS ADMIN
-========================================== */
+===================================================== */
 
 async function loadHoursAdmin(){
 
-const container =
-document.getElementById(
-"hoursAdmin"
-);
+  const container =
+    document.getElementById(
+      "hoursAdmin"
+    );
 
+
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("volunteer_hours")
+    .select(
+      "id,user_id,event_id,hours,description,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
+
+
+  if(error){
+
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ ${escapeHTML(error.message)}
+      </div>
+    `;
+
+    return;
+  }
 
-const {
-data,
-error
-} =
-await supabaseClient
 
-.from("volunteer_hours")
+  if(!data || !data.length){
 
-.select(
-"id,user_id,event_id,hours,description,created_at"
-)
+    container.innerHTML = `
+      <div class="glass empty">
+        ⏱️ Aucune heure enregistrée.
+      </div>
+    `;
 
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+    return;
+  }
 
 
-if(error){
+  const userIds = [
+    ...new Set(
+      data.map(
+        x => x.user_id
+      )
+    )
+  ];
 
-console.error(error);
 
-container.innerHTML = `
+  const eventIds = [
+    ...new Set(
+      data
+        .filter(x => x.event_id)
+        .map(x => x.event_id)
+    )
+  ];
 
-<div class="glass empty">
 
-❌ Erreur de chargement des heures.
+  const {
+    data:profiles
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select(
+      "id,full_name"
+    )
+    .in(
+      "id",
+      userIds
+    );
 
-</div>
 
-`;
+  let events = [];
 
-return;
 
-}
+  if(eventIds.length){
 
+    const result =
+      await supabaseClient
+        .from("events")
+        .select(
+          "id,title"
+        )
+        .in(
+          "id",
+          eventIds
+        );
+
+
+    events =
+      result.data || [];
+
+  }
+
 
-if(!data || !data.length){
+  const profileMap =
+    new Map(
+      (profiles || [])
+        .map(
+          p => [
+            p.id,
+            p.full_name
+          ]
+        )
+    );
+
+
+  const eventMap =
+    new Map(
+      events.map(
+        e => [
+          e.id,
+          e.title
+        ]
+      )
+    );
 
-container.innerHTML = `
 
-<div class="glass empty">
+  let html = `
 
-⏱️ Aucune heure enregistrée.
+    <div class="glass table-wrap">
 
-</div>
+      <table>
 
-`;
+        <thead>
 
-return;
+          <tr>
 
-}
+            <th>Bénévole</th>
+            <th>Événement</th>
+            <th>Heures</th>
+            <th>Description</th>
+            <th>Date</th>
 
+          </tr>
 
-const userIds = [
+        </thead>
 
-...new Set(
+        <tbody>
 
-data.map(
-x =>
-x.user_id
-)
+  `;
 
-)
 
-];
+  data.forEach(
+    item => {
 
+      html += `
 
-const eventIds = [
+        <tr>
 
-...new Set(
+          <td>
+            <strong>
+              ${escapeHTML(
+                profileMap.get(
+                  item.user_id
+                ) ||
+                "Bénévole"
+              )}
+            </strong>
+          </td>
 
-data
+          <td>
+            ${
+              item.event_id
+              ? escapeHTML(
+                  eventMap.get(
+                    item.event_id
+                  ) ||
+                  "Événement"
+                )
+              : "-"
+            }
+          </td>
 
-.filter(
-x =>
-x.event_id
-)
+          <td>
+            <strong>
+              ${Number(
+                item.hours
+              ).toFixed(2)}h
+            </strong>
+          </td>
 
-.map(
-x =>
-x.event_id
-)
+          <td>
+            ${escapeHTML(
+              item.description ||
+              "-"
+            )}
+          </td>
 
-)
+          <td>
+            ${
+              item.created_at
+              ? new Date(
+                  item.created_at
+                ).toLocaleDateString(
+                  "fr-FR"
+                )
+              : "-"
+            }
+          </td>
 
-];
+        </tr>
 
+      `;
 
-const {
-data:profiles
-} =
-await supabaseClient
+    }
+  );
 
-.from("profiles")
 
-.select(
-"id,full_name"
-)
+  html += `
 
-.in(
-"id",
-userIds
-);
+        </tbody>
 
+      </table>
 
-const {
-data:events
-} =
-eventIds.length
+    </div>
 
-?
+  `;
 
-await supabaseClient
 
-.from("events")
-
-.select(
-"id,title"
-)
-
-.in(
-"id",
-eventIds
-)
-
-:
-
-{
-data:[]
-};
-
-
-const profileMap =
-new Map(
-
-(profiles || [])
-.map(
-p =>
-[
-p.id,
-p.full_name
-]
-)
-
-);
-
-
-const eventMap =
-new Map(
-
-(events || [])
-.map(
-e =>
-[
-e.id,
-e.title
-]
-)
-
-);
-
-
-let html = `
-
-<div class="glass table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>
-Bénévole
-</th>
-
-<th>
-Événement
-</th>
-
-<th>
-Heures
-</th>
-
-<th>
-Description
-</th>
-
-<th>
-Date
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-`;
-
-
-data.forEach(
-item => {
-
-html += `
-
-<tr>
-
-<td>
-
-<strong>
-
-${escapeHTML(
-
-profileMap.get(
-item.user_id
-) ||
-
-"Bénévole"
-
-)}
-
-</strong>
-
-</td>
-
-
-<td>
-
-${
-item.event_id
-
-?
-
-escapeHTML(
-
-eventMap.get(
-item.event_id
-) ||
-
-"Événement"
-
-)
-
-:
-
-"-"
-
-}
-
-</td>
-
-
-<td>
-
-<strong>
-
-${Number(
-item.hours
-).toFixed(2)}
-h
-
-</strong>
-
-</td>
-
-
-<td>
-
-${escapeHTML(
-
-item.description ||
-
-"-"
-
-)}
-
-</td>
-
-
-<td>
-
-${
-item.created_at
-
-?
-
-new Date(
-item.created_at
-)
-.toLocaleDateString(
-"fr-FR"
-)
-
-:
-
-"-"
-
-}
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-
-html += `
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-
-container.innerHTML =
-html;
+  container.innerHTML =
+    html;
 
 }
 
 
-/* ==========================================
+/* =====================================================
    CERTIFICATE USERS
-========================================== */
+===================================================== */
 
 function populateCertificateUsers(){
 
-const select =
-document.getElementById(
-"certificateUser"
-);
+  const select =
+    document.getElementById(
+      "certificateUser"
+    );
 
 
-if(!select){
-
-return;
-
-}
+  if(!select){
+    return;
+  }
 
 
-select.innerHTML = `
+  select.innerHTML = `
 
-<option value="">
+    <option value="">
+      Choisir un bénévole
+    </option>
 
-Choisir un bénévole
-
-</option>
-
-`;
+  `;
 
 
-allMembers.forEach(
-member => {
+  allMembers.forEach(
+    member => {
 
-const option =
-document.createElement(
-"option"
-);
-
-
-option.value =
-member.id;
+      const option =
+        document.createElement(
+          "option"
+        );
 
 
-option.textContent =
-member.full_name ||
-"Bénévole sans nom";
+      option.value =
+        member.id;
 
 
-select.appendChild(
-option
-);
+      option.textContent =
+        member.full_name ||
+        "Bénévole sans nom";
 
-});
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
 
 }
 
 
-/* ==========================================
-   LOAD CERTIFICATES
-========================================== */
+/* =====================================================
+   CERTIFICATES
+===================================================== */
 
 async function loadCertificatesAdmin(){
 
-const container =
-document.getElementById(
-"certificatesAdmin"
-);
+  const container =
+    document.getElementById(
+      "certificatesAdmin"
+    );
 
 
-if(!container){
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("certificates")
+    .select(
+      "id,user_id,title,description,file_path,issued_at"
+    )
+    .order(
+      "issued_at",
+      {
+        ascending:false
+      }
+    );
 
-return;
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ ${escapeHTML(error.message)}
+      </div>
+    `;
+
+    return;
+  }
+
+
+  if(!data || !data.length){
+
+    container.innerHTML = `
+      <div class="glass empty">
+        🏆 Aucun certificat enregistré.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const userIds = [
+    ...new Set(
+      data.map(
+        item =>
+          item.user_id
+      )
+    )
+  ];
+
+
+  const {
+    data:profiles
+  } =
+  await supabaseClient
+    .from("profiles")
+    .select(
+      "id,full_name"
+    )
+    .in(
+      "id",
+      userIds
+    );
+
+
+  const profileMap =
+    new Map(
+      (profiles || [])
+        .map(
+          p => [
+            p.id,
+            p.full_name
+          ]
+        )
+    );
+
+
+  let html = `
+
+    <div class="glass table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Bénévole</th>
+            <th>Certificat</th>
+            <th>Date</th>
+            <th>PDF</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+  `;
+
+
+  data.forEach(
+    certificate => {
+
+      html += `
+
+        <tr>
+
+          <td>
+            <strong>
+              ${escapeHTML(
+                profileMap.get(
+                  certificate.user_id
+                ) ||
+                "Bénévole"
+              )}
+            </strong>
+          </td>
+
+          <td>
+
+            <strong>
+              ${escapeHTML(
+                certificate.title
+              )}
+            </strong>
+
+            ${
+              certificate.description
+              ? `
+                <br>
+                <small>
+                  ${escapeHTML(
+                    certificate.description
+                  )}
+                </small>
+              `
+              : ""
+            }
+
+          </td>
+
+          <td>
+            ${
+              certificate.issued_at
+              ? new Date(
+                  certificate.issued_at
+                ).toLocaleDateString(
+                  "fr-FR"
+                )
+              : "-"
+            }
+          </td>
+
+          <td>
+
+            ${
+              certificate.file_path
+              ? `
+                <button
+                  class="mini-btn"
+                  onclick="openCertificate(
+                    '${String(
+                      certificate.file_path
+                    )
+                    .replace(/\\/g,"\\\\")
+                    .replace(/'/g,"\\'")}'
+                  )"
+                >
+                  📄 Voir
+                </button>
+              `
+              : "Pas de PDF"
+            }
+
+          </td>
+
+          <td>
+
+            <button
+              class="mini-btn danger"
+              onclick="deleteCertificate(
+                '${certificate.id}',
+                '${String(
+                  certificate.file_path || ""
+                )
+                .replace(/\\/g,"\\\\")
+                .replace(/'/g,"\\'")}'
+              )"
+            >
+              Supprimer
+            </button>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+  html += `
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  `;
+
+
+  container.innerHTML =
+    html;
 
 }
 
 
-const {
-data,
-error
-} =
-await supabaseClient
-
-.from("certificates")
-
-.select(
-"id,user_id,title,description,file_path,issued_at"
-)
-
-.order(
-"issued_at",
-{
-ascending:false
-}
-);
-
-
-if(error){
-
-console.error(error);
-
-container.innerHTML = `
-
-<div class="glass empty">
-
-❌ Erreur de chargement des certificats.
-
-<br>
-
-<small>
-
-${escapeHTML(
-error.message
-)}
-
-</small>
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-if(!data || !data.length){
-
-container.innerHTML = `
-
-<div class="glass empty">
-
-🏆 Aucun certificat enregistré.
-
-</div>
-
-`;
-
-return;
-
-}
-
-
-const userIds = [
-
-...new Set(
-
-data.map(
-item =>
-item.user_id
-)
-
-)
-
-];
-
-
-const {
-data:profiles
-} =
-await supabaseClient
-
-.from("profiles")
-
-.select(
-"id,full_name"
-)
-
-.in(
-"id",
-userIds
-);
-
-
-const profileMap =
-new Map(
-
-(profiles || [])
-.map(
-p =>
-[
-p.id,
-p.full_name
-]
-)
-
-);
-
-
-let html = `
-
-<div class="glass table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>
-Bénévole
-</th>
-
-<th>
-Certificat
-</th>
-
-<th>
-Date
-</th>
-
-<th>
-PDF
-</th>
-
-<th>
-Action
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-`;
-
-
-data.forEach(
-certificate => {
-
-const name =
-profileMap.get(
-certificate.user_id
-) ||
-"Bénévole";
-
-
-const date =
-certificate.issued_at
-
-?
-
-new Date(
-certificate.issued_at
-)
-.toLocaleDateString(
-"fr-FR"
-)
-
-:
-
-"-";
-
-
-html += `
-
-<tr>
-
-<td>
-
-<strong>
-
-${escapeHTML(name)}
-
-</strong>
-
-</td>
-
-
-<td>
-
-<strong>
-
-${escapeHTML(
-certificate.title
-)}
-
-</strong>
-
-
-${
-certificate.description
-
-?
-
-`
-
-<br>
-
-<small>
-
-${escapeHTML(
-certificate.description
-)}
-
-</small>
-
-`
-
-:
-
-""
-
-}
-
-</td>
-
-
-<td>
-
-${date}
-
-</td>
-
-
-<td>
-
-${
-certificate.file_path
-
-?
-
-`
-
-<button
-class="mini-btn"
-onclick="openCertificate(
-'${escapeHTML(
-certificate.file_path
-)}'
-)"
->
-
-📄 Voir
-
-</button>
-
-`
-
-:
-
-`
-
-<span>
-Pas de PDF
-</span>
-
-`
-
-}
-
-</td>
-
-
-<td>
-
-<button
-class="mini-btn danger"
-onclick="deleteCertificate(
-'${certificate.id}',
-'${escapeHTML(
-certificate.file_path || ""
-)}'
-)"
->
-
-Supprimer
-
-</button>
-
-</td>
-
-</tr>
-
-`;
-
-});
-
-
-html += `
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
-
-
-container.innerHTML =
-html;
-
-}
-
-
-/* ==========================================
+/* =====================================================
    OPEN CERTIFICATE
-========================================== */
+===================================================== */
 
 async function openCertificate(
-filePath
+  filePath
 ){
 
-if(!filePath){
+  if(!filePath){
 
-alert(
-"❌ Fichier introuvable."
-);
+    alert(
+      "❌ Fichier introuvable."
+    );
 
-return;
-
-}
-
-
-const {
-data,
-error
-} =
-await supabaseClient
-
-.storage
-
-.from("certificates")
-
-.createSignedUrl(
-filePath,
-3600
-);
+    return;
+  }
 
 
-if(error){
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .storage
+    .from("certificates")
+    .createSignedUrl(
+      filePath,
+      3600
+    );
 
-console.error(error);
 
-alert(
-"❌ Impossible d'ouvrir le PDF.\n\n" +
-error.message
-);
+  if(error){
 
-return;
+    alert(
+      "❌ Impossible d'ouvrir le PDF.\n\n" +
+      error.message
+    );
 
-}
+    return;
+  }
 
 
-if(data?.signedUrl){
+  if(data?.signedUrl){
 
-window.open(
-data.signedUrl,
-"_blank"
-);
+    window.open(
+      data.signedUrl,
+      "_blank"
+    );
 
-}
+  }
 
 }
 
 
-/* ==========================================
+/* =====================================================
    DELETE CERTIFICATE
-========================================== */
+===================================================== */
 
 async function deleteCertificate(
-id,
-filePath
+  id,
+  filePath
 ){
 
-if(
-!confirm(
-"Supprimer ce certificat ?"
-)
-){
-
-return;
-
-}
+  if(
+    !confirm(
+      "Supprimer ce certificat ?"
+    )
+  ){
+    return;
+  }
 
 
-try{
+  try{
 
-if(filePath){
+    if(filePath){
 
-const {
-error:storageError
-} =
-await supabaseClient
+      await supabaseClient
+        .storage
+        .from("certificates")
+        .remove([
+          filePath
+        ]);
 
-.storage
-
-.from("certificates")
-
-.remove([
-filePath
-]);
+    }
 
 
-if(storageError){
-
-console.error(
-storageError
-);
-
-}
-
-}
-
-
-const {
-error
-} =
-await supabaseClient
-
-.from("certificates")
-
-.delete()
-
-.eq(
-"id",
-id
-);
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("certificates")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
 
 
-if(error){
+    if(error){
+      throw error;
+    }
 
-throw error;
+
+    await loadCertificatesAdmin();
+
+  }
+  catch(error){
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+  }
 
 }
 
 
-await loadCertificatesAdmin();
-
-
-}
-catch(error){
-
-console.error(error);
-
-alert(
-"❌ " +
-error.message
-);
-
-}
-
-}
-
-
-/* ==========================================
+/* =====================================================
    CREATE CERTIFICATE
-========================================== */
+===================================================== */
 
-const certificateForm =
-document.getElementById(
-"certificateForm"
-);
-
-
-if(certificateForm){
-
-certificateForm.addEventListener(
+document
+.getElementById("certificateForm")
+.addEventListener(
 "submit",
 async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
 
-const message =
-document.getElementById(
-"certificateMessage"
-);
+  const message =
+    document.getElementById(
+      "certificateMessage"
+    );
 
 
-const submit =
-document.getElementById(
-"certificateSubmit"
-);
+  const submit =
+    document.getElementById(
+      "certificateSubmit"
+    );
 
 
-const userId =
-document.getElementById(
-"certificateUser"
-).value;
+  const userId =
+    document.getElementById(
+      "certificateUser"
+    ).value;
 
 
-const title =
-document.getElementById(
-"certificateTitle"
-).value.trim();
+  const title =
+    document.getElementById(
+      "certificateTitle"
+    ).value.trim();
 
 
-const description =
-document.getElementById(
-"certificateDescription"
-).value.trim();
+  const description =
+    document.getElementById(
+      "certificateDescription"
+    ).value.trim();
 
 
-const file =
-document.getElementById(
-"certificateFile"
-).files[0];
+  const file =
+    document.getElementById(
+      "certificateFile"
+    ).files[0];
 
 
-if(!userId){
+  if(!userId){
 
-message.innerHTML =
-"❌ Choisissez un bénévole.";
+    message.innerHTML =
+      "❌ Choisissez un bénévole.";
 
-return;
+    return;
+  }
 
-}
 
+  if(!title){
 
-if(!title){
+    message.innerHTML =
+      "❌ Entrez le titre du certificat.";
 
-message.innerHTML =
-"❌ Entrez le titre du certificat.";
+    return;
+  }
 
-return;
 
-}
+  if(!file){
 
+    message.innerHTML =
+      "❌ Sélectionnez un fichier PDF.";
 
-if(!file){
+    return;
+  }
 
-message.innerHTML =
-"❌ Sélectionnez un fichier PDF.";
 
-return;
+  const isPDF =
+    file.type ===
+      "application/pdf"
+    ||
+    file.name
+      .toLowerCase()
+      .endsWith(".pdf");
 
-}
 
+  if(!isPDF){
 
-const isPDF =
-file.type ===
-"application/pdf"
+    message.innerHTML =
+      "❌ Le fichier doit être un PDF.";
 
-||
+    return;
+  }
 
-file.name
-.toLowerCase()
-.endsWith(
-".pdf"
-);
 
+  if(
+    file.size >
+    10 * 1024 * 1024
+  ){
 
-if(!isPDF){
+    message.innerHTML =
+      "❌ Le PDF ne doit pas dépasser 10 MB.";
 
-message.innerHTML =
-"❌ Le fichier doit être un PDF.";
+    return;
+  }
 
-return;
 
-}
+  submit.disabled =
+    true;
 
+  submit.textContent =
+    "⏳ Upload du PDF...";
 
-if(
-file.size >
-10 * 1024 * 1024
-){
 
-message.innerHTML =
-"❌ Le PDF ne doit pas dépasser 10 MB.";
+  try{
 
-return;
+    const safeName =
+      file.name.replace(
+        /[^a-zA-Z0-9._-]/g,
+        "_"
+      );
 
-}
 
+    const filePath =
+      userId +
+      "/" +
+      Date.now() +
+      "_" +
+      safeName;
 
-submit.disabled =
-true;
 
-submit.textContent =
-"⏳ Upload du PDF...";
+    const {
+      error:uploadError
+    } =
+    await supabaseClient
+      .storage
+      .from("certificates")
+      .upload(
+        filePath,
+        file,
+        {
+          contentType:
+            "application/pdf",
+          upsert:false
+        }
+      );
 
-message.innerHTML =
-"";
 
+    if(uploadError){
+      throw uploadError;
+    }
 
-try{
 
-const safeName =
-file.name
+    const {
+      error:insertError
+    } =
+    await supabaseClient
+      .from("certificates")
+      .insert({
 
-.replace(
-/[^a-zA-Z0-9._-]/g,
-"_"
-);
+        user_id:
+          userId,
 
+        title:
+          title,
 
-const filePath =
-userId +
-"/" +
-Date.now() +
-"_" +
-safeName;
+        description:
+          description || null,
 
+        file_path:
+          filePath
 
-const {
-error:uploadError
-} =
-await supabaseClient
+      });
 
-.storage
 
-.from("certificates")
+    if(insertError){
 
-.upload(
-filePath,
-file,
-{
+      await supabaseClient
+        .storage
+        .from("certificates")
+        .remove([
+          filePath
+        ]);
 
-contentType:
-"application/pdf",
+      throw insertError;
+    }
 
-upsert:false
 
-}
-);
+    message.innerHTML =
+      "✅ <strong>Certificat ajouté avec succès !</strong>";
 
 
-if(uploadError){
+    this.reset();
 
-console.error(
-uploadError
-);
 
-throw uploadError;
+    await loadCertificatesAdmin();
 
-}
+  }
+  catch(error){
 
+    console.error(error);
 
-const {
-error:insertError
-} =
-await supabaseClient
+    message.innerHTML =
+      "❌ " +
+      escapeHTML(
+        error.message
+      );
 
-.from("certificates")
+  }
+  finally{
 
-.insert({
+    submit.disabled =
+      false;
 
-user_id:
-userId,
+    submit.textContent =
+      "🏆 Ajouter le certificat";
 
-title:
-title,
-
-description:
-description ||
-null,
-
-file_path:
-filePath
+  }
 
 });
 
 
-if(insertError){
-
-await supabaseClient
-
-.storage
-
-.from("certificates")
-
-.remove([
-filePath
-]);
-
-throw insertError;
-
-}
-
-
-message.innerHTML =
-"✅ <strong>Certificat ajouté avec succès !</strong>";
-
-
-certificateForm.reset();
-
-
-await loadCertificatesAdmin();
-
-
-}
-catch(error){
-
-console.error(error);
-
-message.innerHTML =
-"❌ " +
-escapeHTML(
-error.message ||
-"Erreur lors de l'ajout."
-);
-
-}
-finally{
-
-submit.disabled =
-false;
-
-submit.textContent =
-"🏆 Ajouter le certificat";
-
-}
-
-});
-
-}
-
-
-/* ==========================================
+/* =====================================================
    ANNOUNCEMENTS
-========================================== */
+===================================================== */
 
 async function loadAnnouncements(){
 
-const container =
-document.getElementById(
-"announcementsAdmin"
-);
+  const container =
+    document.getElementById(
+      "announcementsAdmin"
+    );
 
 
-const {
-data,
-error
-} =
-await supabaseClient
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("announcements")
+    .select(
+      "id,title,content,category,is_published,created_at"
+    )
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
 
-.from("announcements")
 
-.select(
-"id,title,content,category,is_published,created_at"
-)
+  if(error){
 
-.order(
-"created_at",
-{
-ascending:false
-}
-);
+    console.error(error);
 
+    container.innerHTML = `
+      <div class="glass empty">
+        ❌ ${escapeHTML(error.message)}
+      </div>
+    `;
 
-if(error){
+    return;
+  }
 
-container.innerHTML = `
 
-<div class="glass empty">
+  document.getElementById(
+    "announcementsCount"
+  ).textContent =
+    (data || []).length;
 
-❌ Erreur.
 
-</div>
+  if(!data || !data.length){
 
-`;
+    container.innerHTML = `
+      <div class="glass empty">
+        📢 Aucune annonce.
+      </div>
+    `;
 
-return;
+    return;
+  }
 
-}
 
+  container.innerHTML = "";
 
-document.getElementById(
-"announcementsCount"
-).textContent =
-(data || []).length;
 
+  data.forEach(
+    item => {
 
-if(!data.length){
+      const card =
+        document.createElement(
+          "div"
+        );
 
-container.innerHTML = `
 
-<div class="glass empty">
+      card.className =
+        "glass event-admin-card";
 
-📢 Aucune annonce.
 
-</div>
+      card.innerHTML = `
 
-`;
+        <div class="event-admin-head">
 
-return;
+          <div>
 
-}
+            <h3>
+              📢 ${escapeHTML(
+                item.title
+              )}
+            </h3>
 
+            <div class="event-meta">
 
-container.innerHTML = "";
+              ${escapeHTML(
+                item.category
+              )}
 
+              ·
 
-data.forEach(
-item => {
+              ${
+                item.created_at
+                ? new Date(
+                    item.created_at
+                  ).toLocaleDateString(
+                    "fr-FR"
+                  )
+                : ""
+              }
 
-const card =
-document.createElement(
-"div"
-);
+            </div>
 
+            <p>
+              ${escapeHTML(
+                item.content
+              )}
+            </p>
 
-card.className =
-"glass event-admin-card";
+          </div>
 
+          <button
+            class="mini-btn danger"
+            onclick="deleteAnnouncement(
+              '${item.id}'
+            )"
+          >
+            Supprimer
+          </button>
 
-card.innerHTML = `
+        </div>
 
-<div class="event-admin-head">
+      `;
 
-<div>
 
-<h3>
+      container.appendChild(
+        card
+      );
 
-📢 ${escapeHTML(
-item.title
-)}
-
-</h3>
-
-
-<div class="event-meta">
-
-${escapeHTML(
-item.category
-)}
-
-·
-
-${
-item.created_at
-
-?
-
-new Date(
-item.created_at
-)
-.toLocaleDateString(
-"fr-FR"
-)
-
-:
-
-""
-
-}
-
-</div>
-
-
-<p>
-
-${escapeHTML(
-item.content
-)}
-
-</p>
-
-</div>
-
-
-<button
-class="mini-btn danger"
-onclick="deleteAnnouncement(
-'${item.id}'
-)"
->
-
-Supprimer
-
-</button>
-
-</div>
-
-`;
-
-
-container.appendChild(
-card
-);
-
-});
+    }
+  );
 
 }
 
 
-/* CREATE ANNOUNCEMENT */
+/* =====================================================
+   CREATE ANNOUNCEMENT
+===================================================== */
 
-document.getElementById(
-"announcementForm"
-).addEventListener(
+document
+.getElementById("announcementForm")
+.addEventListener(
 "submit",
 async function(e){
 
-e.preventDefault();
+  e.preventDefault();
 
 
-const message =
-document.getElementById(
-"announcementMessage"
-);
+  const message =
+    document.getElementById(
+      "announcementMessage"
+    );
 
 
-const title =
-document.getElementById(
-"announcementTitle"
-).value.trim();
+  const title =
+    document.getElementById(
+      "announcementTitle"
+    ).value.trim();
 
 
-const content =
-document.getElementById(
-"announcementContent"
-).value.trim();
+  const content =
+    document.getElementById(
+      "announcementContent"
+    ).value.trim();
 
 
-const category =
-document.getElementById(
-"announcementCategory"
-).value;
+  const category =
+    document.getElementById(
+      "announcementCategory"
+    ).value;
 
 
-message.textContent =
-"⏳ Publication...";
+  message.textContent =
+    "⏳ Publication...";
 
 
-const {
-error
-} =
-await supabaseClient
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("announcements")
+    .insert({
 
-.from("announcements")
+      title:title,
 
-.insert({
+      content:content,
 
-title:title,
+      category:category,
 
-content:content,
+      is_published:true,
 
-category:category,
+      created_by:
+        adminProfile.id
 
-is_published:true,
-
-created_by:adminProfile.id
-
-});
-
-
-if(error){
-
-message.innerHTML =
-"❌ " +
-escapeHTML(
-error.message
-);
-
-return;
-
-}
+    });
 
 
-message.innerHTML =
-"✅ Annonce publiée !";
+  if(error){
+
+    message.innerHTML =
+      "❌ " +
+      escapeHTML(
+        error.message
+      );
+
+    return;
+  }
 
 
-this.reset();
+  message.innerHTML =
+    "✅ Annonce publiée !";
 
 
-await loadAnnouncements();
+  this.reset();
+
+
+  await loadAnnouncements();
 
 });
 
 
-/* DELETE ANNOUNCEMENT */
+/* =====================================================
+   DELETE ANNOUNCEMENT
+===================================================== */
 
 async function deleteAnnouncement(
-id
+  id
 ){
 
-if(
-!confirm(
-"Supprimer cette annonce ?"
-)
-){
-
-return;
-
-}
+  if(
+    !confirm(
+      "Supprimer cette annonce ?"
+    )
+  ){
+    return;
+  }
 
 
-const {
-error
-} =
-await supabaseClient
-
-.from("announcements")
-
-.delete()
-
-.eq(
-"id",
-id
-);
+  const {
+    error
+  } =
+  await supabaseClient
+    .from("announcements")
+    .delete()
+    .eq(
+      "id",
+      id
+    );
 
 
-if(error){
+  if(error){
 
-alert(
-"❌ " +
-error.message
-);
+    alert(
+      "❌ " +
+      error.message
+    );
 
-return;
+    return;
+  }
 
-}
 
-
-await loadAnnouncements();
+  await loadAnnouncements();
 
 }
 
 
-/* ==========================================
+/* =====================================================
    TOTAL HOURS
-========================================== */
+===================================================== */
 
 async function loadHours(){
 
-const {
-data,
-error
-} =
-await supabaseClient
-
-.from("volunteer_hours")
-
-.select(
-"hours"
-);
+  const {
+    data,
+    error
+  } =
+  await supabaseClient
+    .from("volunteer_hours")
+    .select("hours");
 
 
-if(error){
-
-return;
-
-}
+  if(error){
+    return;
+  }
 
 
-const total =
-(data || []).reduce(
-
-(sum,item) =>
-
-sum +
-Number(
-item.hours || 0
-),
-
-0
-
-);
+  const total =
+    (data || []).reduce(
+      (sum,item) =>
+        sum +
+        Number(
+          item.hours || 0
+        ),
+      0
+    );
 
 
-document.getElementById(
-"hoursCount"
-).textContent =
-total.toFixed(2);
+  document.getElementById(
+    "hoursCount"
+  ).textContent =
+    total.toFixed(2);
 
 }
 
 
-/* ==========================================
-   SECURITY
-========================================== */
+/* =====================================================
+   INIT ADMIN
+===================================================== */
 
-function escapeHTML(
-value
-){
+async function initAdmin(){
 
-if(
-value === null ||
-value === undefined
-){
+  try{
 
-return "";
+    adminProfile =
+      await requireAdmin();
+
+
+    if(!adminProfile){
+      return;
+    }
+
+
+    console.log(
+      "✅ ADMIN CONNECTÉ:",
+      adminProfile.email
+    );
+
+
+    await loadMembers();
+
+    await loadEvents();
+
+    await loadAnnouncements();
+
+    await loadHours();
+
+    await loadHoursAdmin();
+
+    await loadCertificatesAdmin();
+
+    await loadSiteSettings();
+
+    await loadSiteImages();
+
+
+  }
+  catch(error){
+
+    console.error(
+      "ADMIN INIT ERROR:",
+      error
+    );
+
+
+    alert(
+      "❌ Erreur admin :\n\n" +
+      error.message
+    );
+
+  }
 
 }
 
 
-return String(value)
-
-.replace(
-/&/g,
-"&amp;"
-)
-
-.replace(
-/</g,
-"&lt;"
-)
-
-.replace(
-/>/g,
-"&gt;"
-)
-
-.replace(
-/"/g,
-"&quot;"
-)
-
-.replace(
-/'/g,
-"&#039;"
-);
-
-}
-
-
-/* ==========================================
+/* =====================================================
    START
-========================================== */
+===================================================== */
 
 initAdmin();
 
