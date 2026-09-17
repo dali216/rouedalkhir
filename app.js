@@ -1,6 +1,6 @@
-// ==========================================
-// ROUED AL KHAIR - SUPABASE APP
-// ==========================================
+// ================================
+// SUPABASE CONFIG
+// ================================
 
 const SUPABASE_URL =
   "https://iimzsfbkgugbqkipsdih.supabase.co";
@@ -14,9 +14,9 @@ const supabaseClient = window.supabase.createClient(
 );
 
 
-// ==========================================
-// GET CURRENT PROFILE
-// ==========================================
+// ================================
+// HELPERS
+// ================================
 
 async function getProfile() {
   const {
@@ -24,19 +24,13 @@ async function getProfile() {
     error: userError
   } = await supabaseClient.auth.getUser();
 
-  if (userError || !user) {
-    return null;
-  }
+  if (userError || !user) return null;
 
-  const { data: profile, error } = await supabaseClient
+  const { data: profile } = await supabaseClient
     .from("profiles")
     .select("*")
     .eq("id", user.id)
     .maybeSingle();
-
-  if (error) {
-    console.error("Profile error:", error);
-  }
 
   if (profile) {
     return {
@@ -53,10 +47,6 @@ async function getProfile() {
 }
 
 
-// ==========================================
-// REQUIRE LOGIN
-// ==========================================
-
 async function requireAuth(target = "login.html") {
   const {
     data: { user }
@@ -71,10 +61,6 @@ async function requireAuth(target = "login.html") {
 }
 
 
-// ==========================================
-// REQUIRE ADMIN
-// ==========================================
-
 async function requireAdmin() {
   const profile = await getProfile();
 
@@ -87,23 +73,21 @@ async function requireAdmin() {
 }
 
 
-// ==========================================
-// EMAIL CONFIRMATION REDIRECT
-// ==========================================
-
-// IMPORTANT:
-// new URL() يخلي الرابط يخدم حتى كان الموقع داخل
-// GitHub Pages repository مثل:
-// username.github.io/roued-alkhair/
+// ================================
+// EMAIL REDIRECT URL
+// ================================
 
 function getLoginRedirectUrl() {
-  return new URL("login.html", window.location.href).href;
+  return new URL(
+    "login.html",
+    window.location.href
+  ).href;
 }
 
 
-// ==========================================
+// ================================
 // LOGIN
-// ==========================================
+// ================================
 
 const loginForm = document.getElementById("login");
 
@@ -118,7 +102,8 @@ if (loginForm) {
     const email = document
       .getElementById("email")
       .value
-      .trim();
+      .trim()
+      .toLowerCase();
 
     const password = document
       .getElementById("password")
@@ -126,15 +111,15 @@ if (loginForm) {
 
     msg.textContent = "Connexion...";
 
-    const { data, error } =
-      await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
 
     if (error) {
-
-      console.error(error);
 
       const errorMessage =
         error.message.toLowerCase();
@@ -144,8 +129,9 @@ if (loginForm) {
         errorMessage.includes("email_not_confirmed")
       ) {
 
-        msg.textContent =
-          "⚠️ Vérifiez votre adresse email avant de vous connecter.";
+        msg.innerHTML =
+          "⚠️ Votre email n'est pas encore confirmé.<br>" +
+          "Vérifiez votre boîte mail et cliquez sur le lien de confirmation.";
 
       } else {
 
@@ -169,7 +155,8 @@ if (loginForm) {
 
     setTimeout(async () => {
 
-      const profile = await getProfile();
+      const profile =
+        await getProfile();
 
       if (
         profile &&
@@ -190,9 +177,9 @@ if (loginForm) {
 }
 
 
-// ==========================================
+// ================================
 // REGISTER
-// ==========================================
+// ================================
 
 const registerForm =
   document.getElementById("register");
@@ -207,21 +194,28 @@ if (registerForm) {
       document.getElementById("msg");
 
     const name =
-      document.getElementById("name")
+      document
+        .getElementById("name")
         .value
         .trim();
 
     const email =
-      document.getElementById("email")
+      document
+        .getElementById("email")
         .value
         .trim()
         .toLowerCase();
 
     const password =
-      document.getElementById("password")
+      document
+        .getElementById("password")
         .value;
 
+
+    // Validation
+
     if (!name) {
+
       msg.textContent =
         "Veuillez entrer votre nom.";
 
@@ -229,6 +223,7 @@ if (registerForm) {
     }
 
     if (!email) {
+
       msg.textContent =
         "Veuillez entrer votre email.";
 
@@ -236,42 +231,50 @@ if (registerForm) {
     }
 
     if (password.length < 6) {
+
       msg.textContent =
         "Le mot de passe doit contenir au moins 6 caractères.";
 
       return;
     }
 
+
     msg.textContent =
       "Création du compte...";
 
 
-    // IMPORTANT:
-    // URL relative pour éviter problème GitHub Pages
+    // URL vers laquelle Supabase revient après confirmation
+
     const redirectUrl =
       getLoginRedirectUrl();
 
 
-    const { data, error } =
-      await supabaseClient.auth.signUp({
+    // Création du compte
 
-        email: email,
+    const {
+      data,
+      error
+    } = await supabaseClient.auth.signUp({
 
-        password: password,
+      email: email,
 
-        options: {
+      password: password,
 
-          data: {
-            full_name: name
-          },
+      options: {
 
-          emailRedirectTo:
-            redirectUrl
-        }
-      });
+        data: {
+          full_name: name
+        },
+
+        emailRedirectTo:
+          redirectUrl
+      }
+
+    });
 
 
-    // Erreur Supabase
+    // Erreur
+
     if (error) {
 
       console.error(
@@ -286,38 +289,51 @@ if (registerForm) {
     }
 
 
-    // ======================================
-    // USER CREATED
-    // ======================================
+    // Compte créé
 
     if (data && data.user) {
 
-      // Avec Email Confirmation activé,
-      // session تكون null وهذا طبيعي.
-
+      // Email confirmation activée
       if (!data.session) {
 
         msg.innerHTML =
-          "✅ Compte créé avec succès !<br><br>" +
-          "📧 Nous avons envoyé un email de confirmation à :<br>" +
-          "<strong>" + email + "</strong><br><br>" +
-          "Cliquez sur le lien dans l'email pour confirmer votre compte.<br>" +
-          "Après confirmation, vous pourrez vous connecter.";
+          "✅ <strong>Compte créé avec succès !</strong><br><br>" +
+
+          "📧 Un email de confirmation a été envoyé à :<br>" +
+
+          "<strong>" +
+          email +
+          "</strong><br><br>" +
+
+          "Cliquez sur le lien reçu par email pour confirmer votre compte.<br><br>" +
+
+          "⚠️ Si vous ne trouvez pas l'email, vérifiez le dossier Spam.";
+
+        // Afficher bouton resend
+
+        if (resendEmailBtn) {
+          resendEmailBtn.style.display =
+            "block";
+        }
 
       } else {
 
         msg.innerHTML =
           "✅ Compte créé et connecté !";
-
       }
 
 
-      // Désactiver le bouton
+      // Désactiver bouton création
+
       const button =
-        registerForm.querySelector("button");
+        registerForm.querySelector(
+          "button[type='submit']"
+        );
 
       if (button) {
+
         button.disabled = true;
+
         button.textContent =
           "Email envoyé ✓";
       }
@@ -326,9 +342,118 @@ if (registerForm) {
 }
 
 
-// ==========================================
+// ================================
+// RESEND CONFIRMATION EMAIL
+// ================================
+
+const resendEmailBtn =
+  document.getElementById(
+    "resendEmail"
+  );
+
+if (resendEmailBtn) {
+
+  resendEmailBtn.onclick =
+    async function () {
+
+      const msg =
+        document.getElementById("msg");
+
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim()
+          .toLowerCase();
+
+
+      if (!email) {
+
+        msg.textContent =
+          "Écrivez votre email d'abord.";
+
+        return;
+      }
+
+
+      resendEmailBtn.disabled =
+        true;
+
+      resendEmailBtn.textContent =
+        "Envoi en cours...";
+
+      msg.textContent =
+        "Réenvoi de l'email de confirmation...";
+
+
+      const redirectUrl =
+        getLoginRedirectUrl();
+
+
+      const {
+        error
+      } = await supabaseClient.auth.resend({
+
+        type: "signup",
+
+        email: email,
+
+        options: {
+
+          emailRedirectTo:
+            redirectUrl
+        }
+
+      });
+
+
+      if (error) {
+
+        console.error(
+          "RESEND ERROR:",
+          error
+        );
+
+        msg.textContent =
+          "❌ " + error.message;
+
+        resendEmailBtn.disabled =
+          false;
+
+        resendEmailBtn.textContent =
+          "إعادة إرسال رابط التأكيد";
+
+        return;
+      }
+
+
+      msg.innerHTML =
+        "✅ <strong>تم إرسال رابط تأكيد جديد.</strong><br><br>" +
+        "تفقد بريدك الإلكتروني و Spam.";
+
+
+      resendEmailBtn.textContent =
+        "تم الإرسال ✓";
+
+
+      // حماية من الضغط المتكرر
+
+      setTimeout(() => {
+
+        resendEmailBtn.disabled =
+          false;
+
+        resendEmailBtn.textContent =
+          "إعادة إرسال رابط التأكيد";
+
+      }, 60000);
+    };
+}
+
+
+// ================================
 // LOGOUT
-// ==========================================
+// ================================
 
 const logout =
   document.getElementById("logout");
@@ -345,12 +470,9 @@ if (logout) {
 }
 
 
-// ==========================================
-// HANDLE EMAIL CONFIRMATION
-// ==========================================
-
-// Supabase peut retourner sur login.html
-// après validation du lien email.
+// ================================
+// AUTH STATE
+// ================================
 
 supabaseClient.auth.onAuthStateChange(
   async (event, session) => {
@@ -360,14 +482,13 @@ supabaseClient.auth.onAuthStateChange(
       event
     );
 
-    if (event === "SIGNED_IN" && session) {
-
-      // On ne redirige pas automatiquement
-      // depuis login pour laisser l'utilisateur
-      // voir la confirmation.
+    if (
+      event === "SIGNED_IN" &&
+      session
+    ) {
 
       console.log(
-        "Email confirmé / utilisateur connecté."
+        "Utilisateur connecté / email confirmé."
       );
     }
   }
