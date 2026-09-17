@@ -4,35 +4,32 @@
 
 if ("serviceWorker" in navigator) {
 
-  window.addEventListener(
-    "load",
-    async () => {
+  window.addEventListener("load", async () => {
 
-      try {
+    try {
 
-        const registration =
-          await navigator.serviceWorker.register(
-            "sw.js",
-            {
-              scope: "./"
-            }
-          );
-
-        console.log(
-          "✅ Service Worker actif:",
-          registration.scope
+      const registration =
+        await navigator.serviceWorker.register(
+          "./sw.js",
+          {
+            scope: "./"
+          }
         );
 
-      } catch (error) {
+      console.log(
+        "✅ Service Worker actif:",
+        registration.scope
+      );
 
-        console.error(
-          "❌ Service Worker error:",
-          error
-        );
+    } catch (error) {
 
-      }
+      console.error(
+        "❌ Service Worker error:",
+        error
+      );
 
     }
-  );
+
+  });
 
 }
