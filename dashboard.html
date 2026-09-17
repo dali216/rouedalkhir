@@ -1,1001 +1,829 @@
 <!doctype html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Espace bénévole — Roued Al Khair</title>
+  <title>Dashboard — Roued Al Khair</title>
 
   <link rel="stylesheet" href="style.css">
 
-  <!-- QR CODE -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
   <style>
-
-    .welcome-card {
-      padding: 28px;
-      margin-bottom: 25px;
+    .dashboard-wrap{
+      max-width:1200px;
+      margin:auto;
+      padding:30px 20px 60px;
     }
 
-    .welcome-card h1 {
-      margin: 5px 0;
+    .dash-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      margin-bottom:30px;
+      flex-wrap:wrap;
     }
 
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 25px;
+    .dash-header h1{
+      margin:0;
     }
 
-    .category-card {
-      text-decoration: none;
-      color: inherit;
-      padding: 25px 20px;
-      border-radius: 20px;
-      transition: .2s;
-      display: block;
+    .dash-header p{
+      margin:6px 0 0;
+      opacity:.7;
     }
 
-    .category-card:hover {
-      transform: translateY(-4px);
+    .dash-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+      margin-bottom:30px;
     }
 
-    .category-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
+    .dash-card{
+      padding:24px;
+      border-radius:20px;
     }
 
-    .category-card h3 {
-      margin: 0 0 7px;
+    .dash-card h3{
+      margin:0 0 8px;
     }
 
-    .category-card p {
-      margin: 0;
-      color: #64748b;
-      font-size: 13px;
-      line-height: 1.5;
+    .stat{
+      font-size:32px;
+      font-weight:800;
     }
 
-    .qr-section {
-      display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 20px;
-      margin-top: 20px;
+    .actions{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:15px;
+      margin-bottom:35px;
     }
 
-    .qr-panel {
-      padding: 25px;
-      text-align: center;
+    .action{
+      text-decoration:none;
+      color:inherit;
+      padding:20px;
+      border-radius:18px;
+      transition:.2s;
     }
 
-    #userQR {
-      width: 200px;
-      height: 200px;
-      background: white;
-      padding: 10px;
-      border-radius: 15px;
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .action:hover{
+      transform:translateY(-3px);
     }
 
-    #userQR img,
-    #userQR canvas {
-      max-width: 180px;
-      max-height: 180px;
+    .section{
+      margin-top:35px;
     }
 
-    .profile-mini {
-      padding: 25px;
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      margin-bottom:18px;
     }
 
-    .mini-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
+    .event-list{
+      display:grid;
+      gap:16px;
     }
 
-    .mini-avatar {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 20px;
-      background: #e2e8f0;
+    .event-card{
+      padding:22px;
+      border-radius:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
     }
 
-    .announcement-box {
-      margin-top: 20px;
-      padding: 25px;
+    .event-info h3{
+      margin:0 0 8px;
     }
 
-    @media (max-width: 900px) {
-
-      .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .qr-section {
-        grid-template-columns: 1fr;
-      }
-
+    .event-info p{
+      margin:5px 0;
+      opacity:.75;
     }
 
-    @media (max-width: 600px) {
-
-      .category-grid {
-        grid-template-columns: 1fr;
-      }
-
+    .event-date{
+      font-weight:700;
     }
 
+    .participate-btn{
+      border:0;
+      cursor:pointer;
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:700;
+      background:#111;
+      color:#fff;
+    }
+
+    .participate-btn.registered{
+      background:#198754;
+      cursor:default;
+    }
+
+    .empty{
+      padding:25px;
+      text-align:center;
+      opacity:.65;
+    }
+
+    .qr-box{
+      text-align:center;
+      padding:25px;
+      border-radius:20px;
+    }
+
+    #qrcode{
+      display:flex;
+      justify-content:center;
+      margin:20px 0;
+    }
+
+    .logout-btn{
+      cursor:pointer;
+    }
+
+    .loading{
+      opacity:.6;
+      padding:20px;
+    }
   </style>
-
 </head>
-
 
 <body>
 
+<div class="dashboard-wrap">
 
-<!-- ========================================= -->
-<!-- NAVBAR -->
-<!-- ========================================= -->
+  <!-- HEADER -->
+  <div class="dash-header">
 
-<header class="nav-wrap">
+    <div>
+      <span class="eyebrow">ROUED AL KHAIR</span>
 
-  <nav class="nav glass">
+      <h1>
+        Bonjour,
+        <span id="userName">...</span> 👋
+      </h1>
 
-    <a class="brand" href="index.html">
-
-      <span class="logo">
-        RK
-      </span>
-
-      <span>
-        Roued <b>Al Khair</b>
-      </span>
-
-    </a>
-
-
-    <div style="margin-left:auto;display:flex;gap:8px">
-
-      <a
-        class="btn small ghost"
-        href="index.html"
-      >
-        Site public
-      </a>
-
-      <button
-        class="btn small"
-        id="logout"
-      >
-        Déconnexion
-      </button>
-
+      <p>
+        Bienvenue dans votre espace bénévole.
+      </p>
     </div>
 
-  </nav>
+    <button
+      id="logout"
+      class="btn ghost logout-btn"
+    >
+      Déconnexion
+    </button>
 
-</header>
-
-
-
-<!-- ========================================= -->
-<!-- MAIN -->
-<!-- ========================================= -->
-
-<main class="dashboard">
+  </div>
 
 
-  <!-- ======================================= -->
-  <!-- WELCOME -->
-  <!-- ======================================= -->
+  <!-- STATS -->
+  <div class="dash-grid">
 
-  <section class="glass welcome-card">
+    <div class="dash-card glass">
+      <h3>⭐ Points</h3>
+      <div class="stat" id="points">0</div>
+    </div>
 
-    <span class="eyebrow">
-      ESPACE BÉNÉVOLE
-    </span>
+    <div class="dash-card glass">
+      <h3>⏱ Mes heures</h3>
+      <div class="stat" id="hours">0</div>
+    </div>
 
-    <h1>
-      Bonjour,
-      <span id="name">...</span>
-      👋
-    </h1>
+    <div class="dash-card glass">
+      <h3>📅 Événements</h3>
+      <div class="stat" id="eventCount">0</div>
+    </div>
 
-    <p>
-      Bienvenue dans votre espace personnel
-      Roued Al Khair.
-    </p>
+    <div class="dash-card glass">
+      <h3>🏆 Certificats</h3>
+      <div class="stat" id="certificateCount">0</div>
+    </div>
+
+  </div>
+
+
+  <!-- ACTIONS -->
+  <div class="actions">
+
+    <a
+      class="action glass"
+      id="profileLink"
+      href="#"
+    >
+      👤
+      <strong>Mon profil</strong>
+      <br>
+      <small>Voir mon profil public</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="volunteer-form.html"
+    >
+      📝
+      <strong>Mon formulaire</strong>
+      <br>
+      <small>Mes informations bénévoles</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="cv.html"
+    >
+      📄
+      <strong>Mon CV</strong>
+      <br>
+      <small>Gérer mon CV</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="annonces.html"
+    >
+      📢
+      <strong>Annonces</strong>
+      <br>
+      <small>Actualités de l'association</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="chat.html"
+    >
+      💬
+      <strong>Chat</strong>
+      <br>
+      <small>Discuter avec les membres</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="hours.html"
+    >
+      ⏱
+      <strong>Mes heures</strong>
+      <br>
+      <small>Suivre mes heures</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="certificats.html"
+    >
+      🏆
+      <strong>Certificats</strong>
+      <br>
+      <small>Mes certificats</small>
+    </a>
+
+    <a
+      class="action glass"
+      href="notifications.html"
+    >
+      🔔
+      <strong>Notifications</strong>
+      <br>
+      <small>Mes notifications</small>
+    </a>
+
+  </div>
+
+
+  <!-- EVENTS -->
+  <section class="section">
+
+    <div class="section-title">
+      <div>
+        <span class="eyebrow">
+          PARTICIPATION
+        </span>
+
+        <h2>
+          Événements
+        </h2>
+      </div>
+    </div>
+
+    <div
+      id="eventsList"
+      class="event-list"
+    >
+      <div class="glass empty">
+        ⏳ Chargement des événements...
+      </div>
+    </div>
 
   </section>
 
 
+  <!-- ANNOUNCEMENTS -->
+  <section class="section">
 
-  <!-- ======================================= -->
-  <!-- CATEGORIES -->
-  <!-- ======================================= -->
+    <div class="section-title">
 
-  <section>
+      <div>
+        <span class="eyebrow">
+          ACTUALITÉS
+        </span>
 
-    <div class="panel-title">
-
-      <h2>
-        Mon espace
-      </h2>
-
-    </div>
-
-
-    <div class="category-grid">
-
-
-      <!-- PROFILE -->
-
-      <a
-        href="#"
-        id="profileLink"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          👤
-        </div>
-
-        <h3>
-          Mon profil
-        </h3>
-
-        <p>
-          Consultez votre profil bénévole
-          et vos informations.
-        </p>
-
-      </a>
-
-
-
-      <!-- FORM -->
-
-      <a
-        href="volunteer-form.html"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          📝
-        </div>
-
-        <h3>
-          Mon formulaire
-        </h3>
-
-        <p>
-          Complétez vos informations
-          personnelles et bénévoles.
-        </p>
-
-      </a>
-
-
-
-      <!-- CV -->
-
-      <a
-        href="cv.html"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          📄
-        </div>
-
-        <h3>
-          Mon CV
-        </h3>
-
-        <p>
-          Ajoutez ou consultez votre
-          CV professionnel.
-        </p>
-
-      </a>
-
-
-
-      <!-- CHAT -->
-
-      <a
-        href="chat.html"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          💬
-        </div>
-
-        <h3>
-          Chat
-        </h3>
-
-        <p>
-          Discutez directement avec
-          l'administration.
-        </p>
-
-      </a>
-
-
-
-      <!-- ANNOUNCEMENTS -->
+        <h2>
+          Dernières annonces
+        </h2>
+      </div>
 
       <a
         href="annonces.html"
-        class="category-card glass"
+        class="btn ghost"
       >
-
-        <div class="category-icon">
-          📢
-        </div>
-
-        <h3>
-          Annonces
-        </h3>
-
-        <p>
-          Découvrez les nouvelles
-          annonces de l'association.
-        </p>
-
+        Voir tout →
       </a>
 
+    </div>
 
-
-      <!-- EVENTS -->
-
-      <a
-        href="#eventsSection"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          📅
-        </div>
-
-        <h3>
-          Événements
-        </h3>
-
-        <p>
-          Consultez les prochaines
-          activités et missions.
-        </p>
-
-      </a>
-
-
-
-      <!-- HOURS -->
-
-      <a
-        href="hours.html"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          ⏱️
-        </div>
-
-        <h3>
-          Mes heures
-        </h3>
-
-        <p>
-          Suivez vos heures de
-          bénévolat.
-        </p>
-
-      </a>
-
-
-
-      <!-- CERTIFICATES -->
-
-      <a
-        href="certificats.html"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          🏆
-        </div>
-
-        <h3>
-          Mes certificats
-        </h3>
-
-        <p>
-          Retrouvez vos certificats
-          de participation.
-        </p>
-
-      </a>
-
-
-
-      <!-- NOTIFICATIONS -->
-
-      <a
-        href="notifications.html"
-        class="category-card glass"
-      >
-
-        <div class="category-icon">
-          🔔
-        </div>
-
-        <h3>
-          Notifications
-        </h3>
-
-        <p>
-          Consultez vos notifications
-          et informations importantes.
-        </p>
-
-      </a>
-
+    <div
+      id="announcementsList"
+      class="event-list"
+    >
+      <div class="glass empty">
+        ⏳ Chargement...
+      </div>
     </div>
 
   </section>
 
 
+  <!-- QR -->
+  <section class="section">
 
-  <!-- ======================================= -->
-  <!-- STATS -->
-  <!-- ======================================= -->
-
-  <div class="dash-grid">
-
-    <div class="metric glass">
-
-      <small>
-        Points
-      </small>
-
-      <strong>
-        240
-      </strong>
-
-      <span>
-        +32 ce mois
-      </span>
-
-    </div>
-
-
-    <div class="metric glass">
-
-      <small>
-        Heures
-      </small>
-
-      <strong id="hours">
-        0h
-      </strong>
-
-      <span>
-        de bénévolat
-      </span>
-
-    </div>
-
-
-    <div class="metric glass">
-
-      <small>
-        Événements
-      </small>
-
-      <strong id="eventCount">
-        0
-      </strong>
-
-      <span>
-        participations
-      </span>
-
-    </div>
-
-
-    <div class="metric glass">
-
-      <small>
-        Certificats
-      </small>
-
-      <strong id="certificateCount">
-        0
-      </strong>
-
-      <span>
-        disponibles
-      </span>
-
-    </div>
-
-  </div>
-
-
-
-  <!-- ======================================= -->
-  <!-- EVENTS + PROFILE -->
-  <!-- ======================================= -->
-
-  <div
-    class="qr-section"
-    id="eventsSection"
-  >
-
-
-    <!-- EVENTS -->
-
-    <section class="glass panel">
-
-      <div class="panel-title">
+    <div class="section-title">
+      <div>
+        <span class="eyebrow">
+          MON IDENTITÉ
+        </span>
 
         <h2>
-          Prochains événements
+          Mon QR Code
         </h2>
-
       </div>
-
-      <div id="events">
-
-        <p style="color:#64748b">
-          Chargement...
-        </p>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- PROFILE -->
-
-    <aside class="glass profile-mini">
-
-      <div class="mini-info">
-
-        <div
-          class="mini-avatar"
-          id="avatar"
-        >
-          RK
-        </div>
-
-        <div>
-
-          <strong id="miniName">
-            ...
-          </strong>
-
-          <p style="margin:4px 0;color:#64748b">
-            Bénévole
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <a
-        href="#"
-        id="profileBtn"
-        class="btn ghost"
-        style="width:100%;justify-content:center"
-      >
-        Voir mon profil
-      </a>
-
-    </aside>
-
-  </div>
-
-
-
-  <!-- ======================================= -->
-  <!-- QR -->
-  <!-- ======================================= -->
-
-  <section class="glass qr-panel">
-
-    <span class="eyebrow">
-      IDENTIFICATION
-    </span>
-
-    <h2>
-      Mon QR Code
-    </h2>
-
-    <p>
-      Scannez ce QR Code pour ouvrir
-      directement votre profil bénévole.
-    </p>
-
-
-    <div id="userQR">
-
-      <span style="color:#64748b">
-        Génération...
-      </span>
-
     </div>
 
+    <div class="glass qr-box">
 
-    <small style="color:#64748b">
-      Votre QR Code est unique.
-    </small>
-
-  </section>
-
-
-
-  <!-- ======================================= -->
-  <!-- ANNOUNCEMENTS PREVIEW -->
-  <!-- ======================================= -->
-
-  <section class="glass announcement-box">
-
-    <div class="panel-title">
-
-      <h2>
-        📢 Dernières annonces
-      </h2>
-
-    </div>
-
-    <div id="announcements">
-
-      <p style="color:#64748b">
-        Chargement...
+      <p>
+        Scannez ce QR Code pour ouvrir votre profil public.
       </p>
 
+      <div id="qrcode"></div>
+
+      <small id="profileUrl"></small>
+
     </div>
 
   </section>
 
+</div>
 
-</main>
-
-
-
-<!-- ========================================= -->
-<!-- SUPABASE -->
-<!-- ========================================= -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script src="app.js"></script>
 
 
-
-<!-- ========================================= -->
-<!-- DASHBOARD SCRIPT -->
-<!-- ========================================= -->
-
 <script>
 
-(async () => {
+let currentUser = null;
+let currentProfile = null;
 
 
-  /* ===================================== */
-  /* AUTH */
-  /* ===================================== */
+/* =========================
+   INIT
+========================= */
 
-  const user =
+async function initDashboard(){
+
+  currentUser =
     await requireAuth();
 
-  if (!user) return;
+  if(!currentUser){
+    return;
+  }
 
 
-  /* ===================================== */
-  /* PROFILE */
-  /* ===================================== */
-
-  const profile =
+  currentProfile =
     await getProfile();
 
-  if (!profile) return;
+
+  if(!currentProfile){
+    return;
+  }
 
 
-  const name =
-    profile.full_name ||
-    profile.email.split("@")[0];
+  /* NAME */
+
+  document.getElementById(
+    "userName"
+  ).textContent =
+    currentProfile.full_name ||
+    currentUser.email;
 
 
-  document.getElementById("name")
-    .textContent = name;
-
-
-  document.getElementById("miniName")
-    .textContent = name;
-
-
-  const initials =
-    name
-      .split(" ")
-      .map(x => x[0])
-      .join("")
-      .slice(0,2)
-      .toUpperCase();
-
-
-  document.getElementById("avatar")
-    .textContent = initials;
-
-
-  /* ===================================== */
-  /* PROFILE URL */
-  /* ===================================== */
+  /* PROFILE LINK */
 
   const profileUrl =
     new URL(
       "profile.html?id=" +
-      encodeURIComponent(user.id),
+      currentUser.id,
       window.location.href
     ).href;
 
 
-  document.getElementById("profileLink")
-    .href = profileUrl;
-
-
-  document.getElementById("profileBtn")
-    .href = profileUrl;
-
-
-
-  /* ===================================== */
-  /* QR */
-  /* ===================================== */
-
-  const qr =
-    document.getElementById("userQR");
-
-
-  qr.innerHTML = "";
-
-
-  if (typeof QRCode !== "undefined") {
-
-    new QRCode(qr, {
-
-      text: profileUrl,
-
-      width: 180,
-
-      height: 180,
-
-      correctLevel:
-        QRCode.CorrectLevel.H
-
-    });
-
-  }
-
-
-
-  /* ===================================== */
-  /* EVENTS */
-  /* ===================================== */
-
-  const {
-    data: events,
-    error: eventsError
-  } =
-    await supabaseClient
-      .from("events")
-      .select("*")
-      .order(
-        "event_date",
-        {
-          ascending: true
-        }
-      );
-
-
-  const eventsBox =
-    document.getElementById("events");
-
-
-  if (eventsError) {
-
-    console.error(eventsError);
-
-    eventsBox.innerHTML =
-      `
-      <p style="color:#ef4444">
-        Impossible de charger les événements.
-      </p>
-      `;
-
-  } else {
-
-    document.getElementById("eventCount")
-      .textContent =
-      events?.length || 0;
-
-
-    if (events?.length) {
-
-      eventsBox.innerHTML =
-        events
-          .map(event => `
-
-            <div
-              class="dash-event"
-              style="margin-bottom:15px"
-            >
-
-              <div class="date">
-
-                <b>
-                  ${new Date(
-                    event.event_date
-                  ).getDate()}
-                </b>
-
-                <small>
-                  ${new Date(
-                    event.event_date
-                  )
-                  .toLocaleDateString(
-                    "fr-FR",
-                    {
-                      month:"short"
-                    }
-                  )
-                  .toUpperCase()}
-                </small>
-
-              </div>
-
-
-              <div>
-
-                <h3>
-                  ${escapeHtml(
-                    event.title
-                  )}
-                </h3>
-
-                <p>
-
-                  📍
-                  ${escapeHtml(
-                    event.location || "—"
-                  )}
-
-                  ·
-
-                  ${new Date(
-                    event.event_date
-                  )
-                  .toLocaleTimeString(
-                    "fr-FR",
-                    {
-                      hour:"2-digit",
-                      minute:"2-digit"
-                    }
-                  )}
-
-                </p>
-
-              </div>
-
-            </div>
-
-          `)
-          .join("");
-
-    } else {
-
-      eventsBox.innerHTML =
-        `
-        <p style="color:#64748b">
-          Aucun événement à venir.
-        </p>
-        `;
-
-    }
-
-  }
-
-
-
-  /* ===================================== */
-  /* HOURS */
-  /* ===================================== */
-
-  const {
-    data: hours
-  } =
-    await supabaseClient
-      .from("volunteer_hours")
-      .select("hours")
-      .eq(
-        "user_id",
-        user.id
-      );
-
-
-  const totalHours =
-    (hours || [])
-      .reduce(
-        (sum, item) =>
-          sum +
-          Number(item.hours || 0),
-        0
-      );
-
-
-  document.getElementById("hours")
-    .textContent =
-    totalHours + "h";
-
-
-
-  /* ===================================== */
-  /* CERTIFICATES */
-  /* ===================================== */
-
-  const {
-    count: certificateCount
-  } =
-    await supabaseClient
-      .from("certificates")
-      .select(
-        "id",
-        {
-          count:"exact",
-          head:true
-        }
-      )
-      .eq(
-        "user_id",
-        user.id
-      );
+  document.getElementById(
+    "profileLink"
+  ).href =
+    profileUrl;
 
 
   document.getElementById(
-    "certificateCount"
+    "profileUrl"
   ).textContent =
-    certificateCount || 0;
+    profileUrl;
 
 
+  /* QR */
 
-  /* ===================================== */
-  /* ANNOUNCEMENTS */
-  /* ===================================== */
+  const qr =
+    document.getElementById(
+      "qrcode"
+    );
+
+  qr.innerHTML = "";
+
+  new QRCode(
+    qr,
+    {
+      text: profileUrl,
+      width:180,
+      height:180
+    }
+  );
+
+
+  /* LOAD DATA */
+
+  await Promise.all([
+    loadEvents(),
+    loadAnnouncements(),
+    loadHours(),
+    loadCertificates()
+  ]);
+
+}
+
+
+/* =========================
+   EVENTS
+========================= */
+
+async function loadEvents(){
+
+  const container =
+    document.getElementById(
+      "eventsList"
+    );
+
 
   const {
-    data: announcements
+    data: events,
+    error
+  } =
+    await supabaseClient
+      .from("events")
+      .select(
+        "id,title,description,location,event_date,created_at"
+      )
+      .order(
+        "event_date",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      "EVENT ERROR:",
+      error
+    );
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        ❌ Impossible de charger les événements.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  if(!events || events.length === 0){
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        📅 Aucun événement disponible pour le moment.
+      </div>
+      `;
+
+    document.getElementById(
+      "eventCount"
+    ).textContent = "0";
+
+    return;
+  }
+
+
+  /* registrations */
+
+  const {
+    data: registrations,
+    error: regError
+  } =
+    await supabaseClient
+      .from("event_participants")
+      .select(
+        "event_id,status"
+      )
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+
+  if(regError){
+
+    console.error(
+      "REGISTRATION ERROR:",
+      regError
+    );
+
+  }
+
+
+  const registeredIds =
+    new Set(
+      (registrations || [])
+        .filter(
+          r =>
+            r.status !== "cancelled"
+        )
+        .map(
+          r =>
+            r.event_id
+        )
+    );
+
+
+  container.innerHTML = "";
+
+
+  events.forEach(
+    event => {
+
+      const registered =
+        registeredIds.has(
+          event.id
+        );
+
+
+      const date =
+        event.event_date
+          ? new Date(
+              event.event_date
+            ).toLocaleString(
+              "fr-FR",
+              {
+                dateStyle:"medium",
+                timeStyle:"short"
+              }
+            )
+          : "Date à confirmer";
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "glass event-card";
+
+
+      card.innerHTML =
+        `
+        <div class="event-info">
+
+          <h3>
+            ${escapeHTML(event.title)}
+          </h3>
+
+          <p class="event-date">
+            📅 ${escapeHTML(date)}
+          </p>
+
+          ${
+            event.location
+              ?
+              `
+              <p>
+                📍 ${escapeHTML(event.location)}
+              </p>
+              `
+              :
+              ""
+          }
+
+          ${
+            event.description
+              ?
+              `
+              <p>
+                ${escapeHTML(event.description)}
+              </p>
+              `
+              :
+              ""
+          }
+
+        </div>
+
+
+        <div>
+
+          ${
+            registered
+              ?
+              `
+              <button
+                class="participate-btn registered"
+                disabled
+              >
+                ✓ Inscrit
+              </button>
+              `
+              :
+              `
+              <button
+                class="participate-btn"
+                onclick="registerForEvent(
+                  '${event.id}',
+                  this
+                )"
+              >
+                Participer
+              </button>
+              `
+          }
+
+        </div>
+        `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  document.getElementById(
+    "eventCount"
+  ).textContent =
+    events.length;
+
+}
+
+
+/* =========================
+   REGISTER EVENT
+========================= */
+
+async function registerForEvent(
+  eventId,
+  button
+){
+
+  if(!currentUser){
+    return;
+  }
+
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "⏳ Inscription...";
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from(
+        "event_participants"
+      )
+      .insert({
+        event_id:eventId,
+        user_id:currentUser.id,
+        status:"registered"
+      });
+
+
+  if(error){
+
+    console.error(
+      "REGISTER ERROR:",
+      error
+    );
+
+
+    if(
+      error.code === "23505"
+    ){
+
+      button.textContent =
+        "✓ Déjà inscrit";
+
+      button.classList.add(
+        "registered"
+      );
+
+      return;
+    }
+
+
+    alert(
+      "❌ Erreur lors de l'inscription : " +
+      error.message
+    );
+
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Participer";
+
+    return;
+  }
+
+
+  button.textContent =
+    "✓ Inscrit";
+
+  button.classList.add(
+    "registered"
+  );
+
+}
+
+
+/* =========================
+   ANNOUNCEMENTS
+========================= */
+
+async function loadAnnouncements(){
+
+  const container =
+    document.getElementById(
+      "announcementsList"
+    );
+
+
+  const {
+    data,
+    error
   } =
     await supabaseClient
       .from("announcements")
-      .select("*")
+      .select(
+        "id,title,content,category,created_at"
+      )
       .eq(
         "is_published",
         true
@@ -1009,92 +837,233 @@
       .limit(3);
 
 
-  const announcementsBox =
-    document.getElementById(
-      "announcements"
+  if(error){
+
+    console.error(
+      error
     );
 
-
-  if (announcements?.length) {
-
-    announcementsBox.innerHTML =
-      announcements
-        .map(a => `
-
-          <div
-            style="
-              padding:15px;
-              margin-bottom:10px;
-              border-radius:12px;
-              background:rgba(255,255,255,.05);
-            "
-          >
-
-            <strong>
-              ${escapeHtml(a.title)}
-            </strong>
-
-            <p style="
-              margin:6px 0;
-              color:#64748b;
-            ">
-
-              ${escapeHtml(
-                a.content
-              )}
-
-            </p>
-
-          </div>
-
-        `)
-        .join("");
-
-  } else {
-
-    announcementsBox.innerHTML =
+    container.innerHTML =
       `
-      <p style="color:#64748b">
-        Aucune annonce pour le moment.
-      </p>
+      <div class="glass empty">
+        ❌ Impossible de charger les annonces.
+      </div>
       `;
 
+    return;
   }
 
 
-})();
+  if(!data || data.length === 0){
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        📢 Aucune annonce pour le moment.
+      </div>
+      `;
+
+    return;
+  }
 
 
+  container.innerHTML = "";
 
-/* ========================================= */
-/* SECURITY */
-/* ========================================= */
 
-function escapeHtml(value) {
+  data.forEach(
+    item => {
 
-  return String(value ?? "")
-    .replace(
-      /[&<>"']/g,
-      function(char) {
+      const card =
+        document.createElement(
+          "div"
+        );
 
-        return {
+      card.className =
+        "glass event-card";
 
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#039;"
 
-        }[char];
+      card.innerHTML =
+        `
+        <div class="event-info">
 
-      }
+          <h3>
+            📢 ${escapeHTML(item.title)}
+          </h3>
+
+          <p>
+            ${escapeHTML(item.content)}
+          </p>
+
+          <small>
+            ${new Date(
+              item.created_at
+            ).toLocaleDateString(
+              "fr-FR"
+            )}
+          </small>
+
+        </div>
+        `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   HOURS
+========================= */
+
+async function loadHours(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("volunteer_hours")
+      .select("hours")
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+
+  if(error){
+
+    console.error(
+      "HOURS ERROR:",
+      error
+    );
+
+    return;
+  }
+
+
+  const total =
+    (data || []).reduce(
+      (
+        sum,
+        item
+      ) =>
+        sum +
+        Number(
+          item.hours || 0
+        ),
+      0
+    );
+
+
+  document.getElementById(
+    "hours"
+  ).textContent =
+    total.toFixed(2);
+
+
+  /* simple points */
+
+  document.getElementById(
+    "points"
+  ).textContent =
+    Math.round(
+      total * 10
     );
 
 }
 
+
+/* =========================
+   CERTIFICATES
+========================= */
+
+async function loadCertificates(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("certificates")
+      .select("id")
+      .eq(
+        "user_id",
+        currentUser.id
+      );
+
+
+  if(error){
+
+    console.error(
+      "CERTIFICATES ERROR:",
+      error
+    );
+
+    return;
+  }
+
+
+  document.getElementById(
+    "certificateCount"
+  ).textContent =
+    (data || []).length;
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(
+  value
+){
+
+  if(value === null ||
+     value === undefined){
+
+    return "";
+
+  }
+
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+initDashboard();
+
 </script>
 
-
 </body>
-
 </html>
