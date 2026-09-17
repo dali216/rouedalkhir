@@ -1,1501 +1,1977 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Administration — Roued Al Khair</title>
+  <title>Administration — Roued Al Khair</title>
 
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 
-<style>
-*{box-sizing:border-box}
+  <style>
+    .admin-wrap{
+      max-width:1250px;
+      margin:auto;
+      padding:30px 20px 70px;
+    }
 
-body{
-  margin:0;
-  background:#f4f6f9;
-  font-family:Arial,sans-serif;
-  color:#111;
-}
+    .admin-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:30px;
+    }
 
-.admin-container{
-  width:min(1200px,94%);
-  margin:auto;
-  padding:30px 0 60px;
-}
+    .admin-header h1{
+      margin:5px 0;
+    }
 
-.header{
-  background:#fff;
-  padding:25px;
-  border-radius:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:20px;
-  flex-wrap:wrap;
-  box-shadow:0 8px 30px rgba(0,0,0,.06);
-  margin-bottom:25px;
-}
+    .admin-header p{
+      opacity:.65;
+      margin:0;
+    }
 
-.header h1{margin:0;font-size:30px}
-.header p{margin:7px 0 0;color:#777}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:16px;
+      margin-bottom:30px;
+    }
 
-.logout{
-  background:#111;
-  color:white;
-  border:0;
-  padding:12px 18px;
-  border-radius:10px;
-  cursor:pointer;
-}
+    .stat-card{
+      padding:22px;
+      border-radius:20px;
+    }
 
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:25px;
-}
+    .stat-card small{
+      opacity:.65;
+    }
 
-.stat{
-  background:#fff;
-  padding:22px;
-  border-radius:18px;
-  box-shadow:0 8px 25px rgba(0,0,0,.05);
-}
+    .stat-number{
+      font-size:32px;
+      font-weight:800;
+      margin-top:5px;
+    }
 
-.stat-icon{font-size:25px}
-.stat-label{color:#777;font-size:14px;margin-top:8px}
-.stat-number{display:block;font-size:30px;margin-top:5px}
+    .section{
+      margin-top:35px;
+    }
 
-.section{
-  background:#fff;
-  padding:25px;
-  border-radius:20px;
-  margin-bottom:25px;
-  box-shadow:0 8px 30px rgba(0,0,0,.05);
-}
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
 
-.section-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
+    .section-title h2{
+      margin:3px 0;
+    }
 
-.section h2{margin:0}
+    .form-box{
+      padding:25px;
+      border-radius:20px;
+      margin-bottom:20px;
+    }
 
-input,textarea,select{
-  width:100%;
-  padding:12px 14px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-size:15px;
-  outline:none;
-  background:#fff;
-}
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:15px;
+    }
 
-textarea{
-  min-height:120px;
-  resize:vertical;
-}
+    .form-box input,
+    .form-box textarea,
+    .form-box select{
+      width:100%;
+      box-sizing:border-box;
+      padding:12px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      margin-top:6px;
+      font:inherit;
+    }
 
-.form{
-  display:grid;
-  gap:12px;
-  margin-bottom:25px;
-}
+    .form-box textarea{
+      min-height:100px;
+      resize:vertical;
+    }
 
-.btn{
-  border:0;
-  background:#111;
-  color:#fff;
-  padding:13px 18px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
+    .full{
+      grid-column:1/-1;
+    }
 
-.btn-danger{
-  background:#e53935;
-}
+    .table-wrap{
+      overflow-x:auto;
+      border-radius:18px;
+    }
 
-.btn-edit{
-  background:#555;
-}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:750px;
+    }
 
-.table-container{
-  overflow-x:auto;
-}
+    th,
+    td{
+      padding:14px;
+      text-align:left;
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:650px;
-}
+    th{
+      font-size:13px;
+      opacity:.65;
+    }
 
-th,td{
-  padding:14px 10px;
-  text-align:left;
-  border-bottom:1px solid #eee;
-}
+    .role{
+      padding:6px 10px;
+      border-radius:20px;
+      font-size:12px;
+      font-weight:700;
+      display:inline-block;
+    }
 
-th{
-  color:#777;
-  background:#fafafa;
-  font-size:13px;
-}
+    .role.admin{
+      background:#111;
+      color:#fff;
+    }
 
-.announcement,
-.event-card{
-  border:1px solid #eee;
-  padding:18px;
-  border-radius:15px;
-  margin-bottom:12px;
-}
+    .role.volunteer{
+      background:#eee;
+    }
 
-.announcement h3,
-.event-card h3{
-  margin:0 0 8px;
-}
+    .danger{
+      background:#b42318 !important;
+      color:#fff !important;
+    }
 
-.announcement p,
-.event-card p{
-  color:#555;
-  white-space:pre-wrap;
-  line-height:1.6;
-}
+    .event-admin-card{
+      padding:22px;
+      border-radius:20px;
+      margin-bottom:18px;
+    }
 
-small{color:#888}
+    .event-admin-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:20px;
+      flex-wrap:wrap;
+    }
 
-.actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:15px;
-}
+    .event-admin-head h3{
+      margin:0 0 7px;
+    }
 
-#message{
-  display:none;
-  padding:13px 16px;
-  border-radius:12px;
-  margin-bottom:20px;
-}
+    .event-meta{
+      opacity:.7;
+      font-size:14px;
+    }
 
-.empty{
-  padding:25px;
-  text-align:center;
-  color:#888;
-}
+    .event-actions{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
 
-@media(max-width:900px){
-  .stats{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
+    .mini-btn{
+      border:0;
+      padding:9px 13px;
+      border-radius:9px;
+      cursor:pointer;
+      font-weight:700;
+    }
 
-@media(max-width:550px){
-  .stats{
-    grid-template-columns:1fr;
-  }
+    .status-select{
+      padding:8px 10px;
+      border-radius:9px;
+      border:1px solid #ddd;
+    }
 
-  .section{
-    padding:18px;
-  }
+    .status-registered{
+      color:#555;
+    }
 
-  .header h1{
-    font-size:24px;
-  }
-}
-</style>
+    .status-present{
+      color:#198754;
+      font-weight:700;
+    }
+
+    .status-absent{
+      color:#b42318;
+      font-weight:700;
+    }
+
+    .participant-count{
+      padding:7px 12px;
+      border-radius:20px;
+      background:#eee;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .empty{
+      padding:25px;
+      text-align:center;
+      opacity:.65;
+    }
+
+    .message{
+      margin-top:12px;
+      font-weight:600;
+    }
+
+    @media(max-width:600px){
+      .admin-wrap{
+        padding:20px 12px 50px;
+      }
+
+      .stat-number{
+        font-size:26px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="admin-container">
+<div class="admin-wrap">
 
-<!-- HEADER -->
+  <!-- HEADER -->
 
-<div class="header">
-
-  <div>
-    <h1>⚙️ Administration</h1>
-    <p id="adminName">Chargement...</p>
-  </div>
-
-  <button id="logout" class="logout">
-    Déconnexion
-  </button>
-
-</div>
-
-<div id="message"></div>
-
-
-<!-- STATS -->
-
-<div class="stats">
-
-  <div class="stat">
-    <div class="stat-icon">👥</div>
-    <div class="stat-label">Membres</div>
-    <strong id="membersCount" class="stat-number">0</strong>
-  </div>
-
-  <div class="stat">
-    <div class="stat-icon">📢</div>
-    <div class="stat-label">Annonces</div>
-    <strong id="announcementsCount" class="stat-number">0</strong>
-  </div>
-
-  <div class="stat">
-    <div class="stat-icon">📅</div>
-    <div class="stat-label">Événements</div>
-    <strong id="eventsCount" class="stat-number">0</strong>
-  </div>
-
-  <div class="stat">
-    <div class="stat-icon">⏱️</div>
-    <div class="stat-label">Heures</div>
-    <strong id="hoursCount" class="stat-number">0</strong>
-  </div>
-
-</div>
-
-
-<!-- MEMBERS -->
-
-<div class="section">
-
-  <div class="section-header">
+  <header class="admin-header">
 
     <div>
-      <h2>👥 Membres</h2>
-      <p style="color:#777">
-        Gestion des bénévoles.
+      <span class="eyebrow">
+        ROUED AL KHAIR
+      </span>
+
+      <h1>
+        Administration
+      </h1>
+
+      <p>
+        Gestion de l'association
       </p>
     </div>
-
-    <input
-      id="memberSearch"
-      type="text"
-      placeholder="🔎 Rechercher un membre..."
-      style="max-width:320px"
-    >
-
-  </div>
-
-  <div class="table-container">
-
-    <table>
-
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Rôle</th>
-          <th>Inscription</th>
-          <th>Profil</th>
-        </tr>
-      </thead>
-
-      <tbody id="membersList">
-        <tr>
-          <td colspan="4">⏳ Chargement...</td>
-        </tr>
-      </tbody>
-
-    </table>
-
-  </div>
-
-</div>
-
-
-<!-- EVENTS -->
-
-<div class="section">
-
-  <div class="section-header">
-
-    <div>
-      <h2>📅 Gestion des événements</h2>
-      <p style="color:#777">
-        Créer et gérer les activités de l'association.
-      </p>
-    </div>
-
-  </div>
-
-
-  <div class="form">
-
-    <input
-      id="eventTitle"
-      type="text"
-      placeholder="Titre de l'événement"
-    >
-
-    <textarea
-      id="eventDescription"
-      placeholder="Description de l'événement..."
-    ></textarea>
-
-    <input
-      id="eventLocation"
-      type="text"
-      placeholder="📍 Lieu"
-    >
-
-    <input
-      id="eventDate"
-      type="datetime-local"
-    >
 
     <button
-      id="addEvent"
-      class="btn"
+      id="logout"
+      class="btn ghost"
     >
-      ➕ Créer l'événement
+      Déconnexion
     </button>
 
-  </div>
+  </header>
 
 
-  <div id="eventsList">
-    ⏳ Chargement...
-  </div>
+  <!-- STATS -->
 
-</div>
+  <section class="stats">
 
-
-<!-- ANNOUNCEMENTS -->
-
-<div class="section">
-
-  <div class="section-header">
-
-    <div>
-      <h2>📢 Annonces</h2>
-      <p style="color:#777">
-        Publier des informations aux bénévoles.
-      </p>
+    <div class="glass stat-card">
+      <small>👥 Membres</small>
+      <div
+        class="stat-number"
+        id="membersCount"
+      >
+        0
+      </div>
     </div>
 
-  </div>
-
-
-  <div class="form">
-
-    <input
-      id="announcementTitle"
-      type="text"
-      placeholder="Titre de l'annonce"
-    >
-
-    <select id="announcementCategory">
-
-      <option value="general">
-        Général
-      </option>
-
-      <option value="mission">
-        Mission
-      </option>
-
-      <option value="event">
-        Événement
-      </option>
-
-      <option value="urgent">
-        Urgent
-      </option>
-
-      <option value="formation">
-        Formation
-      </option>
-
-    </select>
-
-    <textarea
-      id="announcementContent"
-      placeholder="Contenu..."
-    ></textarea>
-
-    <button
-      id="addAnnouncement"
-      class="btn"
-    >
-      ➕ Publier
-    </button>
-
-  </div>
-
-  <div id="announcementsList">
-    ⏳ Chargement...
-  </div>
-
-</div>
-
-
-<!-- HOURS -->
-
-<div class="section">
-
-  <div class="section-header">
-
-    <div>
-      <h2>⏱️ Heures bénévoles</h2>
-      <p style="color:#777">
-        Total des heures enregistrées.
-      </p>
+    <div class="glass stat-card">
+      <small>📅 Événements</small>
+      <div
+        class="stat-number"
+        id="eventsCount"
+      >
+        0
+      </div>
     </div>
 
-  </div>
+    <div class="glass stat-card">
+      <small>📢 Annonces</small>
+      <div
+        class="stat-number"
+        id="announcementsCount"
+      >
+        0
+      </div>
+    </div>
 
-  <div id="hoursList">
-    ⏳ Chargement...
-  </div>
+    <div class="glass stat-card">
+      <small>⏱ Heures bénévoles</small>
+      <div
+        class="stat-number"
+        id="hoursCount"
+      >
+        0
+      </div>
+    </div>
 
-</div>
+  </section>
+
+
+  <!-- MEMBERS -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <div>
+        <span class="eyebrow">
+          MEMBRES
+        </span>
+
+        <h2>
+          Gestion des membres
+        </h2>
+      </div>
+
+    </div>
+
+    <div class="glass form-box">
+
+      <label>
+        🔎 Rechercher un membre
+      </label>
+
+      <input
+        id="memberSearch"
+        type="text"
+        placeholder="Nom ou email..."
+      >
+
+    </div>
+
+    <div class="glass table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Rôle</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody id="membersTable">
+
+          <tr>
+            <td colspan="4">
+              Chargement...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- CREATE EVENT -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <div>
+        <span class="eyebrow">
+          ÉVÉNEMENTS
+        </span>
+
+        <h2>
+          Créer un événement
+        </h2>
+      </div>
+
+    </div>
+
+    <form
+      id="eventForm"
+      class="glass form-box"
+    >
+
+      <div class="form-grid">
+
+        <div>
+          <label>
+            Titre
+          </label>
+
+          <input
+            id="eventTitle"
+            required
+            placeholder="Ex: Distribution alimentaire"
+          >
+        </div>
+
+        <div>
+          <label>
+            Lieu
+          </label>
+
+          <input
+            id="eventLocation"
+            placeholder="Ex: Tunis"
+          >
+        </div>
+
+        <div>
+          <label>
+            Date et heure
+          </label>
+
+          <input
+            id="eventDate"
+            type="datetime-local"
+            required
+          >
+        </div>
+
+        <div class="full">
+
+          <label>
+            Description
+          </label>
+
+          <textarea
+            id="eventDescription"
+            placeholder="Description de l'événement..."
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="btn"
+        type="submit"
+      >
+        + Créer l'événement
+      </button>
+
+      <div
+        id="eventMessage"
+        class="message"
+      ></div>
+
+    </form>
+
+  </section>
+
+
+  <!-- EVENTS + PARTICIPANTS -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <div>
+        <span class="eyebrow">
+          PARTICIPANTS
+        </span>
+
+        <h2>
+          Événements & présences
+        </h2>
+      </div>
+
+    </div>
+
+    <div id="eventsAdmin">
+
+      <div class="glass empty">
+        ⏳ Chargement...
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ANNOUNCEMENTS -->
+
+  <section class="section">
+
+    <div class="section-title">
+
+      <div>
+        <span class="eyebrow">
+          COMMUNICATION
+        </span>
+
+        <h2>
+          Créer une annonce
+        </h2>
+      </div>
+
+    </div>
+
+
+    <form
+      id="announcementForm"
+      class="glass form-box"
+    >
+
+      <div class="form-grid">
+
+        <div>
+
+          <label>
+            Titre
+          </label>
+
+          <input
+            id="announcementTitle"
+            required
+            placeholder="Titre de l'annonce"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label>
+            Catégorie
+          </label>
+
+          <select
+            id="announcementCategory"
+          >
+
+            <option value="general">
+              Général
+            </option>
+
+            <option value="mission">
+              Mission
+            </option>
+
+            <option value="event">
+              Événement
+            </option>
+
+            <option value="urgent">
+              Urgent
+            </option>
+
+            <option value="formation">
+              Formation
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="full">
+
+          <label>
+            Contenu
+          </label>
+
+          <textarea
+            id="announcementContent"
+            required
+            placeholder="Écrivez votre annonce..."
+          ></textarea>
+
+        </div>
+
+      </div>
+
+      <br>
+
+      <button
+        class="btn"
+        type="submit"
+      >
+        + Publier l'annonce
+      </button>
+
+      <div
+        id="announcementMessage"
+        class="message"
+      ></div>
+
+    </form>
+
+
+    <div id="announcementsAdmin">
+
+      <div class="glass empty">
+        ⏳ Chargement...
+      </div>
+
+    </div>
+
+  </section>
 
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="app.js"></script>
 
 
 <script>
 
-document.addEventListener(
-  "DOMContentLoaded",
-  async function(){
+let adminProfile = null;
+let allMembers = [];
 
-    const admin =
-      await requireAdmin();
 
-    if(!admin){
+/* =========================
+   INIT
+========================= */
+
+async function initAdmin(){
+
+  adminProfile =
+    await requireAdmin();
+
+  if(!adminProfile){
+    return;
+  }
+
+  await Promise.all([
+    loadMembers(),
+    loadEvents(),
+    loadAnnouncements(),
+    loadHours()
+  ]);
+
+}
+
+
+/* =========================
+   MEMBERS
+========================= */
+
+async function loadMembers(){
+
+  const tbody =
+    document.getElementById(
+      "membersTable"
+    );
+
+
+  const {
+    data: members,
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,full_name,role,created_at"
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    tbody.innerHTML =
+      `
+      <tr>
+        <td colspan="4">
+          ❌ Erreur de chargement.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  allMembers =
+    members || [];
+
+
+  document.getElementById(
+    "membersCount"
+  ).textContent =
+    allMembers.length;
+
+
+  await renderMembers(
+    allMembers
+  );
+
+}
+
+
+async function getEmail(
+  userId
+){
+
+  /*
+   Supabase ne permet pas de lire
+   auth.users directement depuis le navigateur.
+   On affiche donc le nom ici.
+  */
+
+  const member =
+    allMembers.find(
+      m => m.id === userId
+    );
+
+  return member
+    ? "Membre"
+    : "";
+}
+
+
+async function renderMembers(
+  members
+){
+
+  const tbody =
+    document.getElementById(
+      "membersTable"
+    );
+
+
+  if(!members.length){
+
+    tbody.innerHTML =
+      `
+      <tr>
+        <td colspan="4">
+          Aucun membre trouvé.
+        </td>
+      </tr>
+      `;
+
+    return;
+  }
+
+
+  tbody.innerHTML = "";
+
+
+  members.forEach(
+    member => {
+
+      const tr =
+        document.createElement(
+          "tr"
+        );
+
+
+      const role =
+        member.role ||
+        "volunteer";
+
+
+      tr.innerHTML =
+        `
+        <td>
+          <strong>
+            ${escapeHTML(
+              member.full_name ||
+              "Sans nom"
+            )}
+          </strong>
+        </td>
+
+        <td>
+          ${escapeHTML(
+            member.id
+          )}
+        </td>
+
+        <td>
+
+          <span
+            class="role ${
+              role === "admin"
+                ? "admin"
+                : "volunteer"
+            }"
+          >
+            ${
+              role === "admin"
+                ? "Admin"
+                : "Bénévole"
+            }
+          </span>
+
+        </td>
+
+        <td>
+
+          <button
+            class="mini-btn"
+            onclick="changeRole(
+              '${member.id}',
+              '${role}'
+            )"
+          >
+            ${
+              role === "admin"
+                ? "→ Bénévole"
+                : "→ Admin"
+            }
+          </button>
+
+          <button
+            class="mini-btn"
+            onclick="openMemberProfile(
+              '${member.id}'
+            )"
+          >
+            Profil
+          </button>
+
+        </td>
+        `;
+
+
+      tbody.appendChild(
+        tr
+      );
+
+    }
+  );
+
+}
+
+
+async function changeRole(
+  userId,
+  currentRole
+){
+
+  const newRole =
+    currentRole === "admin"
+      ? "volunteer"
+      : "admin";
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        role:newRole
+      })
+      .eq(
+        "id",
+        userId
+      );
+
+
+  if(error){
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadMembers();
+
+}
+
+
+function openMemberProfile(
+  userId
+){
+
+  window.open(
+    "profile.html?id=" +
+    encodeURIComponent(
+      userId
+    ),
+    "_blank"
+  );
+
+}
+
+
+/* =========================
+   MEMBER SEARCH
+========================= */
+
+document.getElementById(
+  "memberSearch"
+).addEventListener(
+  "input",
+  function(){
+
+    const search =
+      this.value
+        .trim()
+        .toLowerCase();
+
+
+    const filtered =
+      allMembers.filter(
+        member =>
+          (
+            member.full_name ||
+            ""
+          )
+          .toLowerCase()
+          .includes(search)
+      );
+
+
+    renderMembers(
+      filtered
+    );
+
+  }
+);
+
+
+/* =========================
+   CREATE EVENT
+========================= */
+
+document.getElementById(
+  "eventForm"
+).addEventListener(
+  "submit",
+  async function(e){
+
+    e.preventDefault();
+
+
+    const message =
+      document.getElementById(
+        "eventMessage"
+      );
+
+
+    message.textContent =
+      "⏳ Création...";
+
+
+    const title =
+      document.getElementById(
+        "eventTitle"
+      ).value.trim();
+
+
+    const location =
+      document.getElementById(
+        "eventLocation"
+      ).value.trim();
+
+
+    const eventDate =
+      document.getElementById(
+        "eventDate"
+      ).value;
+
+
+    const description =
+      document.getElementById(
+        "eventDescription"
+      ).value.trim();
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("events")
+        .insert({
+          title:title,
+          description:description,
+          location:location,
+          event_date:eventDate,
+          created_by:adminProfile.id
+        });
+
+
+    if(error){
+
+      console.error(
+        error
+      );
+
+      message.innerHTML =
+        "❌ " +
+        escapeHTML(
+          error.message
+        );
+
       return;
     }
 
 
-    document.getElementById(
-      "adminName"
-    ).textContent =
-      "Connecté en tant que " +
-      (
-        admin.full_name ||
-        admin.email ||
-        "Administrateur"
-      );
+    message.innerHTML =
+      "✅ Événement créé !";
 
 
-    window.allMembers = [];
+    this.reset();
 
 
-    await loadMembers();
     await loadEvents();
-    await loadAnnouncements();
-    await loadHours();
-
-
-    /* =========================
-       MEMBERS
-    ========================= */
-
-    async function loadMembers(){
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select(
-            "id,full_name,role,created_at"
-          )
-          .order(
-            "created_at",
-            {ascending:false}
-          );
-
-
-      if(error){
-
-        document.getElementById(
-          "membersList"
-        ).innerHTML =
-          `<tr>
-            <td colspan="4">
-              ❌ ${escapeHtml(error.message)}
-            </td>
-          </tr>`;
-
-        return;
-      }
-
-
-      window.allMembers =
-        data || [];
-
-
-      document.getElementById(
-        "membersCount"
-      ).textContent =
-        window.allMembers.length;
-
-
-      renderMembers(
-        window.allMembers
-      );
-    }
-
-
-    function renderMembers(members){
-
-      const list =
-        document.getElementById(
-          "membersList"
-        );
-
-
-      if(!members.length){
-
-        list.innerHTML =
-          `<tr>
-            <td colspan="4">
-              Aucun membre.
-            </td>
-          </tr>`;
-
-        return;
-      }
-
-
-      list.innerHTML =
-        members.map(
-          function(member){
-
-            const role =
-              member.role ||
-              "volunteer";
-
-
-            return `
-              <tr>
-
-                <td>
-                  <strong>
-                    ${escapeHtml(
-                      member.full_name ||
-                      "Sans nom"
-                    )}
-                  </strong>
-                </td>
-
-                <td>
-
-                  <select
-                    onchange="
-                      changeMemberRole(
-                        '${member.id}',
-                        this.value
-                      )
-                    "
-                    style="
-                      width:auto;
-                      min-width:130px;
-                    "
-                  >
-
-                    <option
-                      value="volunteer"
-                      ${
-                        role === "volunteer"
-                        ? "selected"
-                        : ""
-                      }
-                    >
-                      Volunteer
-                    </option>
-
-                    <option
-                      value="admin"
-                      ${
-                        role === "admin"
-                        ? "selected"
-                        : ""
-                      }
-                    >
-                      Admin
-                    </option>
-
-                  </select>
-
-                </td>
-
-                <td>
-                  ${formatDate(
-                    member.created_at
-                  )}
-                </td>
-
-                <td>
-
-                  <a
-                    href="profile.html?id=${member.id}"
-                    target="_blank"
-                  >
-                    👤 Voir
-                  </a>
-
-                </td>
-
-              </tr>
-            `;
-
-          }
-        ).join("");
-    }
-
-
-    window.changeMemberRole =
-      async function(id,newRole){
-
-        const member =
-          window.allMembers.find(
-            function(m){
-              return m.id === id;
-            }
-          );
-
-
-        if(!member){
-          return;
-        }
-
-
-        if(
-          !confirm(
-            "Changer le rôle de " +
-            (
-              member.full_name ||
-              "ce membre"
-            ) +
-            " en " +
-            newRole +
-            " ?"
-          )
-        ){
-
-          renderMembers(
-            window.allMembers
-          );
-
-          return;
-        }
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("profiles")
-            .update({
-              role:newRole
-            })
-            .eq("id",id);
-
-
-        if(error){
-
-          alert(
-            "❌ " +
-            error.message
-          );
-
-          await loadMembers();
-
-          return;
-        }
-
-
-        member.role =
-          newRole;
-
-
-        renderMembers(
-          window.allMembers
-        );
-
-        showMessage(
-          "✅ Rôle modifié."
-        );
-
-      };
-
-
-    document.getElementById(
-      "memberSearch"
-    ).addEventListener(
-      "input",
-      function(){
-
-        const search =
-          this.value
-            .trim()
-            .toLowerCase();
-
-
-        const filtered =
-          window.allMembers.filter(
-            function(member){
-
-              return (
-                member.full_name ||
-                ""
-              )
-              .toLowerCase()
-              .includes(search);
-
-            }
-          );
-
-
-        renderMembers(filtered);
-
-      }
-    );
-
-
-    /* =========================
-       EVENTS
-    ========================= */
-
-    async function loadEvents(){
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("events")
-          .select(
-            "id,title,description,location,event_date,created_by,created_at"
-          )
-          .order(
-            "event_date",
-            {ascending:true}
-          );
-
-
-      if(error){
-
-        document.getElementById(
-          "eventsList"
-        ).innerHTML =
-          "❌ " +
-          escapeHtml(
-            error.message
-          );
-
-        return;
-      }
-
-
-      document.getElementById(
-        "eventsCount"
-      ).textContent =
-        (data || []).length;
-
-
-      if(!data || !data.length){
-
-        document.getElementById(
-          "eventsList"
-        ).innerHTML =
-          `<div class="empty">
-            Aucun événement.
-          </div>`;
-
-        return;
-      }
-
-
-      document.getElementById(
-        "eventsList"
-      ).innerHTML =
-        data.map(
-          function(event){
-
-            return `
-              <div class="event-card">
-
-                <h3>
-                  📅
-                  ${escapeHtml(
-                    event.title
-                  )}
-                </h3>
-
-                <p>
-                  ${
-                    event.description
-                    ? escapeHtml(
-                        event.description
-                      )
-                    : "Aucune description."
-                  }
-                </p>
-
-                <small>
-                  📍
-                  ${
-                    event.location
-                    ? escapeHtml(
-                        event.location
-                      )
-                    : "Lieu non précisé"
-                  }
-                </small>
-
-                <br>
-
-                <small>
-                  🕐
-                  ${
-                    event.event_date
-                    ? formatDateTime(
-                        event.event_date
-                      )
-                    : "Date non précisée"
-                  }
-                </small>
-
-                <div class="actions">
-
-                  <button
-                    class="btn btn-danger"
-                    onclick="
-                      deleteEvent(
-                        '${event.id}'
-                      )
-                    "
-                  >
-                    🗑️ Supprimer
-                  </button>
-
-                </div>
-
-              </div>
-            `;
-
-          }
-        ).join("");
-    }
-
-
-    document.getElementById(
-      "addEvent"
-    ).addEventListener(
-      "click",
-      async function(){
-
-        const title =
-          document.getElementById(
-            "eventTitle"
-          ).value.trim();
-
-
-        const description =
-          document.getElementById(
-            "eventDescription"
-          ).value.trim();
-
-
-        const location =
-          document.getElementById(
-            "eventLocation"
-          ).value.trim();
-
-
-        const eventDate =
-          document.getElementById(
-            "eventDate"
-          ).value;
-
-
-        if(!title){
-
-          showMessage(
-            "❌ Entrez le titre de l'événement.",
-            true
-          );
-
-          return;
-        }
-
-
-        if(!eventDate){
-
-          showMessage(
-            "❌ Choisissez une date.",
-            true
-          );
-
-          return;
-        }
-
-
-        const {
-          data:{
-            user
-          }
-        } =
-          await supabaseClient
-            .auth
-            .getUser();
-
-
-        if(!user){
-
-          return;
-        }
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("events")
-            .insert({
-
-              title:title,
-
-              description:
-                description || null,
-
-              location:
-                location || null,
-
-              event_date:
-                new Date(
-                  eventDate
-                ).toISOString(),
-
-              created_by:
-                user.id
-
-            });
-
-
-        if(error){
-
-          showMessage(
-            "❌ " +
-            error.message,
-            true
-          );
-
-          return;
-        }
-
-
-        document.getElementById(
-          "eventTitle"
-        ).value = "";
-
-
-        document.getElementById(
-          "eventDescription"
-        ).value = "";
-
-
-        document.getElementById(
-          "eventLocation"
-        ).value = "";
-
-
-        document.getElementById(
-          "eventDate"
-        ).value = "";
-
-
-        showMessage(
-          "✅ Événement créé."
-        );
-
-
-        await loadEvents();
-
-      }
-    );
-
-
-    window.deleteEvent =
-      async function(id){
-
-        if(
-          !confirm(
-            "Supprimer cet événement ?"
-          )
-        ){
-          return;
-        }
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("events")
-            .delete()
-            .eq("id",id);
-
-
-        if(error){
-
-          alert(
-            "❌ " +
-            error.message
-          );
-
-          return;
-        }
-
-
-        showMessage(
-          "✅ Événement supprimé."
-        );
-
-
-        await loadEvents();
-
-      };
-
-
-    /* =========================
-       ANNOUNCEMENTS
-    ========================= */
-
-    async function loadAnnouncements(){
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("announcements")
-          .select("*")
-          .order(
-            "created_at",
-            {ascending:false}
-          );
-
-
-      if(error){
-
-        document.getElementById(
-          "announcementsList"
-        ).innerHTML =
-          "❌ " +
-          escapeHtml(
-            error.message
-          );
-
-        return;
-      }
-
-
-      document.getElementById(
-        "announcementsCount"
-      ).textContent =
-        (data || []).length;
-
-
-      if(!data || !data.length){
-
-        document.getElementById(
-          "announcementsList"
-        ).innerHTML =
-          `<div class="empty">
-            Aucune annonce.
-          </div>`;
-
-        return;
-      }
-
-
-      document.getElementById(
-        "announcementsList"
-      ).innerHTML =
-        data.map(
-          function(item){
-
-            return `
-              <div class="announcement">
-
-                <h3>
-                  ${escapeHtml(
-                    item.title
-                  )}
-                </h3>
-
-                <small>
-                  ${escapeHtml(
-                    item.category
-                  )}
-                  ·
-                  ${formatDate(
-                    item.created_at
-                  )}
-                </small>
-
-                <p>
-                  ${escapeHtml(
-                    item.content
-                  )}
-                </p>
-
-                <button
-                  class="btn btn-danger"
-                  onclick="
-                    deleteAnnouncement(
-                      '${item.id}'
-                    )
-                  "
-                >
-                  🗑️ Supprimer
-                </button>
-
-              </div>
-            `;
-
-          }
-        ).join("");
-    }
-
-
-    document.getElementById(
-      "addAnnouncement"
-    ).addEventListener(
-      "click",
-      async function(){
-
-        const title =
-          document.getElementById(
-            "announcementTitle"
-          ).value.trim();
-
-
-        const category =
-          document.getElementById(
-            "announcementCategory"
-          ).value;
-
-
-        const content =
-          document.getElementById(
-            "announcementContent"
-          ).value.trim();
-
-
-        if(!title || !content){
-
-          showMessage(
-            "❌ Remplissez le titre et le contenu.",
-            true
-          );
-
-          return;
-        }
-
-
-        const {
-          data:{
-            user
-          }
-        } =
-          await supabaseClient
-            .auth
-            .getUser();
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("announcements")
-            .insert({
-
-              title:title,
-
-              content:content,
-
-              category:category,
-
-              is_published:true,
-
-              created_by:user.id
-
-            });
-
-
-        if(error){
-
-          showMessage(
-            "❌ " +
-            error.message,
-            true
-          );
-
-          return;
-        }
-
-
-        document.getElementById(
-          "announcementTitle"
-        ).value = "";
-
-
-        document.getElementById(
-          "announcementContent"
-        ).value = "";
-
-
-        showMessage(
-          "✅ Annonce publiée."
-        );
-
-
-        await loadAnnouncements();
-
-      }
-    );
-
-
-    window.deleteAnnouncement =
-      async function(id){
-
-        if(
-          !confirm(
-            "Supprimer cette annonce ?"
-          )
-        ){
-          return;
-        }
-
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("announcements")
-            .delete()
-            .eq("id",id);
-
-
-        if(error){
-
-          alert(
-            "❌ " +
-            error.message
-          );
-
-          return;
-        }
-
-
-        showMessage(
-          "✅ Annonce supprimée."
-        );
-
-
-        await loadAnnouncements();
-
-      };
-
-
-    /* =========================
-       HOURS
-    ========================= */
-
-    async function loadHours(){
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient
-          .from("volunteer_hours")
-          .select(
-            "hours,description,created_at"
-          )
-          .order(
-            "created_at",
-            {ascending:false}
-          );
-
-
-      if(error){
-
-        document.getElementById(
-          "hoursList"
-        ).innerHTML =
-          "❌ " +
-          escapeHtml(
-            error.message
-          );
-
-        return;
-      }
-
-
-      let total = 0;
-
-
-      (data || []).forEach(
-        function(item){
-
-          total +=
-            Number(
-              item.hours
-            ) || 0;
-
-        }
-      );
-
-
-      document.getElementById(
-        "hoursCount"
-      ).textContent =
-        total.toFixed(1);
-
-
-      document.getElementById(
-        "hoursList"
-      ).innerHTML =
-        `
-          <div style="
-            font-size:38px;
-            font-weight:bold;
-          ">
-            ${total.toFixed(1)} h
-          </div>
-
-          <p style="color:#777">
-            Total des heures bénévoles.
-          </p>
-        `;
-
-    }
-
-
-    /* =========================
-       HELPERS
-    ========================= */
-
-    function showMessage(
-      text,
-      error=false
-    ){
-
-      const box =
-        document.getElementById(
-          "message"
-        );
-
-
-      box.style.display =
-        "block";
-
-      box.style.background =
-        error
-        ? "#ffe5e5"
-        : "#e5f8eb";
-
-      box.textContent =
-        text;
-
-
-      setTimeout(
-        function(){
-
-          box.style.display =
-            "none";
-
-        },
-        4000
-      );
-
-    }
-
-
-    function escapeHtml(value){
-
-      return String(
-        value || ""
-      )
-      .replace(
-        /&/g,
-        "&amp;"
-      )
-      .replace(
-        /</g,
-        "&lt;"
-      )
-      .replace(
-        />/g,
-        "&gt;"
-      )
-      .replace(
-        /"/g,
-        "&quot;"
-      )
-      .replace(
-        /'/g,
-        "&#039;"
-      );
-
-    }
-
-
-    function formatDate(date){
-
-      if(!date){
-        return "—";
-      }
-
-      return new Date(
-        date
-      ).toLocaleDateString(
-        "fr-FR"
-      );
-
-    }
-
-
-    function formatDateTime(date){
-
-      if(!date){
-        return "—";
-      }
-
-      return new Date(
-        date
-      ).toLocaleString(
-        "fr-FR",
-        {
-          dateStyle:"medium",
-          timeStyle:"short"
-        }
-      );
-
-    }
 
   }
 );
+
+
+/* =========================
+   LOAD EVENTS
+========================= */
+
+async function loadEvents(){
+
+  const container =
+    document.getElementById(
+      "eventsAdmin"
+    );
+
+
+  const {
+    data: events,
+    error
+  } =
+    await supabaseClient
+      .from("events")
+      .select(
+        "id,title,description,location,event_date,created_at"
+      )
+      .order(
+        "event_date",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        ❌ Erreur de chargement.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  document.getElementById(
+    "eventsCount"
+  ).textContent =
+    (events || []).length;
+
+
+  if(!events || !events.length){
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        📅 Aucun événement.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  for(
+    const event of events
+  ){
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+    card.className =
+      "glass event-admin-card";
+
+
+    const date =
+      event.event_date
+        ? new Date(
+            event.event_date
+          ).toLocaleString(
+            "fr-FR",
+            {
+              dateStyle:"medium",
+              timeStyle:"short"
+            }
+          )
+        : "Date à confirmer";
+
+
+    card.innerHTML =
+      `
+      <div class="event-admin-head">
+
+        <div>
+
+          <h3>
+            ${escapeHTML(
+              event.title
+            )}
+          </h3>
+
+          <div class="event-meta">
+
+            📅 ${escapeHTML(date)}
+
+            ${
+              event.location
+                ? " · 📍 " +
+                  escapeHTML(
+                    event.location
+                  )
+                : ""
+            }
+
+          </div>
+
+          ${
+            event.description
+              ?
+              `
+              <p>
+                ${escapeHTML(
+                  event.description
+                )}
+              </p>
+              `
+              :
+              ""
+          }
+
+        </div>
+
+
+        <div class="event-actions">
+
+          <span
+            class="participant-count"
+            id="count-${event.id}"
+          >
+            ⏳
+          </span>
+
+          <button
+            class="mini-btn danger"
+            onclick="deleteEvent(
+              '${event.id}'
+            )"
+          >
+            Supprimer
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="participants-${event.id}"
+        style="margin-top:20px"
+      >
+        <div class="empty">
+          ⏳ Chargement des participants...
+        </div>
+      </div>
+      `;
+
+
+    container.appendChild(
+      card
+    );
+
+
+    await loadParticipants(
+      event.id
+    );
+
+  }
+
+}
+
+
+/* =========================
+   LOAD PARTICIPANTS
+========================= */
+
+async function loadParticipants(
+  eventId
+){
+
+  const container =
+    document.getElementById(
+      "participants-" +
+      eventId
+    );
+
+
+  const count =
+    document.getElementById(
+      "count-" +
+      eventId
+    );
+
+
+  const {
+    data: participants,
+    error
+  } =
+    await supabaseClient
+      .from(
+        "event_participants"
+      )
+      .select(
+        "id,user_id,status,created_at"
+      )
+      .eq(
+        "event_id",
+        eventId
+      )
+      .order(
+        "created_at",
+        {
+          ascending:true
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    container.innerHTML =
+      `
+      <div class="empty">
+        ❌ Impossible de charger les participants.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  const list =
+    participants || [];
+
+
+  const present =
+    list.filter(
+      p =>
+        p.status === "present"
+    ).length;
+
+
+  count.textContent =
+    `👥 ${list.length} · ✅ ${present} présent(s)`;
+
+
+  if(!list.length){
+
+    container.innerHTML =
+      `
+      <div class="empty">
+        Aucun participant pour le moment.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  /*
+    On récupère les profils
+    correspondants.
+  */
+
+  const userIds =
+    list.map(
+      p => p.user_id
+    );
+
+
+  const {
+    data: profiles,
+    error: profileError
+  } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id,full_name,role"
+      )
+      .in(
+        "id",
+        userIds
+      );
+
+
+  if(profileError){
+
+    console.error(
+      profileError
+    );
+
+  }
+
+
+  const profileMap =
+    new Map(
+      (profiles || []).map(
+        p => [
+          p.id,
+          p
+        ]
+      )
+    );
+
+
+  let html =
+    `
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Bénévole</th>
+            <th>Inscription</th>
+            <th>Statut</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+    `;
+
+
+  list.forEach(
+    participant => {
+
+      const profile =
+        profileMap.get(
+          participant.user_id
+        );
+
+
+      const name =
+        profile &&
+        profile.full_name
+          ? profile.full_name
+          : "Bénévole";
+
+
+      const registeredDate =
+        participant.created_at
+          ? new Date(
+              participant.created_at
+            ).toLocaleDateString(
+              "fr-FR"
+            )
+          : "-";
+
+
+      html +=
+        `
+        <tr>
+
+          <td>
+            <strong>
+              ${escapeHTML(
+                name
+              )}
+            </strong>
+          </td>
+
+          <td>
+            ${registeredDate}
+          </td>
+
+          <td>
+
+            <select
+              class="status-select"
+              onchange="changeParticipantStatus(
+                '${participant.id}',
+                this.value,
+                '${eventId}'
+              )"
+            >
+
+              <option
+                value="registered"
+                ${
+                  participant.status ===
+                  "registered"
+                    ? "selected"
+                    : ""
+                }
+              >
+                Inscrit
+              </option>
+
+              <option
+                value="present"
+                ${
+                  participant.status ===
+                  "present"
+                    ? "selected"
+                    : ""
+                }
+              >
+                Présent
+              </option>
+
+              <option
+                value="absent"
+                ${
+                  participant.status ===
+                  "absent"
+                    ? "selected"
+                    : ""
+                }
+              >
+                Absent
+              </option>
+
+              <option
+                value="cancelled"
+                ${
+                  participant.status ===
+                  "cancelled"
+                    ? "selected"
+                    : ""
+                }
+              >
+                Annulé
+              </option>
+
+            </select>
+
+          </td>
+
+        </tr>
+        `;
+
+    }
+  );
+
+
+  html +=
+    `
+        </tbody>
+
+      </table>
+
+    </div>
+    `;
+
+
+  container.innerHTML =
+    html;
+
+}
+
+
+/* =========================
+   CHANGE STATUS
+========================= */
+
+async function changeParticipantStatus(
+  participantId,
+  status,
+  eventId
+){
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from(
+        "event_participants"
+      )
+      .update({
+        status:status
+      })
+      .eq(
+        "id",
+        participantId
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadParticipants(
+    eventId
+  );
+
+}
+
+
+/* =========================
+   DELETE EVENT
+========================= */
+
+async function deleteEvent(
+  eventId
+){
+
+  const confirmDelete =
+    confirm(
+      "Supprimer cet événement ?\n\nLes inscriptions liées seront également supprimées."
+    );
+
+
+  if(!confirmDelete){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("events")
+      .delete()
+      .eq(
+        "id",
+        eventId
+      );
+
+
+  if(error){
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadEvents();
+
+}
+
+
+/* =========================
+   ANNOUNCEMENTS
+========================= */
+
+async function loadAnnouncements(){
+
+  const container =
+    document.getElementById(
+      "announcementsAdmin"
+    );
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("announcements")
+      .select(
+        "id,title,content,category,is_published,created_at"
+      )
+      .order(
+        "created_at",
+        {
+          ascending:false
+        }
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        ❌ Erreur de chargement.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  document.getElementById(
+    "announcementsCount"
+  ).textContent =
+    (data || []).length;
+
+
+  if(!data || !data.length){
+
+    container.innerHTML =
+      `
+      <div class="glass empty">
+        📢 Aucune annonce.
+      </div>
+      `;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  data.forEach(
+    announcement => {
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+
+      card.className =
+        "glass event-admin-card";
+
+
+      card.innerHTML =
+        `
+        <div class="event-admin-head">
+
+          <div>
+
+            <h3>
+              📢 ${escapeHTML(
+                announcement.title
+              )}
+            </h3>
+
+            <div class="event-meta">
+              ${escapeHTML(
+                announcement.category
+              )}
+              ·
+              ${
+                announcement.created_at
+                  ? new Date(
+                      announcement.created_at
+                    ).toLocaleDateString(
+                      "fr-FR"
+                    )
+                  : ""
+              }
+            </div>
+
+            <p>
+              ${escapeHTML(
+                announcement.content
+              )}
+            </p>
+
+          </div>
+
+          <button
+            class="mini-btn danger"
+            onclick="deleteAnnouncement(
+              '${announcement.id}'
+            )"
+          >
+            Supprimer
+          </button>
+
+        </div>
+        `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   CREATE ANNOUNCEMENT
+========================= */
+
+document.getElementById(
+  "announcementForm"
+).addEventListener(
+  "submit",
+  async function(e){
+
+    e.preventDefault();
+
+
+    const message =
+      document.getElementById(
+        "announcementMessage"
+      );
+
+
+    message.textContent =
+      "⏳ Publication...";
+
+
+    const title =
+      document.getElementById(
+        "announcementTitle"
+      ).value.trim();
+
+
+    const content =
+      document.getElementById(
+        "announcementContent"
+      ).value.trim();
+
+
+    const category =
+      document.getElementById(
+        "announcementCategory"
+      ).value;
+
+
+    const {
+      error
+    } =
+      await supabaseClient
+        .from("announcements")
+        .insert({
+          title:title,
+          content:content,
+          category:category,
+          is_published:true,
+          created_by:adminProfile.id
+        });
+
+
+    if(error){
+
+      console.error(
+        error
+      );
+
+      message.innerHTML =
+        "❌ " +
+        escapeHTML(
+          error.message
+        );
+
+      return;
+    }
+
+
+    message.innerHTML =
+      "✅ Annonce publiée !";
+
+
+    this.reset();
+
+
+    await loadAnnouncements();
+
+  }
+);
+
+
+/* =========================
+   DELETE ANNOUNCEMENT
+========================= */
+
+async function deleteAnnouncement(
+  id
+){
+
+  if(
+    !confirm(
+      "Supprimer cette annonce ?"
+    )
+  ){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+    await supabaseClient
+      .from("announcements")
+      .delete()
+      .eq(
+        "id",
+        id
+      );
+
+
+  if(error){
+
+    alert(
+      "❌ " +
+      error.message
+    );
+
+    return;
+  }
+
+
+  await loadAnnouncements();
+
+}
+
+
+/* =========================
+   HOURS
+========================= */
+
+async function loadHours(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .from("volunteer_hours")
+      .select(
+        "hours"
+      );
+
+
+  if(error){
+
+    console.error(
+      error
+    );
+
+    return;
+  }
+
+
+  const total =
+    (data || []).reduce(
+      (
+        sum,
+        item
+      ) =>
+        sum +
+        Number(
+          item.hours || 0
+        ),
+      0
+    );
+
+
+  document.getElementById(
+    "hoursCount"
+  ).textContent =
+    total.toFixed(2);
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(
+  value
+){
+
+  if(
+    value === null ||
+    value === undefined
+  ){
+    return "";
+  }
+
+
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+initAdmin();
 
 </script>
 
