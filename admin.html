@@ -4427,6 +4427,36 @@ async function initAdmin(){
 
 }
 
+   
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+async function deleteAllMessages() {
+
+  if (!confirm("⚠️ هل أنت متأكد أنك تريد حذف جميع الرسائل؟")) {
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .delete()
+    .not("id", "is", null);
+
+  if (error) {
+    alert("❌ " + error.message);
+    return;
+  }
+
+  alert("✅ تم حذف جميع الرسائل");
+
+  await loadMessages();
+}
+   <button
+  class="mini-btn danger"
+  onclick="deleteAllMessages()"
+>
+  🗑 حذف جميع الرسائل
+</button>
 
 /* =====================================================
    START
