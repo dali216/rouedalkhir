@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta name="viewport"
@@ -12,6 +13,7 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
+
     .chat-page {
       max-width: 900px;
       margin: 30px auto;
@@ -39,21 +41,91 @@
       border-radius: 20px;
     }
 
+    /* MESSAGE */
+
     .message {
       display: flex;
-      margin-bottom: 12px;
+      align-items: flex-end;
+      gap: 8px;
+      margin-bottom: 14px;
     }
 
     .message.mine {
       justify-content: flex-end;
     }
 
-    .bubble {
+    /* AVATAR */
+
+    .avatar {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      border-radius: 50%;
+      background: #111;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: bold;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* CONTENT */
+
+    .message-content {
       max-width: 75%;
-      padding: 12px 16px;
-      border-radius: 17px;
+    }
+
+    .message.mine .message-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    /* NAME + ROLE */
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 4px;
+      padding-left: 4px;
+    }
+
+    .user-name {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-role {
+      font-size: 9px;
+      padding: 3px 7px;
+      border-radius: 20px;
+      background: #eee;
+      color: #555;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .mine .user-role {
+      background: #111;
+      color: white;
+    }
+
+    /* BUBBLE */
+
+    .bubble {
+      padding: 9px 13px;
+      border-radius: 15px;
       background: white;
-      box-shadow: 0 3px 12px rgba(0,0,0,.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
     }
 
     .mine .bubble {
@@ -64,27 +136,31 @@
     .text {
       white-space: pre-wrap;
       word-break: break-word;
-    }
-
-    .sender {
-      font-size: 11px;
-      font-weight: bold;
-      margin-bottom: 5px;
-      opacity: .65;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
     .time {
-      font-size: 10px;
-      opacity: .55;
-      margin-top: 6px;
+      font-size: 9px;
+      opacity: .5;
+      margin-top: 5px;
       text-align: right;
     }
+
+    /* EMPTY */
 
     .empty {
       text-align: center;
       padding: 60px 20px;
       opacity: .6;
     }
+
+    .error {
+      color: #b00020;
+      opacity: 1;
+    }
+
+    /* FORM */
 
     .chat-form {
       display: flex;
@@ -96,7 +172,7 @@
 
     #messageInput {
       flex: 1;
-      min-height: 50px;
+      min-height: 45px;
       resize: vertical;
       padding: 12px;
       border-radius: 12px;
@@ -113,22 +189,69 @@
       font-weight: bold;
     }
 
+    #sendBtn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
     #status {
       text-align: center;
       margin-top: 8px;
       font-size: 13px;
     }
 
-    .error {
-      color: #b00020;
-      opacity: 1;
+    .online-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      margin-top: 8px;
+      opacity: .7;
     }
+
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      .chat-page {
+        margin: 10px auto;
+        padding: 8px;
+      }
+
+      .chat-box {
+        min-height: 450px;
+      }
+
+      .message-content {
+        max-width: 82%;
+      }
+
+      .avatar {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+      }
+
+    }
+
   </style>
+
 </head>
+
 
 <body>
 
 <main class="chat-page">
+
+
+  <!-- HEADER -->
 
   <div class="glass chat-header">
 
@@ -142,19 +265,37 @@
       Espace de discussion de Roued Al Khair
     </p>
 
+    <div class="online-status">
+      <span class="online-dot"></span>
+      Chat en temps réel
+    </div>
+
   </div>
 
 
-  <div id="chatBox" class="glass chat-box">
+  <!-- CHAT -->
 
-    <div id="empty" class="empty">
+  <div
+    id="chatBox"
+    class="glass chat-box"
+  >
+
+    <div
+      id="empty"
+      class="empty"
+    >
       ⏳ Chargement des messages...
     </div>
 
   </div>
 
 
-  <form id="chatForm" class="glass chat-form">
+  <!-- FORM -->
+
+  <form
+    id="chatForm"
+    class="glass chat-form"
+  >
 
     <textarea
       id="messageInput"
@@ -172,67 +313,312 @@
 
   </form>
 
+
   <div id="status"></div>
+
 
 </main>
 
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- APP -->
 <script src="app.js"></script>
 
 
 <script>
 
+
 let currentUser = null;
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* ================================
+   ESCAPE
+================================ */
 
 function escapeHTML(value) {
 
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
     return "";
   }
 
   return String(value)
+
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+
 }
 
 
-/* =========================
-   LOAD CHAT
-========================= */
+/* ================================
+   GET INITIAL
+================================ */
+
+function getInitial(name) {
+
+  if (!name) {
+    return "👤";
+  }
+
+  return name
+    .trim()
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* ================================
+   ROLE
+================================ */
+
+function formatRole(role) {
+
+  if (!role) {
+    return "Bénévole";
+  }
+
+  const roles = {
+
+    admin: "Administrateur",
+
+    president: "Président",
+
+    vice_president: "Vice-président",
+
+    responsable: "Responsable",
+
+    member: "Membre",
+
+    volunteer: "Bénévole"
+
+  };
+
+  return roles[role] ||
+         role;
+
+}
+
+
+/* ================================
+   GET PROFILES
+================================ */
+
+async function getProfiles(userIds) {
+
+  const uniqueIds =
+    [...new Set(userIds)];
+
+
+  if (!uniqueIds.length) {
+    return {};
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+
+      .from("profiles")
+
+      .select(
+        "id,full_name,role,avatar_url,photo_url"
+      )
+
+      .in(
+        "id",
+        uniqueIds
+      );
+
+
+  if (error) {
+
+    console.error(
+      "PROFILE ERROR:",
+      error
+    );
+
+    return {};
+
+  }
+
+
+  const profiles = {};
+
+
+  (data || []).forEach(profile => {
+
+    profiles[profile.id] =
+      profile;
+
+  });
+
+
+  return profiles;
+
+}
+
+
+/* ================================
+   CREATE MESSAGE
+================================ */
+
+function createMessage(
+  msg,
+  profiles
+) {
+
+  const profile =
+    profiles[msg.user_id] ||
+    {};
+
+
+  const mine =
+    currentUser &&
+    msg.user_id ===
+    currentUser.id;
+
+
+  const name =
+    profile.full_name ||
+    "Membre";
+
+
+  const role =
+    formatRole(
+      profile.role
+    );
+
+
+  const avatar =
+    profile.avatar_url ||
+    profile.photo_url ||
+    "";
+
+
+  const date =
+    new Date(
+      msg.created_at
+    );
+
+
+  const message =
+    document.createElement(
+      "div"
+    );
+
+
+  message.className =
+    "message" +
+    (mine ? " mine" : "");
+
+
+  message.dataset.messageId =
+    msg.id;
+
+
+  const avatarHTML =
+    avatar
+
+      ? `
+        <div class="avatar">
+          <img
+            src="${escapeHTML(avatar)}"
+            alt=""
+          >
+        </div>
+      `
+
+      : `
+        <div class="avatar">
+          ${escapeHTML(
+            getInitial(name)
+          )}
+        </div>
+      `;
+
+
+  message.innerHTML = `
+
+    ${mine ? "" : avatarHTML}
+
+    <div class="message-content">
+
+      <div class="user-info">
+
+        <span class="user-name">
+          ${escapeHTML(name)}
+        </span>
+
+        <span class="user-role">
+          ${escapeHTML(role)}
+        </span>
+
+      </div>
+
+      <div class="bubble">
+
+        <div class="text">
+          ${escapeHTML(msg.message)}
+        </div>
+
+        <div class="time">
+          ${date.toLocaleString("fr-FR")}
+        </div>
+
+      </div>
+
+    </div>
+
+    ${mine ? avatarHTML : ""}
+
+  `;
+
+
+  return message;
+
+}
+
+
+/* ================================
+   LOAD
+================================ */
 
 async function loadMessages() {
 
-  const chatBox = document.getElementById("chatBox");
+  const chatBox =
+    document.getElementById(
+      "chatBox"
+    );
+
 
   try {
 
     chatBox.innerHTML = `
+
       <div class="empty">
         ⏳ Chargement des messages...
       </div>
+
     `;
 
-
-    /* Vérifier utilisateur */
 
     const {
       data: {
         user
       },
       error: userError
-    } = await supabaseClient.auth.getUser();
+    } =
+      await supabaseClient
+        .auth
+        .getUser();
 
 
     if (userError) {
@@ -243,38 +629,42 @@ async function loadMessages() {
     if (!user) {
 
       chatBox.innerHTML = `
+
         <div class="empty error">
           ❌ Vous devez être connecté.
         </div>
+
       `;
 
       return;
+
     }
 
 
-    currentUser = user;
+    currentUser =
+      user;
 
-
-    /* Récupérer les messages */
 
     const {
-      data,
+      data: messages,
       error
-    } = await supabaseClient
-      .from("public_chat_messages")
-      .select(`
-        id,
-        user_id,
-        message,
-        created_at
-      `)
-      .order("created_at", {
-        ascending: true
-      });
+    } =
+      await supabaseClient
 
+        .from(
+          "public_chat_messages"
+        )
 
-    console.log("CHAT DATA:", data);
-    console.log("CHAT ERROR:", error);
+        .select(
+          "id,user_id,message,created_at"
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending: true
+          }
+        );
 
 
     if (error) {
@@ -282,64 +672,62 @@ async function loadMessages() {
     }
 
 
-    /* Aucun message */
-
-    if (!data || data.length === 0) {
+    if (
+      !messages ||
+      messages.length === 0
+    ) {
 
       chatBox.innerHTML = `
-        <div class="empty">
-          💬 Aucun message pour le moment.<br>
+
+        <div
+          id="empty"
+          class="empty"
+        >
+
+          💬 Aucun message pour le moment.
+
+          <br><br>
+
           Soyez le premier à écrire !
+
         </div>
+
       `;
 
       return;
+
     }
 
 
-    /* Affichage */
-
-    chatBox.innerHTML = data.map(msg => {
-
-      const mine =
-        msg.user_id === currentUser.id;
-
-
-      const date =
-        new Date(msg.created_at);
+    const profiles =
+      await getProfiles(
+        messages.map(
+          msg =>
+            msg.user_id
+        )
+      );
 
 
-      return `
-        <div class="message ${mine ? "mine" : ""}">
-
-          <div class="bubble">
-
-            <div class="sender">
-              ${mine ? "Vous" : "Membre"}
-            </div>
-
-            <div class="text">
-              ${escapeHTML(msg.message)}
-            </div>
-
-            <div class="time">
-              ${date.toLocaleString("fr-FR")}
-            </div>
-
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
+    chatBox.innerHTML = "";
 
 
-    /* Scroll vers le bas */
+    messages.forEach(msg => {
+
+      chatBox.appendChild(
+        createMessage(
+          msg,
+          profiles
+        )
+      );
+
+    });
+
 
     chatBox.scrollTop =
       chatBox.scrollHeight;
 
   }
+
 
   catch (error) {
 
@@ -350,36 +738,110 @@ async function loadMessages() {
 
 
     chatBox.innerHTML = `
-      <div class="empty error">
 
-        ❌ Erreur de chargement des messages.
+      <div
+        class="empty error"
+      >
+
+        ❌ Erreur de chargement.
 
         <br><br>
 
         <small>
-          ${escapeHTML(error.message)}
+          ${escapeHTML(
+            error.message
+          )}
         </small>
 
       </div>
+
     `;
+
   }
+
 }
 
 
-/* =========================
-   SEND MESSAGE
-========================= */
+/* ================================
+   NEW MESSAGE
+================================ */
+
+async function addMessageToChat(
+  msg
+) {
+
+  if (
+    document.querySelector(
+      `[data-message-id="${msg.id}"]`
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  const chatBox =
+    document.getElementById(
+      "chatBox"
+    );
+
+
+  const empty =
+    document.getElementById(
+      "empty"
+    );
+
+
+  if (empty) {
+    empty.remove();
+  }
+
+
+  const profiles =
+    await getProfiles([
+      msg.user_id
+    ]);
+
+
+  chatBox.appendChild(
+
+    createMessage(
+      msg,
+      profiles
+    )
+
+  );
+
+
+  chatBox.scrollTop =
+    chatBox.scrollHeight;
+
+}
+
+
+/* ================================
+   SEND
+================================ */
 
 async function sendMessage() {
 
   const input =
-    document.getElementById("messageInput");
+    document.getElementById(
+      "messageInput"
+    );
+
 
   const button =
-    document.getElementById("sendBtn");
+    document.getElementById(
+      "sendBtn"
+    );
+
 
   const status =
-    document.getElementById("status");
+    document.getElementById(
+      "status"
+    );
 
 
   const message =
@@ -393,12 +855,12 @@ async function sendMessage() {
 
   try {
 
-    button.disabled = true;
+    button.disabled =
+      true;
+
 
     button.textContent =
       "Envoi...";
-
-    status.textContent = "";
 
 
     if (!currentUser) {
@@ -408,9 +870,14 @@ async function sendMessage() {
           user
         }
       } =
-        await supabaseClient.auth.getUser();
+        await supabaseClient
+          .auth
+          .getUser();
 
-      currentUser = user;
+
+      currentUser =
+        user;
+
     }
 
 
@@ -419,22 +886,28 @@ async function sendMessage() {
       throw new Error(
         "Utilisateur non connecté."
       );
+
     }
 
 
     const {
       error
-    } = await supabaseClient
-      .from("public_chat_messages")
-      .insert({
+    } =
+      await supabaseClient
 
-        user_id:
-          currentUser.id,
+        .from(
+          "public_chat_messages"
+        )
 
-        message:
-          message
+        .insert({
 
-      });
+          user_id:
+            currentUser.id,
+
+          message:
+            message
+
+        });
 
 
     if (error) {
@@ -444,129 +917,123 @@ async function sendMessage() {
 
     input.value = "";
 
+
     status.textContent =
       "✅ Message envoyé";
-
-    await loadMessages();
 
 
     setTimeout(() => {
 
-      status.textContent = "";
+      status.textContent =
+        "";
 
-    }, 2000);
+    }, 1500);
 
   }
+
 
   catch (error) {
 
     console.error(
-      "SEND CHAT ERROR:",
+      "SEND ERROR:",
       error
     );
 
 
     status.textContent =
-      "❌ " + error.message;
-
-    status.className =
-      "error";
+      "❌ " +
+      error.message;
 
   }
+
 
   finally {
 
-    button.disabled = false;
+    button.disabled =
+      false;
 
     button.textContent =
       "Envoyer";
+
   }
+
 }
 
 
-/* =========================
+/* ================================
    REALTIME
-========================= */
+================================ */
 
 function subscribeToMessages() {
 
-  try {
+  console.log(
+    "🔴 Chat Realtime..."
+  );
 
-    supabaseClient
-      .channel("public-chat")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "public_chat_messages"
-        },
-        function(payload) {
 
-          console.log(
-            "Nouveau changement:",
-            payload
-          );
+  supabaseClient
 
-          loadMessages();
+    .channel(
+      "chat-realtime"
+    )
 
-        }
-      )
-      .subscribe();
+    .on(
 
-  }
+      "postgres_changes",
 
-  catch (error) {
+      {
 
-    console.error(
-      "REALTIME ERROR:",
-      error
+        event:
+          "INSERT",
+
+        schema:
+          "public",
+
+        table:
+          "public_chat_messages"
+
+      },
+
+      function(payload) {
+
+        console.log(
+          "💬 NEW MESSAGE",
+          payload.new
+        );
+
+
+        addMessageToChat(
+          payload.new
+        );
+
+      }
+
+    )
+
+    .subscribe(
+
+      function(status) {
+
+        console.log(
+          "Realtime:",
+          status
+        );
+
+      }
+
     );
 
-  }
 }
 
 
-/* =========================
-   INIT
-========================= */
-
-async function initChat() {
-
-  try {
-
-    if (!window.supabaseClient) {
-
-      throw new Error(
-        "supabaseClient n'est pas disponible. Vérifiez app.js."
-      );
-
-    }
-
-
-    await loadMessages();
-
-    subscribeToMessages();
-
-  }
-
-  catch (error) {
-
-    console.error(
-      "INIT CHAT ERROR:",
-      error
-    );
-
-  }
-}
-
-
-/* =========================
+/* ================================
    FORM
-========================= */
+================================ */
 
 document
-  .getElementById("chatForm")
+  .getElementById(
+    "chatForm"
+  )
   .addEventListener(
     "submit",
     function(event) {
@@ -579,12 +1046,81 @@ document
   );
 
 
-/* =========================
+/* ENTER */
+
+document
+  .getElementById(
+    "messageInput"
+  )
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        sendMessage();
+
+      }
+
+    }
+  );
+
+
+/* ================================
+   INIT
+================================ */
+
+async function initChat() {
+
+  try {
+
+    if (
+      !window.supabaseClient
+    ) {
+
+      throw new Error(
+        "supabaseClient n'est pas disponible."
+      );
+
+    }
+
+
+    await loadMessages();
+
+
+    subscribeToMessages();
+
+
+    console.log(
+      "✅ CHAT READY"
+    );
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "INIT ERROR:",
+      error
+    );
+
+  }
+
+}
+
+
+/* ================================
    START
-========================= */
+================================ */
 
 if (
-  document.readyState === "loading"
+  document.readyState ===
+  "loading"
 ) {
 
   document.addEventListener(
