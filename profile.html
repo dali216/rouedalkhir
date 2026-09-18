@@ -1,333 +1,800 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Profil bénévole — Roued Al Khair</title>
+  <title>Mon Profil - Roued Al Khair</title>
 
-  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
 
   <style>
-    .profile-page {
-      max-width: 700px;
-      margin: 80px auto;
-      padding: 20px;
+    * {
+      box-sizing: border-box;
     }
 
-    .profile-card {
-      text-align: center;
-      padding: 40px 25px;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #111;
     }
 
-    .profile-avatar {
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 20px;
-      border-radius: 50%;
+    .container {
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 25px 15px 50px;
+    }
+
+    .top {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 34px;
-      font-weight: 800;
-      background: #e2e8f0;
-      color: #0f172a;
-    }
-
-    .profile-name {
-      font-size: 32px;
-      margin: 10px 0;
-    }
-
-    .profile-role {
-      display: inline-block;
-      padding: 7px 14px;
-      border-radius: 20px;
-      background: #e2e8f0;
-      font-size: 13px;
+      gap: 15px;
       margin-bottom: 25px;
     }
 
-    .profile-info {
-      display: grid;
-      gap: 12px;
-      margin-top: 25px;
-      text-align: left;
+    .back {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 12px;
+      background: #111;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
     }
 
-    .info-item {
-      padding: 15px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.08);
+    .top h1 {
+      margin: 0;
+      font-size: 23px;
     }
 
-    .info-item small {
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 30px 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .profile-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: #111;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      font-weight: bold;
+      overflow: hidden;
+      border: 4px solid #eee;
+      margin-bottom: 15px;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-btn {
+      display: inline-block;
+      padding: 11px 18px;
+      background: #111;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    #photoInput {
+      display: none;
+    }
+
+    .photo-info {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #777;
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
       display: block;
-      color: #64748b;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .field input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #111;
+    }
+
+    .role-box {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid #eee;
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .role-name {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .locked {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .save-btn {
+      width: 100%;
+      height: 52px;
+      border: 0;
+      border-radius: 14px;
+      background: #111;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .save-btn:hover {
+      opacity: 0.9;
+    }
+
+    .save-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 13px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .message.success {
+      display: block;
+      background: #e9f8ed;
+      color: #18733a;
+    }
+
+    .message.error {
+      display: block;
+      background: #ffeaea;
+      color: #a40000;
     }
 
     .loading {
       text-align: center;
-      padding: 50px;
+      padding: 50px 10px;
+      color: #777;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 18px 12px 40px;
+      }
+
+      .card {
+        padding: 25px 17px;
+      }
+
+      .avatar {
+        width: 115px;
+        height: 115px;
+        font-size: 43px;
+      }
+
+      .top h1 {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<header class="nav-wrap">
+  <div class="container">
 
-  <nav class="nav glass">
-
-    <a class="brand" href="index.html">
-      <span class="logo">RK</span>
-      <span>Roued <b>Al Khair</b></span>
-    </a>
-
-  </nav>
-
-</header>
-
-
-<main class="profile-page">
-
-  <div
-    id="loading"
-    class="glass loading"
-  >
-    ⏳ Chargement du profil...
-  </div>
-
-
-  <div
-    id="profile"
-    class="glass profile-card"
-    style="display:none"
-  >
-
-    <div
-      class="profile-avatar"
-      id="avatar"
-    >
-      RK
+    <div class="top">
+      <button class="back" onclick="history.back()">‹</button>
+      <h1>Mon Profil</h1>
     </div>
 
-
-    <h1
-      class="profile-name"
-      id="name"
-    >
-      —
-    </h1>
-
-
-    <div
-      class="profile-role"
-      id="role"
-    >
-      Bénévole
+    <div id="loading" class="loading">
+      ⏳ Chargement du profil...
     </div>
 
+    <div id="profileCard" class="card" style="display:none;">
 
-    <div class="profile-info">
+      <!-- PHOTO -->
+      <div class="profile-photo">
 
-      <div class="info-item">
+        <div id="avatar" class="avatar">
+          👤
+        </div>
 
-        <small>
-          Statut
-        </small>
+        <label for="photoInput" class="photo-btn">
+          📷 Changer la photo
+        </label>
 
-        <strong>
-          ✅ Membre de Roued Al Khair
-        </strong>
+        <input
+          type="file"
+          id="photoInput"
+          accept="image/jpeg,image/png,image/webp"
+        >
+
+        <div class="photo-info">
+          JPG, PNG ou WEBP — max 5 MB
+        </div>
 
       </div>
 
+      <!-- NOM -->
+      <div class="field">
 
-      <div class="info-item">
+        <label for="fullName">
+          Nom complet
+        </label>
 
-        <small>
-          Membre depuis
-        </small>
-
-        <strong id="date">
-          —
-        </strong>
+        <input
+          type="text"
+          id="fullName"
+          placeholder="Votre nom complet"
+          maxlength="100"
+        >
 
       </div>
+
+      <!-- ROLE -->
+      <div class="field">
+
+        <label>
+          Rôle
+        </label>
+
+        <div class="role-box">
+
+          <span
+            id="roleName"
+            class="role-name"
+          >
+            Membre
+          </span>
+
+          <span class="locked">
+            🔒 Protégé
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- SAVE -->
+      <button
+        id="saveBtn"
+        class="save-btn"
+        onclick="saveProfile()"
+      >
+        💾 Enregistrer les modifications
+      </button>
+
+      <div
+        id="message"
+        class="message"
+      ></div>
 
     </div>
 
   </div>
 
-
-  <div
-    id="error"
-    class="glass loading"
-    style="display:none"
-  >
-    ❌ Profil introuvable.
-  </div>
-
-</main>
-
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-const SUPABASE_URL =
-  "https://iimzsfbkgugbqkipsdih.supabase.co";
-
-const SUPABASE_KEY =
-  "sb_publishable_JFAxVtAkqUWJ1XSmhk7TZw_xPyT13dY";
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+  let currentUser = null;
+  let currentProfile = null;
+  let selectedPhoto = null;
 
 
-// =====================================
-// GET USER ID FROM QR URL
-// =====================================
+  // =========================
+  // HELPERS
+  // =========================
 
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
+  function getInitial(name) {
 
-const userId =
-  params.get("id");
+    if (!name) return "👤";
 
-
-// =====================================
-// LOAD PROFILE
-// =====================================
-
-async function loadProfile() {
-
-  if (!userId) {
-
-    showError();
-
-    return;
-  }
-
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient
-      .from("profiles")
-      .select(
-        "id, full_name, role, created_at"
-      )
-      .eq("id", userId)
-      .maybeSingle();
-
-
-  console.log(
-    "PROFILE:",
-    data
-  );
-
-
-  if (error) {
-
-    console.error(error);
-
-    showError();
-
-    return;
-  }
-
-
-  if (!data) {
-
-    showError();
-
-    return;
-  }
-
-
-  const name =
-    data.full_name ||
-    "Bénévole";
-
-
-  document.getElementById("name")
-    .textContent =
-    name;
-
-
-  document.getElementById("avatar")
-    .textContent =
-
-    name
-      .split(" ")
-      .map(x => x[0])
-      .join("")
-      .slice(0,2)
+    return name
+      .trim()
+      .charAt(0)
       .toUpperCase();
+  }
 
 
-  document.getElementById("role")
-    .textContent =
+  function formatRole(role) {
 
-    data.role === "admin"
-      ? "Administrateur"
-      : "Bénévole";
+    if (!role) return "Membre";
+
+    const roles = {
+      admin: "Administrateur",
+      president: "Président",
+      vice_president: "Vice-président",
+      responsable: "Responsable",
+      member: "Membre",
+      volunteer: "Bénévole"
+    };
+
+    return roles[role] || role;
+  }
 
 
-  if (data.created_at) {
+  function showMessage(text, type) {
 
-    document.getElementById("date")
-      .textContent =
+    const box = document.getElementById("message");
 
-      new Date(
-        data.created_at
-      ).toLocaleDateString(
-        "fr-FR"
+    box.textContent = text;
+
+    box.className = "message " + type;
+  }
+
+
+  // =========================
+  // DISPLAY AVATAR
+  // =========================
+
+  function displayAvatar(name, url) {
+
+    const avatar = document.getElementById("avatar");
+
+    if (url) {
+
+      avatar.innerHTML = `
+        <img
+          src="${url}"
+          alt="Photo de profil"
+        >
+      `;
+
+    } else {
+
+      avatar.textContent = getInitial(name);
+
+    }
+  }
+
+
+  // =========================
+  // LOAD PROFILE
+  // =========================
+
+  async function loadProfile() {
+
+    try {
+
+      if (!window.supabaseClient) {
+
+        throw new Error(
+          "Supabase n'est pas disponible."
+        );
+
+      }
+
+      const {
+        data: {
+          user
+        },
+        error: userError
+      } = await window.supabaseClient.auth.getUser();
+
+
+      if (userError) {
+        throw userError;
+      }
+
+
+      if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+      }
+
+
+      currentUser = user;
+
+
+      const {
+        data,
+        error
+      } = await window.supabaseClient
+
+        .from("profiles")
+
+        .select(
+          "id,full_name,role,avatar_url"
+        )
+
+        .eq("id", user.id)
+
+        .single();
+
+
+      if (error) {
+        throw error;
+      }
+
+
+      currentProfile = data;
+
+
+      document.getElementById(
+        "fullName"
+      ).value = data.full_name || "";
+
+
+      document.getElementById(
+        "roleName"
+      ).textContent = formatRole(data.role);
+
+
+      displayAvatar(
+        data.full_name,
+        data.avatar_url
       );
 
+
+      document.getElementById(
+        "loading"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "profileCard"
+      ).style.display = "block";
+
+
+    } catch (error) {
+
+      console.error(
+        "PROFILE ERROR:",
+        error
+      );
+
+
+      document.getElementById(
+        "loading"
+      ).innerHTML = `
+        ❌ Impossible de charger le profil.
+        <br><br>
+        <small>${error.message}</small>
+      `;
+
+    }
+
   }
 
 
-  document.getElementById("loading")
-    .style.display =
-    "none";
+  // =========================
+  // SELECT PHOTO
+  // =========================
+
+  document
+    .getElementById("photoInput")
+    .addEventListener(
+      "change",
+      function(event) {
+
+        const file =
+          event.target.files[0];
 
 
-  document.getElementById("profile")
-    .style.display =
-    "block";
-
-}
+        if (!file) return;
 
 
-// =====================================
-// ERROR
-// =====================================
+        if (file.size > 5 * 1024 * 1024) {
 
-function showError() {
+          showMessage(
+            "❌ La photo doit faire moins de 5 MB.",
+            "error"
+          );
 
-  document.getElementById("loading")
-    .style.display =
-    "none";
+          event.target.value = "";
 
-  document.getElementById("error")
-    .style.display =
-    "block";
-
-}
+          return;
+        }
 
 
-loadProfile();
+        const allowedTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ];
+
+
+        if (
+          !allowedTypes.includes(file.type)
+        ) {
+
+          showMessage(
+            "❌ Format non accepté. Utilisez JPG, PNG ou WEBP.",
+            "error"
+          );
+
+          event.target.value = "";
+
+          return;
+        }
+
+
+        selectedPhoto = file;
+
+
+        // Preview
+        const reader =
+          new FileReader();
+
+
+        reader.onload = function(e) {
+
+          document.getElementById(
+            "avatar"
+          ).innerHTML = `
+            <img
+              src="${e.target.result}"
+              alt="Nouvelle photo"
+            >
+          `;
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+      }
+    );
+
+
+  // =========================
+  // UPLOAD PHOTO
+  // =========================
+
+  async function uploadPhoto() {
+
+    if (!selectedPhoto) {
+
+      return currentProfile.avatar_url || "";
+
+    }
+
+
+    const extension =
+      selectedPhoto.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+
+    const filePath =
+      currentUser.id +
+      "/avatar." +
+      extension;
+
+
+    const {
+      error
+    } = await window.supabaseClient
+      .storage
+      .from("avatars")
+      .upload(
+        filePath,
+        selectedPhoto,
+        {
+          upsert: true,
+          contentType: selectedPhoto.type
+        }
+      );
+
+
+    if (error) {
+
+      console.error(
+        "UPLOAD ERROR:",
+        error
+      );
+
+      throw error;
+    }
+
+
+    const {
+      data
+    } = window.supabaseClient
+      .storage
+      .from("avatars")
+      .getPublicUrl(filePath);
+
+
+    return data.publicUrl +
+      "?t=" +
+      Date.now();
+
+  }
+
+
+  // =========================
+  // SAVE PROFILE
+  // =========================
+
+  async function saveProfile() {
+
+    const saveBtn =
+      document.getElementById(
+        "saveBtn"
+      );
+
+
+    const newName =
+      document
+        .getElementById("fullName")
+        .value
+        .trim();
+
+
+    if (!newName) {
+
+      showMessage(
+        "❌ Entrez votre nom.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    if (newName.length < 2) {
+
+      showMessage(
+        "❌ Le nom est trop court.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    try {
+
+      saveBtn.disabled = true;
+
+      saveBtn.textContent =
+        "⏳ Enregistrement...";
+
+
+      // Upload photo si elle a été changée
+      const avatarUrl =
+        await uploadPhoto();
+
+
+      // RPC sécurisée :
+      // seulement full_name + avatar_url
+      const {
+        error
+      } = await window.supabaseClient
+
+        .rpc(
+          "update_my_profile",
+          {
+            new_full_name: newName,
+            new_avatar_url: avatarUrl
+          }
+        );
+
+
+      if (error) {
+
+        console.error(
+          "UPDATE ERROR:",
+          error
+        );
+
+        throw error;
+      }
+
+
+      // Update local data
+      currentProfile.full_name =
+        newName;
+
+      currentProfile.avatar_url =
+        avatarUrl;
+
+
+      selectedPhoto = null;
+
+
+      displayAvatar(
+        newName,
+        avatarUrl
+      );
+
+
+      showMessage(
+        "✅ Votre profil a été mis à jour.",
+        "success"
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "SAVE ERROR:",
+        error
+      );
+
+
+      showMessage(
+        "❌ Erreur : " +
+        error.message,
+        "error"
+      );
+
+
+    } finally {
+
+      saveBtn.disabled = false;
+
+      saveBtn.textContent =
+        "💾 Enregistrer les modifications";
+
+    }
+
+  }
+
+
+  // =========================
+  // START
+  // =========================
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    loadProfile
+  );
 
 </script>
 
