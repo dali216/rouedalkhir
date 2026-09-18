@@ -1189,6 +1189,35 @@ class="message"
 </section>
 
 
+<!-- =====================================================
+     MESSAGES
+===================================================== -->
+
+<section class="section">
+
+  <div class="section-title">
+    <div>
+      <span class="eyebrow">CONTACT</span>
+      <h2>Messages reçus</h2>
+    </div>
+
+    <button
+      id="deleteAllMessagesBtn"
+      class="mini-btn danger"
+      type="button"
+      onclick="deleteAllMessages()"
+    >
+      🗑 Supprimer tous les messages
+    </button>
+  </div>
+
+  <div id="messagesAdmin" class="glass empty">
+    ⏳ Chargement...
+  </div>
+
+</section>
+
+
 </div>
 
 
@@ -4397,6 +4426,8 @@ async function initAdmin(){
     await loadEvents();
 
     await loadAnnouncements();
+
+    await loadMessages();
 
     await loadHours();
 
