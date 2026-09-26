@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Profil - Roued Al Khair</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 13px;
+      background: white;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 23px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 25px;
+      padding: 30px 22px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: #e9edf2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: bold;
+      color: #555;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .name {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .role {
+      display: inline-block;
+      padding: 7px 15px;
+      border-radius: 20px;
+      background: #eef2ff;
+      color: #4f46e5;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .organisation {
+      padding: 15px;
+      border-radius: 14px;
+      background: #f7f8fa;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .friend-btn {
+      width: 100%;
+      border: none;
+      padding: 15px;
+      border-radius: 13px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .add {
+      background: #111827;
+      color: white;
+    }
+
+    .pending {
+      background: #fff7ed;
+      color: #c2410c;
+      cursor: default;
+    }
+
+    .friends {
+      background: #ecfdf5;
+      color: #047857;
+      cursor: default;
+    }
+
+    .login {
+      background: #111827;
+      color: white;
+    }
+
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .message.success {
+      display: block;
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .message.error {
+      display: block;
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px 10px;
+      color: #777;
+    }
+
+    .error {
+      display: none;
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: 20px;
+      color: #dc2626;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="top">
+    <button class="back" onclick="history.back()">‹</button>
+    <h1>Profil du membre</h1>
+  </div>
+
+  <div id="loading" class="loading">
+    ⏳ Chargement du profil...
+  </div>
+
+  <div id="profileCard" class="card" style="display:none;">
+
+    <div id="avatar" class="avatar">
+      👤
+    </div>
+
+    <div id="fullName" class="name">
+      —
+    </div>
+
+    <div id="role" class="role">
+      Membre
+    </div>
+
+    <div class="organisation">
+      <strong>Roued Al Khair</strong><br>
+      Profil officiel du membre
+    </div>
+
+    <button
+      id="friendBtn"
+      class="friend-btn add"
+      onclick="sendFriendRequest()"
+    >
+      ➕ Ajouter comme ami
+    </button>
+
+    <div id="message" class="message"></div>
+
+  </div>
+
+  <div id="errorBox" class="error">
+    ❌ Profil introuvable.
+  </div>
+
+</div>
+
+
+<script>
+
+let profileUserId = null;
+let currentUser = null;
+let currentProfile = null;
+
+
+/* =====================================
+   INITIAL
+===================================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  loadPublicProfile
+);
+
+
+/* =====================================
+   INITIAL LETTER
+===================================== */
+
+function getInitial(name) {
+
+  if (!name) return "👤";
+
+  return name
+    .trim()
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =====================================
+   ROLE
+===================================== */
+
+function formatRole(role) {
+
+  if (role === "admin") {
+    return "Administrateur";
+  }
+
+  return "Membre";
+
+}
+
+
+/* =====================================
+   MESSAGE
+===================================== */
+
+function showMessage(text, type) {
+
+  const box =
+    document.getElementById("message");
+
+  box.textContent = text;
+
+  box.className =
+    "message " + type;
+
+}
+
+
+/* =====================================
+   LOAD PROFILE
+===================================== */
+
+async function loadPublicProfile() {
+
+  try {
+
+    if (!window.supabaseClient) {
+
+      throw new Error(
+        "Supabase n'est pas disponible."
+      );
+
+    }
+
+
+    /* -----------------------------
+       GET PROFILE ID FROM URL
+    ----------------------------- */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    profileUserId =
+      params.get("id");
+
+
+    if (!profileUserId) {
+
+      throw new Error(
+        "ID du profil manquant."
+      );
+
+    }
+
+
+    /* -----------------------------
+       GET CURRENT USER
+    ----------------------------- */
+
+    const {
+      data: {
+        user
+      }
+    } =
+      await window.supabaseClient
+        .auth
+        .getUser();
+
+    currentUser = user || null;
+
+
+    /* -----------------------------
+       GET PROFILE
+    ----------------------------- */
+
+    const {
+      data,
+      error
+    } =
+      await window.supabaseClient
+
+        .from("profiles")
+
+        .select(
+          "id,full_name,role,avatar_url"
+        )
+
+        .eq(
+          "id",
+          profileUserId
+        )
+
+        .single();
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    if (!data) {
+
+      throw new Error(
+        "Profil introuvable."
+      );
+
+    }
+
+
+    currentProfile = data;
+
+
+    /* -----------------------------
+       DISPLAY
+    ----------------------------- */
+
+    document
+      .getElementById("fullName")
+      .textContent =
+      data.full_name || "Membre";
+
+
+    document
+      .getElementById("role")
+      .textContent =
+      formatRole(data.role);
+
+
+    const avatar =
+      document.getElementById("avatar");
+
+
+    if (data.avatar_url) {
+
+      avatar.innerHTML = `
+        <img
+          src="${data.avatar_url}"
+          alt="Photo de profil"
+        >
+      `;
+
+    } else {
+
+      avatar.textContent =
+        getInitial(data.full_name);
+
+    }
+
+
+    /* -----------------------------
+       FRIEND STATUS
+    ----------------------------- */
+
+    await checkFriendStatus();
+
+
+    /* -----------------------------
+       SHOW
+    ----------------------------- */
+
+    document
+      .getElementById("loading")
+      .style.display = "none";
+
+
+    document
+      .getElementById("profileCard")
+      .style.display = "block";
+
+
+  } catch (error) {
+
+    console.error(
+      "PUBLIC PROFILE ERROR:",
+      error
+    );
+
+
+    document
+      .getElementById("loading")
+      .style.display = "none";
+
+
+    document
+      .getElementById("errorBox")
+      .style.display = "block";
+
+  }
+
+}
+
+
+/* =====================================
+   CHECK FRIEND STATUS
+===================================== */
+
+async function checkFriendStatus() {
+
+  const button =
+    document.getElementById("friendBtn");
+
+
+  /*
+    المستخدم موش connecté
+  */
+
+  if (!currentUser) {
+
+    button.textContent =
+      "🔐 Connectez-vous pour ajouter";
+
+    button.className =
+      "friend-btn login";
+
+    button.onclick = function() {
+
+      window.location.href =
+        "login.html";
+
+    };
+
+    return;
+
+  }
+
+
+  /*
+    البروفايل هو نفس المستخدم
+  */
+
+  if (
+    currentUser.id === profileUserId
+  ) {
+
+    button.textContent =
+      "👤 C'est votre profil";
+
+    button.className =
+      "friend-btn pending";
+
+    button.disabled = true;
+
+    return;
+
+  }
+
+
+  /*
+    نبحث على requests
+  */
+
+  const {
+    data,
+    error
+  } =
+    await window.supabaseClient
+
+      .from("friend_requests")
+
+      .select(
+        "id,sender_id,receiver_id,status"
+      )
+
+      .or(
+        `and(sender_id.eq.${currentUser.id},receiver_id.eq.${profileUserId}),and(sender_id.eq.${profileUserId},receiver_id.eq.${currentUser.id})`
+      );
+
+
+  if (error) {
+
+    console.error(
+      "FRIEND STATUS ERROR:",
+      error
+    );
+
+    return;
+
+  }
+
+
+  if (!data || data.length === 0) {
+
+    button.textContent =
+      "➕ Ajouter comme ami";
+
+    button.className =
+      "friend-btn add";
+
+    button.disabled = false;
+
+    button.onclick =
+      sendFriendRequest;
+
+    return;
+
+  }
+
+
+  const request =
+    data[0];
+
+
+  /*
+    ACCEPTED
+  */
+
+  if (
+    request.status === "accepted"
+  ) {
+
+    button.textContent =
+      "✅ Amis";
+
+    button.className =
+      "friend-btn friends";
+
+    button.disabled = true;
+
+    return;
+
+  }
+
+
+  /*
+    الطلب متاعنا
+  */
+
+  if (
+    request.sender_id === currentUser.id &&
+    request.status === "pending"
+  ) {
+
+    button.textContent =
+      "⏳ Demande envoyée";
+
+    button.className =
+      "friend-btn pending";
+
+    button.disabled = true;
+
+    return;
+
+  }
+
+
+  /*
+    الطلب جاي من العضو الآخر
+  */
+
+  if (
+    request.receiver_id === currentUser.id &&
+    request.status === "pending"
+  ) {
+
+    button.textContent =
+      "📩 Demande reçue";
+
+    button.className =
+      "friend-btn add";
+
+    button.disabled = false;
+
+    button.onclick =
+      function() {
+
+        acceptFriendRequest(
+          request.id
+        );
+
+      };
+
+  }
+
+}
+
+
+/* =====================================
+   SEND FRIEND REQUEST
+===================================== */
+
+async function sendFriendRequest() {
+
+  if (!currentUser) {
+
+    window.location.href =
+      "login.html";
+
+    return;
+
+  }
+
+
+  if (
+    currentUser.id === profileUserId
+  ) {
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById("friendBtn");
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "⏳ Envoi...";
+
+
+  try {
+
+    const {
+      error
+    } =
+      await window.supabaseClient
+
+        .from("friend_requests")
+
+        .insert({
+
+          sender_id:
+            currentUser.id,
+
+          receiver_id:
+            profileUserId,
+
+          status:
+            "pending"
+
+        });
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    button.textContent =
+      "⏳ Demande envoyée";
+
+    button.className =
+      "friend-btn pending";
+
+
+    showMessage(
+      "✅ Demande d'amitié envoyée.",
+      "success"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "SEND FRIEND REQUEST ERROR:",
+      error
+    );
+
+
+    button.disabled = false;
+
+    button.textContent =
+      "➕ Ajouter comme ami";
+
+    button.className =
+      "friend-btn add";
+
+
+    showMessage(
+      "❌ Erreur : " +
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+/* =====================================
+   ACCEPT FRIEND REQUEST
+===================================== */
+
+async function acceptFriendRequest(
+  requestId
+) {
+
+  try {
+
+    const {
+      error
+    } =
+      await window.supabaseClient
+
+        .from("friend_requests")
+
+        .update({
+          status: "accepted"
+        })
+
+        .eq(
+          "id",
+          requestId
+        );
+
+
+    if (error) {
+      throw error;
+    }
+
+
+    showMessage(
+      "✅ Vous êtes maintenant amis.",
+      "success"
+    );
+
+
+    await checkFriendStatus();
+
+
+  } catch (error) {
+
+    console.error(
+      "ACCEPT ERROR:",
+      error
+    );
+
+
+    showMessage(
+      "❌ Erreur : " +
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
