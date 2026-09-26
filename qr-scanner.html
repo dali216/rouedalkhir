@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Scanner QR - Roued Al Khair</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+
+  <!-- QR Scanner -->
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1f2937;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .back {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 14px;
+      background: white;
+      font-size: 30px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .qr-icon {
+      font-size: 55px;
+      margin-bottom: 8px;
+    }
+
+    .intro h2 {
+      margin: 5px 0 8px;
+      font-size: 21px;
+    }
+
+    .intro p {
+      margin: 0;
+      color: #6b7280;
+      line-height: 1.5;
+    }
+
+    #reader {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 18px;
+      margin-top: 20px;
+    }
+
+    #reader video {
+      border-radius: 18px;
+    }
+
+    .status {
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 12px;
+      text-align: center;
+      background: #f3f4f6;
+      color: #4b5563;
+      font-size: 14px;
+    }
+
+    .success {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .error {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .manual {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .manual button {
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 13px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .manual input {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="top">
+    <button class="back" onclick="history.back()">‹</button>
+    <h1>Scanner QR</h1>
+  </div>
+
+  <div class="card">
+
+    <div class="intro">
+      <div class="qr-icon">📷</div>
+
+      <h2>Scanner le QR d'un membre</h2>
+
+      <p>
+        Scannez le QR Code d'un membre de Roued Al Khair
+        pour accéder à son profil.
+      </p>
+    </div>
+
+    <div id="reader"></div>
+
+    <div id="status" class="status">
+      📷 Préparation de la caméra...
+    </div>
+
+    <div id="errorBox" class="status error hidden"></div>
+
+    <div class="manual">
+      <button onclick="toggleManual()">
+        🔗 Entrer un lien manuellement
+      </button>
+
+      <div id="manualBox" class="hidden">
+        <input
+          type="text"
+          id="manualUrl"
+          placeholder="Coller le lien du profil..."
+        >
+
+        <button
+          style="margin-top:10px;"
+          onclick="openManualUrl()"
+        >
+          Ouvrir le profil
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let scanner = null;
+let scanDone = false;
+
+
+/* =========================
+   STATUS
+========================= */
+
+function setStatus(message, type = "") {
+
+  const status = document.getElementById("status");
+
+  status.textContent = message;
+
+  status.className = "status";
+
+  if (type) {
+    status.classList.add(type);
+  }
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(message) {
+
+  const box = document.getElementById("errorBox");
+
+  box.textContent = "❌ " + message;
+
+  box.classList.remove("hidden");
+}
+
+
+/* =========================
+   QR SUCCESS
+========================= */
+
+async function onScanSuccess(decodedText) {
+
+  if (scanDone) return;
+
+  scanDone = true;
+
+  console.log("QR SCANNED:", decodedText);
+
+  setStatus("✅ QR Code détecté...", "success");
+
+  try {
+
+    /*
+      Exemple accepté :
+
+      https://dali216.github.io/rouedalkhir/public-profile.html?id=UUID
+
+      ou simplement :
+
+      public-profile.html?id=UUID
+    */
+
+    let url;
+
+    try {
+      url = new URL(decodedText);
+    } catch {
+
+      url = new URL(
+        decodedText,
+        window.location.origin + "/rouedalkhir/"
+      );
+
+    }
+
+    const userId = url.searchParams.get("id");
+
+    /*
+      Si le QR contient directement un UUID
+    */
+
+    if (!userId && isUUID(decodedText.trim())) {
+
+      openProfile(decodedText.trim());
+
+      return;
+    }
+
+    /*
+      Si QR contient id=UUID
+    */
+
+    if (userId && isUUID(userId)) {
+
+      openProfile(userId);
+
+      return;
+    }
+
+    /*
+      Si le QR contient une URL du site mais sans id
+    */
+
+    if (
+      url.pathname.includes("public-profile.html") &&
+      !userId
+    ) {
+
+      throw new Error("ID du profil manquant dans le QR Code.");
+
+    }
+
+    throw new Error(
+      "Ce QR Code ne correspond pas à un profil Roued Al Khair."
+    );
+
+  } catch (error) {
+
+    console.error("QR ERROR:", error);
+
+    scanDone = false;
+
+    showError(error.message);
+
+    setStatus("📷 Vous pouvez scanner un autre QR Code.");
+
+  }
+
+}
+
+
+/* =========================
+   UUID CHECK
+========================= */
+
+function isUUID(value) {
+
+  const regex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  return regex.test(value);
+
+}
+
+
+/* =========================
+   OPEN PROFILE
+========================= */
+
+function openProfile(userId) {
+
+  /*
+    نوقف الكاميرا قبل الانتقال
+  */
+
+  if (scanner) {
+
+    scanner.stop().catch(() => {});
+
+  }
+
+  setStatus(
+    "👤 Ouverture du profil...",
+    "success"
+  );
+
+  window.location.href =
+    "public-profile.html?id=" +
+    encodeURIComponent(userId);
+
+}
+
+
+/* =========================
+   START CAMERA
+========================= */
+
+async function startScanner() {
+
+  try {
+
+    setStatus("📷 Activation de la caméra...");
+
+    scanner = new Html5Qrcode("reader");
+
+    const config = {
+      fps: 10,
+      qrbox: {
+        width: 250,
+        height: 250
+      },
+      aspectRatio: 1
+    };
+
+    /*
+      نطلب الكاميرا الخلفية
+    */
+
+    await scanner.start(
+      {
+        facingMode: "environment"
+      },
+      config,
+      onScanSuccess,
+      () => {}
+    );
+
+    setStatus(
+      "📷 وجه الكاميرا نحو QR Code",
+      ""
+    );
+
+  } catch (error) {
+
+    console.error("CAMERA ERROR:", error);
+
+    showError(
+      "Impossible d'accéder à la caméra. Vérifiez l'autorisation du navigateur."
+    );
+
+    setStatus(
+      "⚠️ Caméra non disponible"
+    );
+
+  }
+
+}
+
+
+/* =========================
+   MANUAL URL
+========================= */
+
+function toggleManual() {
+
+  const box =
+    document.getElementById("manualBox");
+
+  box.classList.toggle("hidden");
+
+}
+
+
+function openManualUrl() {
+
+  const value =
+    document.getElementById("manualUrl").value.trim();
+
+  if (!value) {
+
+    showError("Veuillez entrer un lien.");
+
+    return;
+
+  }
+
+  try {
+
+    let url;
+
+    try {
+
+      url = new URL(value);
+
+    } catch {
+
+      url = new URL(
+        value,
+        window.location.origin + "/rouedalkhir/"
+      );
+
+    }
+
+    const userId =
+      url.searchParams.get("id");
+
+    if (userId && isUUID(userId)) {
+
+      openProfile(userId);
+
+      return;
+
+    }
+
+    if (isUUID(value)) {
+
+      openProfile(value);
+
+      return;
+
+    }
+
+    throw new Error(
+      "Lien de profil invalide."
+    );
+
+  } catch (error) {
+
+    showError(error.message);
+
+  }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    setTimeout(
+      startScanner,
+      500
+    );
+
+  }
+);
+
+
+/* =========================
+   STOP CAMERA
+========================= */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    if (scanner) {
+
+      scanner.stop().catch(() => {});
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
