@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Mon Profil - Roued Al Khair</title>
+  <title>Profil - Roued Al Khair</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script src="app.js"></script>
 
   <style>
@@ -24,8 +26,8 @@
 
     .container {
       width: 100%;
-      max-width: 650px;
-      margin: 0 auto;
+      max-width: 600px;
+      margin: auto;
       padding: 25px 15px 50px;
     }
 
@@ -43,7 +45,7 @@
       border-radius: 12px;
       background: #111;
       color: white;
-      font-size: 20px;
+      font-size: 22px;
       cursor: pointer;
     }
 
@@ -55,31 +57,25 @@
     .card {
       background: white;
       border-radius: 22px;
-      padding: 30px 22px;
+      padding: 35px 22px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    }
-
-    .profile-photo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 30px;
+      text-align: center;
     }
 
     .avatar {
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 20px;
       border-radius: 50%;
       background: #111;
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 50px;
+      font-size: 55px;
       font-weight: bold;
       overflow: hidden;
-      border: 4px solid #eee;
-      margin-bottom: 15px;
+      border: 5px solid #eee;
     }
 
     .avatar img {
@@ -88,122 +84,43 @@
       object-fit: cover;
     }
 
-    .photo-btn {
+    .name {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .role {
       display: inline-block;
-      padding: 11px 18px;
-      background: #111;
-      color: white;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    #photoInput {
-      display: none;
-    }
-
-    .photo-info {
-      margin-top: 8px;
-      font-size: 11px;
-      color: #777;
-      text-align: center;
-    }
-
-    .field {
-      margin-bottom: 20px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 8px;
+      padding: 9px 16px;
+      border-radius: 20px;
+      background: #f1f1f1;
       font-size: 13px;
       font-weight: bold;
+      color: #555;
     }
 
-    .field input {
-      width: 100%;
-      height: 48px;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 0 14px;
-      font-size: 15px;
-      outline: none;
-    }
-
-    .field input:focus {
-      border-color: #111;
-    }
-
-    .role-box {
-      width: 100%;
-      min-height: 48px;
-      border: 1px solid #eee;
-      background: #f7f7f7;
-      border-radius: 12px;
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .role-name {
+    .organisation {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
       font-size: 14px;
-      font-weight: bold;
-    }
-
-    .locked {
-      font-size: 12px;
       color: #777;
-    }
-
-    .save-btn {
-      width: 100%;
-      height: 52px;
-      border: 0;
-      border-radius: 14px;
-      background: #111;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .save-btn:hover {
-      opacity: 0.9;
-    }
-
-    .save-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .message {
-      display: none;
-      margin-top: 15px;
-      padding: 13px;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 13px;
-    }
-
-    .message.success {
-      display: block;
-      background: #e9f8ed;
-      color: #18733a;
-    }
-
-    .message.error {
-      display: block;
-      background: #ffeaea;
-      color: #a40000;
     }
 
     .loading {
       text-align: center;
-      padding: 50px 10px;
+      padding: 60px 10px;
       color: #777;
+    }
+
+    .error {
+      background: white;
+      border-radius: 20px;
+      padding: 35px 20px;
+      text-align: center;
+      color: #a40000;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
 
     @media (max-width: 500px) {
@@ -211,133 +128,65 @@
         padding: 18px 12px 40px;
       }
 
-      .card {
-        padding: 25px 17px;
-      }
-
       .avatar {
-        width: 115px;
-        height: 115px;
-        font-size: 43px;
+        width: 120px;
+        height: 120px;
+        font-size: 45px;
       }
 
-      .top h1 {
-        font-size: 20px;
+      .name {
+        font-size: 22px;
       }
     }
   </style>
+
 </head>
 
 <body>
 
   <div class="container">
 
-    <div class="top">
-      <button class="back" onclick="history.back()">‹</button>
-      <h1>Mon Profil</h1>
-    </div>
+```
+<div class="top">
+  <button class="back" onclick="history.back()">‹</button>
+  <h1>Profil du membre</h1>
+</div>
 
-    <div id="loading" class="loading">
-      ⏳ Chargement du profil...
-    </div>
+<div id="loading" class="loading">
+  ⏳ Chargement du profil...
+</div>
 
-    <div id="profileCard" class="card" style="display:none;">
+<div id="profileCard" class="card" style="display:none;">
 
-      <!-- PHOTO -->
-      <div class="profile-photo">
+  <div id="avatar" class="avatar">
+    👤
+  </div>
 
-        <div id="avatar" class="avatar">
-          👤
-        </div>
+  <div id="fullName" class="name">
+    —
+  </div>
 
-        <label for="photoInput" class="photo-btn">
-          📷 Changer la photo
-        </label>
+  <div id="role" class="role">
+    Membre
+  </div>
 
-        <input
-          type="file"
-          id="photoInput"
-          accept="image/jpeg,image/png,image/webp"
-        >
+  <div class="organisation">
+    <strong>Roued Al Khair</strong><br>
+    Profil officiel du membre
+  </div>
 
-        <div class="photo-info">
-          JPG, PNG ou WEBP — max 5 MB
-        </div>
+</div>
 
-      </div>
-
-      <!-- NOM -->
-      <div class="field">
-
-        <label for="fullName">
-          Nom complet
-        </label>
-
-        <input
-          type="text"
-          id="fullName"
-          placeholder="Votre nom complet"
-          maxlength="100"
-        >
-
-      </div>
-
-      <!-- ROLE -->
-      <div class="field">
-
-        <label>
-          Rôle
-        </label>
-
-        <div class="role-box">
-
-          <span
-            id="roleName"
-            class="role-name"
-          >
-            Membre
-          </span>
-
-          <span class="locked">
-            🔒 Protégé
-          </span>
-
-        </div>
-
-      </div>
-
-      <!-- SAVE -->
-      <button
-        id="saveBtn"
-        class="save-btn"
-        onclick="saveProfile()"
-      >
-        💾 Enregistrer les modifications
-      </button>
-
-      <div
-        id="message"
-        class="message"
-      ></div>
-
-    </div>
+<div id="errorBox" class="error" style="display:none;">
+  ❌ Profil introuvable.
+</div>
+```
 
   </div>
 
-
 <script>
 
-  let currentUser = null;
-  let currentProfile = null;
-  let selectedPhoto = null;
-
-
-  // =========================
-  // HELPERS
-  // =========================
-
   function getInitial(name) {
-
     if (!name) return "👤";
 
     return name
@@ -345,7 +194,6 @@
       .charAt(0)
       .toUpperCase();
   }
-
 
   function formatRole(role) {
 
@@ -363,437 +211,102 @@
     return roles[role] || role;
   }
 
-
-  function showMessage(text, type) {
-
-    const box = document.getElementById("message");
-
-    box.textContent = text;
-
-    box.className = "message " + type;
-  }
-
-
-  // =========================
-  // DISPLAY AVATAR
-  // =========================
-
-  function displayAvatar(name, url) {
-
-    const avatar = document.getElementById("avatar");
-
-    if (url) {
-
-      avatar.innerHTML = `
-        <img
-          src="${url}"
-          alt="Photo de profil"
-        >
-      `;
-
-    } else {
-
-      avatar.textContent = getInitial(name);
-
-    }
-  }
-
-
-  // =========================
-  // LOAD PROFILE
-  // =========================
-
-  async function loadProfile() {
+  async function loadPublicProfile() {
 
     try {
 
       if (!window.supabaseClient) {
-
-        throw new Error(
-          "Supabase n'est pas disponible."
-        );
-
+        throw new Error("Supabase n'est pas disponible.");
       }
 
-      const {
-        data: {
-          user
-        },
-        error: userError
-      } = await window.supabaseClient.auth.getUser();
+      // Récupérer l'ID depuis le QR
+      const params = new URLSearchParams(
+        window.location.search
+      );
 
+      const userId = params.get("id");
 
-      if (userError) {
-        throw userError;
+      if (!userId) {
+        throw new Error("ID du profil manquant.");
       }
 
-
-      if (!user) {
-
-        window.location.href = "login.html";
-
-        return;
-      }
-
-
-      currentUser = user;
-
-
+      // Chercher le profil correspondant
       const {
         data,
         error
       } = await window.supabaseClient
-
         .from("profiles")
-
-        .select(
-          "id,full_name,role,avatar_url"
-        )
-
-        .eq("id", user.id)
-
+        .select("id,full_name,role,avatar_url")
+        .eq("id", userId)
         .single();
-
 
       if (error) {
         throw error;
       }
 
+      if (!data) {
+        throw new Error("Profil introuvable.");
+      }
 
-      currentProfile = data;
-
-
+      // Nom
       document.getElementById(
         "fullName"
-      ).value = data.full_name || "";
+      ).textContent = data.full_name || "Membre";
 
-
+      // Rôle
       document.getElementById(
-        "roleName"
+        "role"
       ).textContent = formatRole(data.role);
 
+      // Photo
+      const avatar =
+        document.getElementById("avatar");
 
-      displayAvatar(
-        data.full_name,
-        data.avatar_url
-      );
+      if (data.avatar_url) {
 
+        avatar.innerHTML = `
+          <img
+            src="${data.avatar_url}"
+            alt="Photo de ${data.full_name || "membre"}"
+          >
+        `;
+
+      } else {
+
+        avatar.textContent =
+          getInitial(data.full_name);
+
+      }
 
       document.getElementById(
         "loading"
       ).style.display = "none";
 
-
       document.getElementById(
         "profileCard"
       ).style.display = "block";
 
-
     } catch (error) {
 
       console.error(
-        "PROFILE ERROR:",
+        "PUBLIC PROFILE ERROR:",
         error
       );
-
 
       document.getElementById(
         "loading"
-      ).innerHTML = `
-        ❌ Impossible de charger le profil.
-        <br><br>
-        <small>${error.message}</small>
-      `;
+      ).style.display = "none";
 
-    }
-
-  }
-
-
-  // =========================
-  // SELECT PHOTO
-  // =========================
-
-  document
-    .getElementById("photoInput")
-    .addEventListener(
-      "change",
-      function(event) {
-
-        const file =
-          event.target.files[0];
-
-
-        if (!file) return;
-
-
-        if (file.size > 5 * 1024 * 1024) {
-
-          showMessage(
-            "❌ La photo doit faire moins de 5 MB.",
-            "error"
-          );
-
-          event.target.value = "";
-
-          return;
-        }
-
-
-        const allowedTypes = [
-          "image/jpeg",
-          "image/png",
-          "image/webp"
-        ];
-
-
-        if (
-          !allowedTypes.includes(file.type)
-        ) {
-
-          showMessage(
-            "❌ Format non accepté. Utilisez JPG, PNG ou WEBP.",
-            "error"
-          );
-
-          event.target.value = "";
-
-          return;
-        }
-
-
-        selectedPhoto = file;
-
-
-        // Preview
-        const reader =
-          new FileReader();
-
-
-        reader.onload = function(e) {
-
-          document.getElementById(
-            "avatar"
-          ).innerHTML = `
-            <img
-              src="${e.target.result}"
-              alt="Nouvelle photo"
-            >
-          `;
-
-        };
-
-
-        reader.readAsDataURL(file);
-
-      }
-    );
-
-
-  // =========================
-  // UPLOAD PHOTO
-  // =========================
-
-  async function uploadPhoto() {
-
-    if (!selectedPhoto) {
-
-      return currentProfile.avatar_url || "";
-
-    }
-
-
-    const extension =
-      selectedPhoto.name
-        .split(".")
-        .pop()
-        .toLowerCase();
-
-
-    const filePath =
-      currentUser.id +
-      "/avatar." +
-      extension;
-
-
-    const {
-      error
-    } = await window.supabaseClient
-      .storage
-      .from("avatars")
-      .upload(
-        filePath,
-        selectedPhoto,
-        {
-          upsert: true,
-          contentType: selectedPhoto.type
-        }
-      );
-
-
-    if (error) {
-
-      console.error(
-        "UPLOAD ERROR:",
-        error
-      );
-
-      throw error;
-    }
-
-
-    const {
-      data
-    } = window.supabaseClient
-      .storage
-      .from("avatars")
-      .getPublicUrl(filePath);
-
-
-    return data.publicUrl +
-      "?t=" +
-      Date.now();
-
-  }
-
-
-  // =========================
-  // SAVE PROFILE
-  // =========================
-
-  async function saveProfile() {
-
-    const saveBtn =
       document.getElementById(
-        "saveBtn"
-      );
-
-
-    const newName =
-      document
-        .getElementById("fullName")
-        .value
-        .trim();
-
-
-    if (!newName) {
-
-      showMessage(
-        "❌ Entrez votre nom.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    if (newName.length < 2) {
-
-      showMessage(
-        "❌ Le nom est trop court.",
-        "error"
-      );
-
-      return;
-    }
-
-
-    try {
-
-      saveBtn.disabled = true;
-
-      saveBtn.textContent =
-        "⏳ Enregistrement...";
-
-
-      // Upload photo si elle a été changée
-      const avatarUrl =
-        await uploadPhoto();
-
-
-      // RPC sécurisée :
-      // seulement full_name + avatar_url
-      const {
-        error
-      } = await window.supabaseClient
-
-        .rpc(
-          "update_my_profile",
-          {
-            new_full_name: newName,
-            new_avatar_url: avatarUrl
-          }
-        );
-
-
-      if (error) {
-
-        console.error(
-          "UPDATE ERROR:",
-          error
-        );
-
-        throw error;
-      }
-
-
-      // Update local data
-      currentProfile.full_name =
-        newName;
-
-      currentProfile.avatar_url =
-        avatarUrl;
-
-
-      selectedPhoto = null;
-
-
-      displayAvatar(
-        newName,
-        avatarUrl
-      );
-
-
-      showMessage(
-        "✅ Votre profil a été mis à jour.",
-        "success"
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "SAVE ERROR:",
-        error
-      );
-
-
-      showMessage(
-        "❌ Erreur : " +
-        error.message,
-        "error"
-      );
-
-
-    } finally {
-
-      saveBtn.disabled = false;
-
-      saveBtn.textContent =
-        "💾 Enregistrer les modifications";
+        "errorBox"
+      ).style.display = "block";
 
     }
-
   }
-
-
-  // =========================
-  // START
-  // =========================
 
   document.addEventListener(
     "DOMContentLoaded",
-    loadProfile
+    loadPublicProfile
   );
 
 </script>
