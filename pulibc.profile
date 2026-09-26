@@ -108,6 +108,82 @@
       color: #777;
     }
 
+    .edit-btn,
+    .save-btn,
+    .cancel-btn {
+      width: 100%;
+      height: 50px;
+      border: 0;
+      border-radius: 13px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      margin-top: 25px;
+      background: #111;
+      color: white;
+    }
+
+    .save-btn {
+      margin-top: 20px;
+      background: #111;
+      color: white;
+    }
+
+    .cancel-btn {
+      margin-top: 10px;
+      background: #eee;
+      color: #111;
+    }
+
+    .edit-section {
+      display: none;
+      margin-top: 25px;
+      padding-top: 25px;
+      border-top: 1px solid #eee;
+      text-align: left;
+    }
+
+    .edit-section label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .edit-section input[type="text"] {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .edit-section input[type="text"]:focus {
+      border-color: #111;
+    }
+
+    .photo-label {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin-top: 8px;
+      border-radius: 12px;
+      background: #f1f1f1;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #photoInput {
+      display: none;
+    }
+
     .loading {
       text-align: center;
       padding: 60px 10px;
@@ -123,20 +199,25 @@
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
     }
 
-    @media (max-width: 500px) {
-      .container {
-        padding: 18px 12px 40px;
-      }
+    .message {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 13px;
+    }
 
-      .avatar {
-        width: 120px;
-        height: 120px;
-        font-size: 45px;
-      }
+    .message.success {
+      display: block;
+      background: #e9f8ed;
+      color: #18733a;
+    }
 
-      .name {
-        font-size: 22px;
-      }
+    .message.error {
+      display: block;
+      background: #ffeaea;
+      color: #a40000;
     }
   </style>
 
@@ -144,170 +225,551 @@
 
 <body>
 
-  <div class="container">
+<div class="container">
+
+  <div class="top">
+    <button class="back" onclick="history.back()">‹</button>
+    <h1>Profil du membre</h1>
+  </div>
+
+  <div id="loading" class="loading">
+    ⏳ Chargement du profil...
+  </div>
+
+  <div id="profileCard" class="card" style="display:none;">
 
 ```
-<div class="top">
-  <button class="back" onclick="history.back()">‹</button>
-  <h1>Profil du membre</h1>
+<div id="avatar" class="avatar">
+  👤
 </div>
 
-<div id="loading" class="loading">
-  ⏳ Chargement du profil...
+<div id="fullName" class="name">
+  —
 </div>
 
-<div id="profileCard" class="card" style="display:none;">
-
-  <div id="avatar" class="avatar">
-    👤
-  </div>
-
-  <div id="fullName" class="name">
-    —
-  </div>
-
-  <div id="role" class="role">
-    Membre
-  </div>
-
-  <div class="organisation">
-    <strong>Roued Al Khair</strong><br>
-    Profil officiel du membre
-  </div>
-
+<div id="role" class="role">
+  Membre
 </div>
 
-<div id="errorBox" class="error" style="display:none;">
-  ❌ Profil introuvable.
+<div class="organisation">
+  <strong>Roued Al Khair</strong><br>
+  Profil officiel du membre
+</div>
+
+<!-- يظهر فقط لصاحب الحساب -->
+<button
+  id="editBtn"
+  class="edit-btn"
+  style="display:none;"
+  onclick="openEdit()"
+>
+  ✏️ Modifier le profil
+</button>
+
+<!-- EDIT -->
+<div id="editSection" class="edit-section">
+
+  <label for="nameInput">
+    Nom complet
+  </label>
+
+  <input
+    type="text"
+    id="nameInput"
+    maxlength="100"
+    placeholder="Votre nom complet"
+  >
+
+  <label style="margin-top:18px;">
+    Photo de profil
+  </label>
+
+  <label
+    for="photoInput"
+    class="photo-label"
+  >
+    📷 Choisir une nouvelle photo
+  </label>
+
+  <input
+    type="file"
+    id="photoInput"
+    accept="image/jpeg,image/png,image/webp"
+  >
+
+  <button
+    id="saveBtn"
+    class="save-btn"
+    onclick="saveProfile()"
+  >
+    💾 Enregistrer
+  </button>
+
+  <button
+    class="cancel-btn"
+    onclick="closeEdit()"
+  >
+    Annuler
+  </button>
+
+  <div id="message" class="message"></div>
+
 </div>
 ```
 
   </div>
+
+  <div id="errorBox" class="error" style="display:none;">
+    ❌ Profil introuvable.
+  </div>
+
+</div>
 
 <script>
 
-  function getInitial(name) {
-    if (!name) return "👤";
+let profileId = null;
+let currentProfile = null;
+let currentUser = null;
+let selectedPhoto = null;
 
-    return name
-      .trim()
-      .charAt(0)
-      .toUpperCase();
-  }
 
-  function formatRole(role) {
+// ==========================
+// INITIAL
+// ==========================
 
-    if (!role) return "Membre";
+async function loadPublicProfile() {
 
-    const roles = {
-      admin: "Administrateur",
-      president: "Président",
-      vice_president: "Vice-président",
-      responsable: "Responsable",
-      member: "Membre",
-      volunteer: "Bénévole"
-    };
+  try {
 
-    return roles[role] || role;
-  }
+    if (!window.supabaseClient) {
+      throw new Error("Supabase n'est pas disponible.");
+    }
 
-  async function loadPublicProfile() {
+    const params =
+      new URLSearchParams(window.location.search);
 
-    try {
+    profileId = params.get("id");
 
-      if (!window.supabaseClient) {
-        throw new Error("Supabase n'est pas disponible.");
-      }
+    if (!profileId) {
+      throw new Error("ID du profil manquant.");
+    }
 
-      // Récupérer l'ID depuis le QR
-      const params = new URLSearchParams(
-        window.location.search
-      );
+    // Utilisateur connecté
+    const {
+      data: { user }
+    } = await window.supabaseClient.auth.getUser();
 
-      const userId = params.get("id");
+    currentUser = user || null;
 
-      if (!userId) {
-        throw new Error("ID du profil manquant.");
-      }
 
-      // Chercher le profil correspondant
-      const {
-        data,
-        error
-      } = await window.supabaseClient
-        .from("profiles")
-        .select("id,full_name,role,avatar_url")
-        .eq("id", userId)
-        .single();
+    // Charger le profil demandé
+    const {
+      data,
+      error
+    } = await window.supabaseClient
+      .from("profiles")
+      .select("id,full_name,role,avatar_url")
+      .eq("id", profileId)
+      .single();
 
-      if (error) {
-        throw error;
-      }
+    if (error) {
+      throw error;
+    }
 
-      if (!data) {
-        throw new Error("Profil introuvable.");
-      }
+    if (!data) {
+      throw new Error("Profil introuvable.");
+    }
 
-      // Nom
-      document.getElementById(
-        "fullName"
-      ).textContent = data.full_name || "Membre";
+    currentProfile = data;
 
-      // Rôle
-      document.getElementById(
-        "role"
-      ).textContent = formatRole(data.role);
 
-      // Photo
-      const avatar =
-        document.getElementById("avatar");
+    // Affichage
+    document.getElementById("fullName").textContent =
+      data.full_name || "Membre";
 
-      if (data.avatar_url) {
+    document.getElementById("role").textContent =
+      formatRole(data.role);
 
-        avatar.innerHTML = `
-          <img
-            src="${data.avatar_url}"
-            alt="Photo de ${data.full_name || "membre"}"
-          >
-        `;
+    displayAvatar(
+      data.full_name,
+      data.avatar_url
+    );
 
-      } else {
 
-        avatar.textContent =
-          getInitial(data.full_name);
+    // ==========================
+    // AUTORISER EDIT UNIQUEMENT
+    // AU PROPRIETAIRE
+    // ==========================
 
-      }
+    if (
+      currentUser &&
+      currentUser.id === profileId
+    ) {
 
       document.getElementById(
-        "loading"
-      ).style.display = "none";
-
-      document.getElementById(
-        "profileCard"
-      ).style.display = "block";
-
-    } catch (error) {
-
-      console.error(
-        "PUBLIC PROFILE ERROR:",
-        error
-      );
-
-      document.getElementById(
-        "loading"
-      ).style.display = "none";
-
-      document.getElementById(
-        "errorBox"
+        "editBtn"
       ).style.display = "block";
 
     }
+
+
+    document.getElementById(
+      "loading"
+    ).style.display = "none";
+
+    document.getElementById(
+      "profileCard"
+    ).style.display = "block";
+
+  } catch (error) {
+
+    console.error(
+      "PUBLIC PROFILE ERROR:",
+      error
+    );
+
+    document.getElementById(
+      "loading"
+    ).style.display = "none";
+
+    document.getElementById(
+      "errorBox"
+    ).style.display = "block";
+  }
+}
+
+
+// ==========================
+// ROLE
+// ==========================
+
+function formatRole(role) {
+
+  const roles = {
+    admin: "Administrateur",
+    president: "Président",
+    vice_president: "Vice-président",
+    responsable: "Responsable",
+    member: "Membre",
+    volunteer: "Bénévole"
+  };
+
+  return roles[role] || role || "Membre";
+}
+
+
+// ==========================
+// AVATAR
+// ==========================
+
+function displayAvatar(name, url) {
+
+  const avatar =
+    document.getElementById("avatar");
+
+  if (url) {
+
+    avatar.innerHTML = `
+      <img
+        src="${url}"
+        alt="Photo de profil"
+      >
+    `;
+
+  } else {
+
+    avatar.textContent =
+      name
+        ? name.trim().charAt(0).toUpperCase()
+        : "👤";
+  }
+}
+
+
+// ==========================
+// OPEN EDIT
+// ==========================
+
+function openEdit() {
+
+  document.getElementById(
+    "editSection"
+  ).style.display = "block";
+
+  document.getElementById(
+    "editBtn"
+  ).style.display = "none";
+
+  document.getElementById(
+    "nameInput"
+  ).value =
+    currentProfile.full_name || "";
+}
+
+
+// ==========================
+// CLOSE EDIT
+// ==========================
+
+function closeEdit() {
+
+  document.getElementById(
+    "editSection"
+  ).style.display = "none";
+
+  document.getElementById(
+    "editBtn"
+  ).style.display = "block";
+
+  selectedPhoto = null;
+
+  document.getElementById(
+    "photoInput"
+  ).value = "";
+
+  document.getElementById(
+    "message"
+  ).className = "message";
+}
+
+
+// ==========================
+// PHOTO SELECT
+// ==========================
+
+document
+  .getElementById("photoInput")
+  .addEventListener("change", function(e) {
+
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+
+      showMessage(
+        "❌ La photo doit faire moins de 5 MB.",
+        "error"
+      );
+
+      e.target.value = "";
+      return;
+    }
+
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+    if (!allowed.includes(file.type)) {
+
+      showMessage(
+        "❌ Format non accepté.",
+        "error"
+      );
+
+      e.target.value = "";
+      return;
+    }
+
+    selectedPhoto = file;
+
+  });
+
+
+// ==========================
+// UPLOAD PHOTO
+// ==========================
+
+async function uploadPhoto() {
+
+  if (!selectedPhoto) {
+    return currentProfile.avatar_url || "";
   }
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    loadPublicProfile
-  );
+  const extension =
+    selectedPhoto.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+  const filePath =
+    currentUser.id +
+    "/avatar." +
+    extension;
+
+  const {
+    error
+  } = await window.supabaseClient
+    .storage
+    .from("avatars")
+    .upload(
+      filePath,
+      selectedPhoto,
+      {
+        upsert: true,
+        contentType: selectedPhoto.type
+      }
+    );
+
+  if (error) {
+    throw error;
+  }
+
+  const {
+    data
+  } = window.supabaseClient
+    .storage
+    .from("avatars")
+    .getPublicUrl(filePath);
+
+  return data.publicUrl +
+    "?t=" +
+    Date.now();
+}
+
+
+// ==========================
+// SAVE PROFILE
+// ==========================
+
+async function saveProfile() {
+
+  const name =
+    document
+      .getElementById("nameInput")
+      .value
+      .trim();
+
+  if (!name) {
+
+    showMessage(
+      "❌ Entrez votre nom.",
+      "error"
+    );
+
+    return;
+  }
+
+  if (!currentUser ||
+      currentUser.id !== profileId) {
+
+    showMessage(
+      "❌ Vous n'êtes pas autorisé à modifier ce profil.",
+      "error"
+    );
+
+    return;
+  }
+
+  const saveBtn =
+    document.getElementById("saveBtn");
+
+  try {
+
+    saveBtn.disabled = true;
+    saveBtn.textContent =
+      "⏳ Enregistrement...";
+
+
+    // Photo
+    const avatarUrl =
+      await uploadPhoto();
+
+
+    // Mise à jour Supabase
+    const {
+      error
+    } = await window.supabaseClient
+      .from("profiles")
+      .update({
+        full_name: name,
+        avatar_url: avatarUrl
+      })
+      .eq("id", currentUser.id);
+
+    if (error) {
+      throw error;
+    }
+
+
+    // Actualiser localement
+    currentProfile.full_name = name;
+    currentProfile.avatar_url = avatarUrl;
+
+
+    document.getElementById(
+      "fullName"
+    ).textContent = name;
+
+    displayAvatar(
+      name,
+      avatarUrl
+    );
+
+
+    selectedPhoto = null;
+
+    document.getElementById(
+      "photoInput"
+    ).value = "";
+
+
+    showMessage(
+      "✅ Profil mis à jour avec succès.",
+      "success"
+    );
+
+
+    setTimeout(() => {
+      closeEdit();
+    }, 1200);
+
+  } catch (error) {
+
+    console.error(
+      "SAVE PROFILE ERROR:",
+      error
+    );
+
+    showMessage(
+      "❌ Erreur : " + error.message,
+      "error"
+    );
+
+  } finally {
+
+    saveBtn.disabled = false;
+    saveBtn.textContent =
+      "💾 Enregistrer";
+  }
+}
+
+
+// ==========================
+// MESSAGE
+// ==========================
+
+function showMessage(text, type) {
+
+  const box =
+    document.getElementById("message");
+
+  box.textContent = text;
+  box.className =
+    "message " + type;
+}
+
+
+// ==========================
+// START
+// ==========================
+
+document.addEventListener(
+  "DOMContentLoaded",
+  loadPublicProfile
+);
 
 </script>
 
